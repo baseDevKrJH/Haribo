@@ -86,7 +86,7 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("notice")) {
             url = "/views/notice/notice.jsp"; // 공지사항 페이지로 이동 -> 이거 url 아니고 NoticeAction으로 줄건데 일단 임시로 해놓음
         } else {
-            url = "/WEB-INF/views/error/404.jsp"; // 에러 페이지 처리
+            url = "/views/error/404.jsp"; // 에러 페이지 처리
         } 
 
         // Action 실행
