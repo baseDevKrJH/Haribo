@@ -274,8 +274,14 @@
 }
 
 /* 모달 버튼 내부 가격 스타일 */
-.size-button span:last-child {
+.size-button .price {
   color: #F15746;
+  font-size: 12px; 
+}
+
+/* 구매 입찰 스타일 */
+.size-button .bid-label {
+  color: #666 !important;
   font-size: 12px;
-  font-weight: normal;
+  opacity: 0.8;
 }
