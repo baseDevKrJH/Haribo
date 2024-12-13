@@ -59,62 +59,53 @@
         </div>
       </dl>
 
+      <!-- 구매/판매 버튼 -->
       <div class="button-group">
-        <!-- 구매 버튼 -->
         <a href="<%= request.getContextPath() %>/views/product/buy.jsp" class="buy-button">
           <div class="buy-text">구매</div>
           <div class="buy-info">
-            <span class="price">250,000원</span> <!-- 임시 텍스트 -->
+            <span class="price">250,000원</span>
             <span class="subtext">즉시 구매가</span>
           </div>
         </a>
-
-        <!-- 판매 버튼 -->
         <a href="<%= request.getContextPath() %>/views/product/sell.jsp" class="sell-button">
           <div class="sell-text">판매</div>
           <div class="sell-info">
-            <span class="price">250,000원</span> <!-- 임시 텍스트 -->
+            <span class="price">250,000원</span>
             <span class="subtext">즉시 판매가</span>
           </div>
         </a>
       </div>
 
-      <!-- 모달 창 -->
-      <div class="modal-overlay" id="size-modal">
-        <div class="modal-content">
-          <button class="modal-close" id="modal-close">&times;</button>
-          <h3 class="modal-title">사이즈</h3>
-          <div class="size-grid">
+<!-- 모달 창 -->
+<div class="modal-overlay" id="size-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <h3 class="modal-title">사이즈</h3>
+    <div class="size-grid">
+      <c:forEach var="sizePrice" items="${sizePriceList}">
+        <div class="size-item">
+          <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${sizePrice.size}" class="size-button">
+            <!-- 사이즈 -->
+            <span>${sizePrice.size}</span>
+            <!-- 가격 -->
             <c:choose>
-              <c:when test="${not empty sizePriceList}">
-                <c:forEach var="sizePrice" items="${sizePriceList}">
-                  <div class="size-item">
-                    <c:choose>
-                      <c:when test="${sizePrice.price != null}">
-                        <!-- 가격이 있는 경우 -->
-                        <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${sizePrice.size}" 
-                           class="size-button">
-                          <span>${sizePrice.size}</span>
-                          <span class="price">${sizePrice.price}원</span>
-                        </a>
-                      </c:when>
-                      <c:otherwise>
-                        <!-- 가격이 없는 경우 -->
-                        <a href="#" class="size-button disabled">
-                          <span>${sizePrice.size}</span>
-                          <span class="price">구매 입찰</span>
-                        </a>
-                      </c:otherwise>
-                    </c:choose>
-                  </div>
-                </c:forEach>
+              <c:when test="${sizePrice.price == -1}">
+                <span class="price bid-label">구매 입찰</span>
               </c:when>
+              <c:otherwise>
+                <span class="price">${sizePrice.price}원</span>
+              </c:otherwise>
             </c:choose>
-          </div>
+          </a>
         </div>
-      </div>
+      </c:forEach>
     </div>
   </div>
-    <%@ include file="/views/home/footer.jsp" %>
+</div>
+    </div>
+  </div>
+
+  <%@ include file="/views/home/footer.jsp" %>
 </body>
 </html>
