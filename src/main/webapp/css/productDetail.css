@@ -275,8 +275,9 @@
 
 /* 모달 버튼 내부 가격 스타일 */
 .size-button .price {
-  color: #F15746;
-  font-size: 12px; 
+  color: #f15746;
+  font-size: 12px;
+  font-weight: normal; 
 }
 
 /* 구매 입찰 스타일 */
@@ -284,4 +285,210 @@
   color: #666 !important;
   font-size: 12px;
   opacity: 0.8;
+}
+
+/************** 여기서부터 관심저장 버튼입니다 ********************/
+
+/* 관심 버튼 기본 */
+.btn.btn_wish {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    width: 400px;
+    height: 60px;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    color: #333;
+    background-color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn_wish:hover {
+    background-color: #f7f7f7; 
+    border-color: #ccc; 
+}
+
+/* 아이콘 이미지 */
+.wishlist-icon img {
+    width: 20px; 
+    height: 20px; 
+    margin-right: 10px; 
+}
+
+/* "관심상품" 텍스트 */
+.wishlist-text {
+    font-size: 15px; 
+    margin-right: 5px; 
+}
+
+/* "210" 숫자 */
+.wishCount {
+    font-size: 16px; 
+    font-weight: bold;
+    color: #22222C; 
+}
+
+
+/************** 여기서부터 배송관련안내 버튼입니다 ********************/
+
+
+/* 배송 정보 컨테이너 */
+.delivery_way_wrap {
+  width: 400px;
+  padding-bottom: 20px;
+  border-top: 1px solid #ebebeb;
+  margin-top: 20px;
+}
+
+.delivery_title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 16px;
+}
+
+/* 배송 옵션 리스트 */
+.delivery_options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.delivery_option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* 아이콘 스타일 */
+.delivery_icon img {
+  width: 30px;
+  height: 30px;
+  margin-right: 16px;
+}
+
+/* 배송 옵션 상세 */
+.delivery_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery_type {
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+}
+
+.delivery_price {
+  font-weight: normal;
+  margin-left: 8px;
+  color: #f15746;
+}
+
+.delivery_desc {
+  font-size: 13px;
+  color: rgba(34, 34, 34, 0.6);
+  margin-top: 4px;
+}
+
+
+/************** 여기서부터 정품 관련 안내입니다 ********************/
+
+/* 정품 보증 컨테이너 */
+.authenticity-info-container {
+  width: 400px; 
+  padding-top: 20px;
+  border-top: 1px solid #ebebeb; 
+  margin-top: 20px; 
+}
+
+/* 정품 보증 리스트 */
+.authenticity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 각 항목 스타일 */
+.authenticity-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px; 
+  padding: 4px 0; 
+}
+
+/* 아이콘 스타일 */
+.authenticity-icon img {
+  width: 40px; 
+  height: 40px;
+  margin-right: 16px;
+}
+
+/* 정품 보증 상세 정보 */
+.authenticity-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.authenticity-title {
+  font-size: 14px; 
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.authenticity-desc {
+  font-size: 13px;
+  color: rgba(34, 34, 34, 0.6);
+}
+
+
+/************** 사이즈 정보 스타일 **************/
+
+/* 컨테이너 */
+.size-info-container {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ebebeb;
+}
+
+.size-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+/* 표 스타일 */
+.size-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.size-table th, .size-table td {
+  text-align: center;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.size-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.size-table td {
+  border-bottom: 1px solid #f0f0f0;
+  color: #444;
+}
+
+/* 참고 텍스트 */
+.size-note {
+  font-size: 13px;
+  color: rgba(34, 34, 34, 0.6);
+  line-height: 1.6;
 }
