@@ -9,9 +9,9 @@ import com.jelly.www.vo.ProductVO;
 public class ProductDAO {
     // DB 연결 정보
     String driver = "com.mysql.cj.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/test";
-    String user = "SCOTT";
-    String password = "TIGER";
+    String url = "jdbc:mysql://localhost:3306/jelly";
+    String user = "scott";
+    String password = "tiger";
 
     Connection conn = null;
     PreparedStatement pstmt = null;

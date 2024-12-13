@@ -8,9 +8,9 @@ import com.jelly.www.vo.UserVO;
 
 public class UserDAO {
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/test";
-    private String user = "SCOTT";
-    private String password = "TIGER";
+    private String url = "jdbc:mysql://localhost:3306/jelly";
+    private String user = "scott";
+    private String password = "tiger";
 
     private Connection conn;
     private PreparedStatement pstmt;
