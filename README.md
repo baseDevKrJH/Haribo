@@ -57,4 +57,4 @@
 ## 설치 및 실행 방법
 1. **프로젝트 클론**
    ```bash
-   git clone https://github.com/your-repository/jelly.git
+   git clone https://github.com/HyeongYoon/jelly.git
