@@ -1,0 +1,281 @@
+.product-detail-container {
+  display: flex;
+  width: 1280px;
+  height: 1500px;
+  margin: 0 auto;
+}
+
+.product-image-section {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.product-image img {
+  width: 560px;
+  height: auto;
+}
+
+.divider {
+  width: 2px;
+  background-color: #ddd;
+  margin: 0 20px;
+}
+
+.product-info-section {
+  flex: 1;
+  padding: 20px;
+}
+
+/* 즉시 구매가 */
+.instant-buy {
+  margin-bottom: 20px;
+}
+
+.instant-buy-label {
+  font-size: 14px;
+  color: rgba(34, 34, 34, 0.5);
+}
+
+.instant-buy-price {
+  font-size: 27px;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+/* 상품명 및 상세설명 */
+.product-name {
+  font-size: 18px;
+  color: #222222;
+  margin-top: 10px;
+}
+
+.product-description {
+  font-size: 14px;
+  color: rgba(34, 34, 34, 0.5);
+}
+
+/* 상품 세부 정보 */
+.product-details {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  height: 60px;
+  margin-top: 30px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  justify-content: center;
+  width: 33%; 
+  text-align: left; 
+  position: relative;
+}
+
+.detail:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 32px; 
+  top: 15%; 
+  height: 70%; 
+  width: 1px;
+  background-color: #ddd;
+}
+
+.detail .text {
+  font-size: 12px;
+  color: rgba(34, 34, 34, 0.5);
+  margin-bottom: 5px;
+}
+
+.detail span {
+  font-size: 14px;
+  color: #222222;
+}
+
+/* 사이즈 선택 드롭다운 */
+.size-selector {
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px 0;
+}
+
+.size-dropdown {
+  width: 400px;
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #222;
+}
+
+.size-dropdown span {
+  margin-right: auto;
+}
+
+.size-dropdown svg {
+  fill: #666;
+}
+
+/* 버튼 그룹 */
+.button-group {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.buy-button,
+.sell-button {
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+}
+
+.buy-button {
+  background-color: #ef6253;
+}
+
+.sell-button {
+  background-color: #41b979;
+}
+
+.buy-text,
+.sell-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 25px;
+  white-space: nowrap;
+}
+
+.buy-info,
+.sell-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.subtext {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+/* 모달창 오버레이 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달창 컨텐츠 */
+.modal-content {
+  background-color: #fff;
+  width: 490px;
+  height: auto;
+  max-height: 80vh; 
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto; 
+}
+
+/* 모달 닫기 버튼 */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+/* 사이즈 버튼 그리드 */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px; 
+  width: 100%;
+  justify-items: center;
+}
+
+/* 사이즈 버튼 */
+.size-item {
+  display: flex;
+  justify-content: center;
+}
+
+.size-button {
+  width: 150px;
+  height: 52px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  text-decoration: none;
+  align-items: center;
+  color: #000;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.size-button:hover {
+  border-color: #333;
+}
+
+.size-button.disabled {
+  color: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+/* 모달 버튼 내부 사이즈 스타일 */
+.size-button span:first-child {
+  color: #222222;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+/* 모달 버튼 내부 가격 스타일 */
+.size-button span:last-child {
+  color: #F15746;
+  font-size: 12px;
+  font-weight: normal;
+}
