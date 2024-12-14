@@ -93,6 +93,8 @@
 
 /* 구매/판매 버튼 스타일 */
 .btn_action {
+	width: 120px;
+	height: 50px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

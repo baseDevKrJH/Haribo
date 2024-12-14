@@ -73,7 +73,7 @@
         <a href="<%= request.getContextPath() %>/views/product/buy.jsp" class="buy-button">
           <div class="buy-text">구매</div>
           <div class="buy-info">
-            <span class="price">250,000원</span>
+            <span class="price">${formattedPrice}원</span>
             <span class="subtext">즉시 구매가</span>
           </div>
         </a>
