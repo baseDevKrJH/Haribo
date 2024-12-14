@@ -71,6 +71,8 @@ public class JellyController extends HttpServlet {
             action = new BagsAction(); // 가방 페이지 처리
         } else if (page.equals("style")) {
             action = new StyleAction(); // 스타일 페이지 처리
+        } else if (page.equals("styleDetail")) {
+        	action = new StyleDetailAction(); // 스타일 페이지 처리
         } else if (page.equals("event")) {
             action = new EventAction(); // 이벤트 페이지 처리
         } else if (page.equals("popular")) {
