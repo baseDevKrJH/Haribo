@@ -104,8 +104,7 @@ public class ProductDAO {
             if (vo != null) {
                 // 사이즈 목록 조회
                 List<String> sizes = selectSizesByProductId(productId);
-                vo.setSizes(sizes);  // ProductVO에 사이즈 목록 추가
-            }
+                vo.setSizes(sizes);              }
             
             
         } catch (SQLException e) {
@@ -188,7 +187,7 @@ public class ProductDAO {
         }
     }
 
-    // 브랜드, 사이즈, 가격 필터링하는 메서드
+    // 브랜드, 사이즈, 가격 필터링하는 메서드 (상품 페이지에서 필터링할때 사용) -> 사이즈가 근데 필터가 안됨.. 사이즈가 null로 떠버림
     public List<ProductVO> filterByBrandsSizesAndPrice(List<String> brands, List<String> sizes, String priceRange) {
         List<ProductVO> list = new ArrayList<>();
         sb.setLength(0);
@@ -321,42 +320,42 @@ public class ProductDAO {
         return list;
     }
     
-    // 무한스크롤 메서드(페이지네이션)
-    public List<ProductVO> selectByPage(int page, int limit) {
-        List<ProductVO> list = new ArrayList<>();
-        int offset = (page - 1) * limit; // 시작 위치 계산
-
-        String sql = "SELECT * FROM PRODUCT ORDER BY RELEASE_DATE DESC LIMIT ? OFFSET ?";
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, limit);
-            pstmt.setInt(2, offset);
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                ProductVO vo = new ProductVO(
-                    rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
-                    rs.getString("DESCRIPTION"),
-                    rs.getString("BRAND"),
-                    rs.getDate("RELEASE_DATE"),
-                    rs.getInt("INITIAL_PRICE"),
-                    rs.getString("MODEL_NUMBER"),
-                    rs.getInt("CATEGORY_ID"),
-                    rs.getString("IMAGE_URL"),
-                    rs.getBoolean("IS_ACTIVE"),
-                    rs.getDate("CREATED_AT"),
-                    rs.getDate("UPDATED_AT")
-                );
-                list.add(vo);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
-        }
-        return list;
-    }
+    // 무한스크롤 메서드(페이지네이션)....인데 구현안됨 어떻게함?
+//    public List<ProductVO> selectByPage(int page, int limit) {
+//        List<ProductVO> list = new ArrayList<>();
+//        int offset = (page - 1) * limit; // 시작 위치 계산
+//
+//        String sql = "SELECT * FROM PRODUCT ORDER BY RELEASE_DATE DESC LIMIT ? OFFSET ?";
+//        try {
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setInt(1, limit);
+//            pstmt.setInt(2, offset);
+//            rs = pstmt.executeQuery();
+//
+//            while (rs.next()) {
+//                ProductVO vo = new ProductVO(
+//                    rs.getInt("PRODUCT_ID"),
+//                    rs.getString("NAME"),
+//                    rs.getString("DESCRIPTION"),
+//                    rs.getString("BRAND"),
+//                    rs.getDate("RELEASE_DATE"),
+//                    rs.getInt("INITIAL_PRICE"),
+//                    rs.getString("MODEL_NUMBER"),
+//                    rs.getInt("CATEGORY_ID"),
+//                    rs.getString("IMAGE_URL"),
+//                    rs.getBoolean("IS_ACTIVE"),
+//                    rs.getDate("CREATED_AT"),
+//                    rs.getDate("UPDATED_AT")
+//                );
+//                list.add(vo);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            close();
+//        }
+//        return list;
+//    }
     
     // 상품 사이즈 목록 조회
     public List<String> selectSizesByProductId(int productId) {
@@ -380,7 +379,7 @@ public class ProductDAO {
         return sizes;
     }
     
-    // 사이즈와 가격 조회
+    // 사이즈와 가격 조회 (상품 모든 사이즈버튼, 구매, 판매 버튼 누르면 나오는 모달창에 사용)
     public List<ProductVO> selectSizesAndPricesByProductId(int productId) {
         List<ProductVO> sizePriceList = new ArrayList<>();
         sb.setLength(0);

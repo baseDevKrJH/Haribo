@@ -25,8 +25,8 @@ public class ProductVO {
     private Date updatedAt;
 
     private List<String> sizes;  // 사이즈 목록
-    private String size;         // 개별 사이즈
-    private int price;           // 개별 가격
+    private String size;         // 사이즈
+    private int price;           // 가격
 
     // 필요한 생성자 (size와 price는 필요없음)
     public ProductVO(int productId, String name, String description, String brand, Date releaseDate, int initialPrice,
