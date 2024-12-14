@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/views/home/subHeader.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,8 +9,42 @@
   <title>상품 상세 정보</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productDetail.css">
   <script src="<%= request.getContextPath() %>/js/size.js"></script>
-</head>
+  <!-- Stickey bar css 가져옴 -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productStickey.css" />
+
 <body>
+  <!-- Sticky Bar 폼임 -->
+  <div class="sticky-container" id="stickyBar">
+    <div class="product_area">
+      <!-- 상품 이미지 -->
+      <div class="thumbnail">
+        <img src="${product.imageUrl}" alt="${product.name}">
+      </div>
+      <!-- 상품 텍스트 정보 -->
+      <div class="product_list_info_summary">
+        <p class="product_title">${product.name}</p>
+        <p class="product_subtitle">${product.description}</p>
+        <p class="product_model">${product.modelNumber}</p>
+      </div>
+    </div>
+    <!-- 버튼 영역 -->
+    <div class="btn_area">
+      <a href="#" class="btn btn_wish2">관심등록</a>
+      <button class="btn_action buy_button">
+        <strong>구매</strong>
+        <div class="price">${formattedPrice}원</div>
+      </button>
+      <button class="btn_action sell_button">
+        <strong>판매</strong>
+        <div class="price">250,000원</div>
+      </button>
+    </div>
+  </div>
+	
+  <!--  productStickey.js 가져옴 -->
+  <script src="<%= request.getContextPath() %>/js/productStickey.js"></script>
+  
+  
   <div class="product-detail-container">
     <!-- 왼쪽: 상품 이미지 -->
     <div class="product-image-section">
@@ -42,7 +77,7 @@
           </svg>
         </button>
       </div>
-
+		
       <!-- 상품 세부 정보 -->
       <dl class="product-details">
         <div class="detail">
@@ -150,6 +185,101 @@
   </ul>
 </div>
 
+<!-- 사이즈 정보 섹션 -->
+<div class="size-info-container">
+  <h3 class="size-title">사이즈 정보</h3>
+  <table class="size-table">
+    <thead>
+      <tr>
+        <th>KR</th>
+        <th>US (M)</th>
+        <th>US (W)</th>
+        <th>UK</th>
+        <th>JP</th>
+        <th>EU</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>210</td>
+        <td>3.5</td>
+        <td>5</td>
+        <td>3</td>
+        <td>22.5</td>
+        <td>35.5</td>
+      </tr>
+      <tr>
+        <td>220</td>
+        <td>4</td>
+        <td>5.5</td>
+        <td>3.5</td>
+        <td>23</td>
+        <td>36</td>
+      </tr>
+      <tr>
+        <td>230</td>
+        <td>4.5</td>
+        <td>6</td>
+        <td>4</td>
+        <td>23.5</td>
+        <td>36.5</td>
+      </tr>
+      <tr>
+        <td>240</td>
+        <td>5</td>
+        <td>6.5</td>
+        <td>4.5</td>
+        <td>24</td>
+        <td>37.5</td>
+      </tr>
+      <tr>
+        <td>250</td>
+        <td>5.5</td>
+        <td>7</td>
+        <td>5</td>
+        <td>24.5</td>
+        <td>38</td>
+      </tr>
+      <tr>
+        <td>260</td>
+        <td>6</td>
+        <td>7.5</td>
+        <td>5.5</td>
+        <td>25</td>
+        <td>39</td>
+      </tr>
+      <tr>
+        <td>270</td>
+        <td>6.5</td>
+        <td>8</td>
+        <td>6</td>
+        <td>25.5</td>
+        <td>40</td>
+      </tr>
+      <tr>
+        <td>280</td>
+        <td>7</td>
+        <td>8.5</td>
+        <td>6.5</td>
+        <td>26</td>
+        <td>41</td>
+      </tr>
+      <tr>
+        <td>290</td>
+        <td>8</td>
+        <td>9.5</td>
+        <td>7.5</td>
+        <td>27</td>
+        <td>42.5</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="size-note">
+    ※ 해당 사이즈 정보는 고객 이해를 위한 참고용이며, 브랜드마다 또는 상품 카테고리마다 차이가 있을 수 있습니다. 
+    정확한 내용은 실물 상품 기준으로 공식 제조사/유통사에 확인해 주시기 바랍니다.
+  </p>
+</div>
+
 
 <!-- 모달 창 -->
 <div class="modal-overlay" id="size-modal">
@@ -180,108 +310,7 @@
     </div>
   </div>
 
-<!-- 사이즈 정보 섹션 -->
-<div class="size-info-container">
-  <h3 class="size-title">사이즈 정보</h3>
-  <table class="size-table">
-    <thead>
-      <tr>
-        <th>KR</th>
-        <th>US (M)</th>
-        <th>US (W)</th>
-        <th>UK</th>
-        <th>JP</th>
-        <th>EU</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>225</td>
-        <td>3.5</td>
-        <td>5</td>
-        <td>3</td>
-        <td>22.5</td>
-        <td>35.5</td>
-      </tr>
-      <tr>
-        <td>230</td>
-        <td>4</td>
-        <td>5.5</td>
-        <td>3.5</td>
-        <td>23</td>
-        <td>36</td>
-      </tr>
-      <tr>
-        <td>235</td>
-        <td>4.5</td>
-        <td>6</td>
-        <td>4</td>
-        <td>23.5</td>
-        <td>36.5</td>
-      </tr>
-      <tr>
-        <td>240</td>
-        <td>5</td>
-        <td>6.5</td>
-        <td>4.5</td>
-        <td>24</td>
-        <td>37.5</td>
-      </tr>
-      <tr>
-        <td>245</td>
-        <td>5.5</td>
-        <td>7</td>
-        <td>5</td>
-        <td>24.5</td>
-        <td>38</td>
-      </tr>
-      <tr>
-        <td>250</td>
-        <td>6</td>
-        <td>7.5</td>
-        <td>5.5</td>
-        <td>25</td>
-        <td>39</td>
-      </tr>
-      <tr>
-        <td>255</td>
-        <td>6.5</td>
-        <td>8</td>
-        <td>6</td>
-        <td>25.5</td>
-        <td>40</td>
-      </tr>
-      <tr>
-        <td>260</td>
-        <td>7</td>
-        <td>8.5</td>
-        <td>6.5</td>
-        <td>26</td>
-        <td>41</td>
-      </tr>
-      <tr>
-        <td>265</td>
-        <td>7.5</td>
-        <td>9</td>
-        <td>7</td>
-        <td>26.5</td>
-        <td>42</td>
-      </tr>
-      <tr>
-        <td>270</td>
-        <td>8</td>
-        <td>9.5</td>
-        <td>7.5</td>
-        <td>27</td>
-        <td>42.5</td>
-      </tr>
-    </tbody>
-  </table>
-  <p class="size-note">
-    ※ 해당 사이즈 정보는 고객 이해를 위한 참고용이며, 브랜드마다 또는 상품 카테고리마다 차이가 있을 수 있습니다. 
-    정확한 내용은 실물 상품 기준으로 공식 제조사/유통사에 확인해 주시기 바랍니다.
-  </p>
-</div>
+
 
   <%@ include file="/views/home/footer.jsp" %>
 </body>
