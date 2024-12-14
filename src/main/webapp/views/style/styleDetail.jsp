@@ -17,18 +17,13 @@
     <button onclick="followUser(${userVo.userId})">팔로우버튼</button>
     
     <!-- 게시물 이미지 표시 -->
-    <c:choose>
-        <c:when test="${not empty postImageList}">
-            <c:forEach var="postImageVo" items="${postImageList}">
-                <div>
-                    <img src="${postImageVo.postImageUrl}" alt="게시물 이미지">
-                </div>
-            </c:forEach>
-        </c:when>
-        <c:otherwise>
-            <h2>이미지 없음</h2>
-        </c:otherwise>
-    </c:choose>
+    <c:if test="${not empty postImageList}">
+        <c:forEach var="postImage" items="${postImageList}">
+            <div>
+                <img src="${postImage.postImageUrl}" alt="게시물 이미지">
+            </div>
+        </c:forEach>
+    </c:if>
     
   	<!-- 게시물 정보 표시 -->
     <h1>${postVo.title}</h1>
@@ -40,11 +35,11 @@
     <c:choose>
         <c:when test="${not empty productList}">
             <h2>상품태그 ${productList.size()}개</h2>
-            <c:forEach var="productVo" items="${productList}">
+            <c:forEach var="product" items="${productList}">
                 <div>
-                    <img src="${productVo.imageUrl}" alt="${productVo.name}">
-                    <p><a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${productVo.productId}">${productVo.name}</a></p>
-                    <p>${productVo.initialPrice}</p>
+                    <img src="${product.imageUrl}" alt="${product.name}">
+                    <p><a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}">${product.name}</a></p>
+                    <p>${product.initialPrice}</p>
                 </div>
             </c:forEach>
         </c:when>
@@ -56,6 +51,23 @@
     <button onclick="likePost(${postVo.postId})">좋아요 버튼</button>
     <button onclick="commentOnPost(${postVo.postId})">댓글 버튼</button>
     <button onclick="savePost(${postVo.postId})">저장 버튼</button>
+    
+    <!-- 작성자의 다른 게시물 표시 -->
+    <h2>${userVo.nickname}님의 다른 스타일</h2>
+    <p><a href="${pageContext.request.contextPath}/jelly?page=profile&userId=${userVo.userId}">더보기</a></p>
+    <c:forEach var="post" items="${postList}">
+    	<c:if test="${post.postId != postVo.postId}">
+	        <div>
+	            <img src="${post.postImageUrl}" alt="" />
+	            <p>좋아요: ${post.likesCount}</p>
+	        </div>
+    	</c:if>
+    	<div>
+    		<img src="${post.postImageUrl}" alt="" />
+    		<p>좋아요: ${post.likesCount}</p>
+    	</div>
+    </c:forEach>
+    
     
     <%--
     <!-- 좋아요, 저장 Ajax -->
@@ -82,6 +94,9 @@
         }
     </script>
     --%>
+    
+    
+    
     <%@ include file="/views/home/footer.jsp" %>
 </body>
 </html>

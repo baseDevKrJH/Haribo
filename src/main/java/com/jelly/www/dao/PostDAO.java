@@ -1,7 +1,9 @@
 package com.jelly.www.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 
+import com.jelly.www.vo.PostImageVO;
 import com.jelly.www.vo.PostVO;
 
 public class PostDAO {
@@ -34,7 +36,7 @@ public class PostDAO {
 	public PostVO selectOne(int postId) {
 		PostVO postVO = null;
 		sb.setLength(0);
-		sb.append("SELECT * FROM POST WHERE post_id = ?");
+		sb.append("select * from post where post_id = ?");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -62,6 +64,42 @@ public class PostDAO {
 		}
 
 		return postVO;
+	}
+	
+	public ArrayList<PostVO> getByUserId(int userId){
+		ArrayList<PostVO> list = new ArrayList<PostVO>();
+		sb.setLength(0);
+        sb.append("select * from post ");
+        sb.append("where user_id = ? ");
+        sb.append("order by created_at desc");
+
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+            	PostVO vo = new PostVO(
+            			rs.getInt("post_id"), 
+    					rs.getInt("user_id"), 
+    					rs.getInt("style_category"),
+    					rs.getString("title"), 
+    					rs.getString("content"), 
+    					rs.getInt("likes_count"),
+    					rs.getInt("comments_count"), 
+    					rs.getInt("views_count"), 
+    					rs.getTimestamp("created_at"),
+    					rs.getTimestamp("updated_at")
+                );
+                list.add(vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+		
+		return list;
 	}
 
 	// 자원 해제 메서드

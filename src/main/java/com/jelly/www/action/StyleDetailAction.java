@@ -47,6 +47,9 @@ public class StyleDetailAction implements Action {
 				productList.add(productVo);
 			}
 			
+			// 작성자의 다른 게시물 조회
+			ArrayList<PostVO> postList = postDao.getByUserId(postVo.getUserId());
+			
 			request.setAttribute("postVo", postVo);
 			request.setAttribute("postImageList", postImageList);
 			request.setAttribute("userVo", userVo);
