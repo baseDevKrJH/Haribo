@@ -53,6 +53,8 @@ public class UserDAO {
                     rs.getString("kakao_id"),
                     rs.getString("naver_id"),
                     rs.getString("profile_image"),
+                    rs.getInt("follower_count"),                   
+                    rs.getInt("following_count"),                   
                     rs.getTimestamp("created_at"),
                     rs.getTimestamp("updated_at")
                 );
@@ -90,6 +92,8 @@ public class UserDAO {
                     rs.getString("kakao_id"),
                     rs.getString("naver_id"),
                     rs.getString("profile_image"),
+                    rs.getInt("follower_count"),                   
+                    rs.getInt("following_count"),
                     rs.getTimestamp("created_at"),
                     rs.getTimestamp("updated_at")
                 );
@@ -204,6 +208,8 @@ public class UserDAO {
                     rs.getString("kakao_id"),
                     rs.getString("naver_id"),
                     rs.getString("profile_image"),
+                    rs.getInt("follower_count"),                   
+                    rs.getInt("following_count"),    
                     rs.getTimestamp("created_at"),
                     rs.getTimestamp("updated_at")
                 );
