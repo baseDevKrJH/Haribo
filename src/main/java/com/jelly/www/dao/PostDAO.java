@@ -193,6 +193,44 @@ public class PostDAO {
             close();
         }
 	}
+	
+	// 좋아요 증가 메서드
+	public void plusLike(int postId) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set likes_count = likes_count + 1 ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("좋아요 증가 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
+	
+	// 좋아요 하락 메서드
+	public void minusLike(int postId) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set likes_count = likes_count - 1 ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("좋아요 하락 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
 
 	// 자원 해제 메서드
 	public void close() {

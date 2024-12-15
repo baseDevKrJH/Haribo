@@ -42,12 +42,11 @@
 	            src="<%= request.getContextPath() %>/img/${isLike ? 'after_like.png' : 'before_like.png'}" 
 	            alt="좋아요 버튼" 
 	            style="cursor: pointer;"
-	            data-is-like="${isLike}"
 	            data-context-path="${pageContext.request.contextPath}"
-	            data-post-id="${postId}"
+	            data-post-id="${postVo.postId}"
 	            data-user-id="${userVo.userId}"
 	        >
-        	${postVo.likesCount}
+        	<span id="likes-count">${postVo.likesCount}</span>
         </span>
         <span>댓글 ${postVo.commentsCount}</span>
         <span>저장 </span>
