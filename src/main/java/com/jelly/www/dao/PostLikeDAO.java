@@ -69,8 +69,8 @@ public class PostLikeDAO {
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setInt(1, vo.getPost_id());
-            pstmt.setInt(2, vo.getUser_id());
+            pstmt.setInt(1, vo.getPostId());
+            pstmt.setInt(2, vo.getUserId());
             pstmt.executeUpdate();
             System.out.println("게시물 좋아요 데이터 추가 완료: " + vo);
         } catch (SQLException e) {
