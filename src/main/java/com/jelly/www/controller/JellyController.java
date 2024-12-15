@@ -16,16 +16,18 @@ public class JellyController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 한글처리 요청 인코딩
         req.setCharacterEncoding("UTF-8");
-        // 응답의 컨텐츠 타입 지정
         resp.setContentType("text/html;charset=UTF-8");
 
         // 요청 파라미터
         String page = req.getParameter("page");
-        String url = null; 
+        String query = req.getParameter("query");
+        String url = null;
         Action action = null;
 
-        // GET 요청 처리
-        if (page == null || page.equals("home")) {
+        // 요청 처리
+        if (query != null && !query.trim().isEmpty()) {
+            action = new SearchAction(); // 검색 요청 처리
+        } else if (page == null || page.equals("home")) {
             action = new HomeAction(); // 홈 화면 처리
         } else if (page.equals("login")) {
             url = "/views/login/login.jsp"; // 로그인 페이지 처리
@@ -81,9 +83,10 @@ public class JellyController extends HttpServlet {
             url = "/views/event/event2.jsp"; // Event2 페이지 처리
         } else if (page.equals("faq")) {
             url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
-        } else if (page.equals("filter")) { 
-            // GET 요청으로 필터를 호출하면 안됨
-            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "GET 요청은 허용안됨.");
+        } else if (page.equals("search")) {
+            action = new SearchAction(); // 검색 요청 처리
+        } else if (page.equals("filter")) {
+            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "GET 요청은 허용되지 않습니다.");
             return;
         } else {
             url = "/views/error/404.jsp"; // 에러 페이지 처리
@@ -92,6 +95,12 @@ public class JellyController extends HttpServlet {
         // Action 실행
         if (action != null) {
             url = action.execute(req, resp);
+
+            // 리다이렉션 처리
+            if (url != null && url.startsWith("redirect:")) {
+                resp.sendRedirect(url.substring("redirect:".length()));
+                return;
+            }
         }
 
         // 페이지 이동
@@ -105,10 +114,7 @@ public class JellyController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 한글처리 요청 인코딩
         req.setCharacterEncoding("UTF-8");
-        // 응답의 컨텐츠 타입 지정
         resp.setContentType("application/json;charset=UTF-8");
-        
-//        System.out.println("[JellyController] doPost 호출됨");
 
         // 요청 파라미터
         String page = req.getParameter("page");
@@ -120,19 +126,22 @@ public class JellyController extends HttpServlet {
         } else if ("joinOk".equals(page)) {
             action = new JoinOkAction(); // 회원가입 요청 처리
         } else if ("filter".equals(page)) {
-//        	System.out.println("[JellyController] Filter 요청 처리 중");
-            // 필터 요청은 FilterController로 처리할거임
             FilterController filterController = new FilterController();
             filterController.handleRequest(req, resp);
-            return; // FilterController에서 응답을 직접 처리할거니까 리턴시켜서 끝냄
+            return; // FilterController에서 응답을 직접 처리
         } else {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "요청 처리 대상이 업스입ㄴ.");
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "요청 처리 대상이 없습니다.");
             return;
         }
 
         // Action 실행
         if (action != null) {
-            action.execute(req, resp);
+            String url = action.execute(req, resp);
+
+            // 리다이렉션 처리
+            if (url != null && url.startsWith("redirect:")) {
+                resp.sendRedirect(url.substring("redirect:".length()));
+            }
         }
     }
 

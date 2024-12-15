@@ -426,6 +426,54 @@ public class ProductDAO {
         return sizePriceList;
     }
     
+    
+    // 검색어 관련 메서드
+    public List<ProductVO> searchProducts(String query) {
+        List<ProductVO> list = new ArrayList<>();
+        sb.setLength(0);
+        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
+        sb.append("FROM PRODUCT WHERE NAME LIKE ? OR MODEL_NUMBER LIKE ? OR BRAND LIKE ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            String searchKeyword = "%" + query + "%";
+            pstmt.setString(1, searchKeyword);
+            pstmt.setString(2, searchKeyword);
+            pstmt.setString(3, searchKeyword);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ProductVO vo = new ProductVO(
+                    rs.getInt("PRODUCT_ID"),
+                    rs.getString("NAME"),
+                    rs.getString("DESCRIPTION"),
+                    rs.getString("BRAND"),
+                    rs.getDate("RELEASE_DATE"),
+                    rs.getInt("INITIAL_PRICE"),
+                    rs.getString("MODEL_NUMBER"),
+                    rs.getInt("CATEGORY_ID"),
+                    rs.getString("IMAGE_URL"),
+                    rs.getBoolean("IS_ACTIVE"),
+                    rs.getDate("CREATED_AT"),
+                    rs.getDate("UPDATED_AT")
+                );
+                list.add(vo);
+                System.out.println("검색된 상품: " + vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return list;
+    }
+    
+    
+    
+    
+    
     // 자원 해제 메서드
     public void close() {
         try {
