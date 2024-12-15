@@ -9,6 +9,7 @@
   <title>Style Detail</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleDetail.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath}/js/styleDetail.js"></script>
 </head>
 <body>
   <div class="container">
@@ -35,7 +36,19 @@
       <p>${postVo.content}</p>
       <div class="stats">
         <span>조회수 ${postVo.viewsCount}</span>
-        <span>좋아요 ${postVo.likesCount}</span>
+        <span>
+	    	<img 
+	            id="like-btn" 
+	            src="<%= request.getContextPath() %>/img/${isLike ? 'after_like.png' : 'before_like.png'}" 
+	            alt="좋아요 버튼" 
+	            style="cursor: pointer;"
+	            data-is-like="${isLike}"
+	            data-context-path="${pageContext.request.contextPath}"
+	            data-post-id="${postId}"
+	            data-user-id="${userVo.userId}"
+	        >
+        	${postVo.likesCount}
+        </span>
         <span>댓글 ${postVo.commentsCount}</span>
         <span>저장 </span>
       </div>
@@ -67,7 +80,7 @@
       <c:forEach var="post" items="${postList}">
         <c:if test="${post.postId != postVo.postId}">
           <div class="post">
-            <img src="${post.postImageUrl}" alt="" />
+          	<p><a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}">${post.title}</a></p>
             <p>좋아요: ${post.likesCount}</p>
           </div>
         </c:if>

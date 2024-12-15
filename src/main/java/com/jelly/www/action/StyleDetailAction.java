@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostImageDAO;
+import com.jelly.www.dao.PostLikeDAO;
 import com.jelly.www.dao.PostTagDAO;
 import com.jelly.www.dao.ProductDAO;
 import com.jelly.www.dao.UserDAO;
@@ -53,10 +54,16 @@ public class StyleDetailAction implements Action {
 			// 작성자의 다른 게시물 조회
 			ArrayList<PostVO> postList = postDao.getByUserId(postVo.getUserId());
 			
+			// 좋아요 중인지 조회
+			PostLikeDAO postLikeDao = new PostLikeDAO();
+			boolean isLike = postLikeDao.checkLike(postId, postVo.getUserId());
+			
 			request.setAttribute("postVo", postVo);
 			request.setAttribute("postImageList", postImageList);
 			request.setAttribute("userVo", userVo);
 			request.setAttribute("productList", productList);
+			request.setAttribute("postList", postList);
+			request.setAttribute("isLike", isLike);
 		}
 
 		return "/views/style/styleDetail.jsp";
