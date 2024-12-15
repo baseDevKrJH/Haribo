@@ -36,7 +36,7 @@ public class PostDAO {
 	public PostVO selectOne(int postId) {
 		PostVO postVO = null;
 		sb.setLength(0);
-		sb.append("select * from post where post_id = ?");
+		sb.append("select * from POST where post_id = ?");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -66,11 +66,43 @@ public class PostDAO {
 		return postVO;
 	}
 	
-	// 작성자id로 가져오기
+	public ArrayList<PostVO> selectAll(){
+		ArrayList<PostVO> list = new ArrayList<PostVO>();
+		sb.setLength(0);
+        sb.append("select * from POST");
+
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+            	PostVO vo = new PostVO(
+            			rs.getInt("post_id"), 
+    					rs.getInt("user_id"), 
+    					rs.getInt("style_category"),
+    					rs.getString("title"), 
+    					rs.getString("content"), 
+    					rs.getInt("likes_count"),
+    					rs.getInt("comments_count"), 
+    					rs.getInt("views_count"), 
+    					rs.getTimestamp("created_at"),
+    					rs.getTimestamp("updated_at")
+                );
+                list.add(vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+		
+		return list;
+	}
+	
 	public ArrayList<PostVO> getByUserId(int userId){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
-        sb.append("select * from post ");
+        sb.append("select * from POST ");
         sb.append("where user_id = ? ");
         sb.append("order by created_at desc");
 
