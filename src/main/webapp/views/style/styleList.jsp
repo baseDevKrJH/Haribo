@@ -1,8 +1,3 @@
-<%@page import="com.jelly.www.vo.UserVO"%>
-<%@page import="com.jelly.www.dao.UserDAO"%>
-<%@page import="com.jelly.www.vo.PostImageVO"%>
-<%@page import="com.jelly.www.dao.PostImageDAO"%>
-<%@page import="com.jelly.www.vo.PostVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,50 +12,56 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleList.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+<script>
+	var _MainPath = "<%= request.getContextPath() %>";
+	var _Style = {
+		isSubmit : false,	
+		getStyleList: function(styleCode) {
+			if (_Style.isSubmit) {
+				return;
+			}
+			_Style.isSubimt = true;
+			$.ajax({
+			    type: 'GET',
+			    url: _MainPath + '/jelly?page=styleList&styleCode=' + styleCode,
+			    data: {},
+			    dataType: 'html',
+			    cache: false,
+			    complete: function () {
+			    	_Style._isSubmit = false;
+			    },
+			    success: function (html) {
+			        $("#divStyleList").html(html);
+			    },
+			    error: function (request, status, error) {
+			        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			    }
+			});
+		}
+	};
+	
+	$(document).ready(function() {
+		_Style.getStyleList(0);
+	});
+	
+		
+	</script>
 <body>
-	<!-- post list -->
-	<div class="posts">
-		<c:forEach var="post" items="${postList}">
-			<%-- <%
-				Object postObject = pageContext.getAttribute("post");
-	        	PostVO post = (PostVO) postObject;
-	        	
-	        	// get information from postVO
-	        	int postId = post.getPostId();
-	        	int userId =  post.getUserId();
-	        	
-				// get first image associated with post id
-				PostImageDAO imageDAO = new PostImageDAO();
-				PostImageVO imageVO = imageDAO.getFirstImageByPostId(postId);
-				request.setAttribute("imageVO", imageVO);
-				
-				// get user information
-				UserDAO userDAO = new UserDAO();
-				UserVO userVO = userDAO.selectOne(userId);
-				request.setAttribute("userVO", userVO);
-			%> --%>
-			
-			
-			
-			<a href= "${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post-card">
-				<div class="imageWrapper">
-					<!-- get image from imageDAO -->
-					<img src="${post.postImageUrl}" alt="${post.nickname}'s post">
-				</div>
-				<div class="underPost">
-					<img src="${post.profileImageUrl}" alt="${post.nickname}'s profile picture" class="profilePic"/>
-					<span class="username">${post.nickname}</span>
-					<span class="likebtn">
-						<button class="heart">likebtn</button>
-						<span>${post.likesCount}</span>
-					</span>
-				</div>
-				<div class="title">
-					<p>${post.title}</p>
-				</div>
-			</a>
-		</c:forEach>
-	</div>
+	<div class="filter">
+		<!-- setAttribute("style", "street") to determine active page -->
+		<!-- javascript:void(0) to not go back to top of page -->
+		<a href="javascript:void(0);" onclick="_Style.getStyleList(0);" class="${style == 'classic' ? 'active' : ''}">all</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(1);" class="${style == 'classic' ? 'active' : ''}">classic</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(2);" class="${style == 'street' ? 'active' : ''}">street</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(3);" class="${style == 'modern' ? 'active' : ''}">modern</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" class="${style == 'vintage' ? 'active' : ''}">vintage</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" class="${style == 'minimal' ? 'active' : ''}">minimal</a>
+    </div>
+    
+    <div class="posts" id="divStyleList">
+    	
+    </div>
+
 
 </body>
 </html>

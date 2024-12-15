@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/header.css">
   <title>Jelly</title>
 </head>
+
 <body>
   <div class="header-section">
     <!-- 헤더 TOP -->
@@ -65,12 +66,6 @@
         <a href="<%= request.getContextPath() %>/jelly?page=discover" class="${currentPage == 'discover' ? 'active' : ''}">Discover?</a>
         <a href="<%= request.getContextPath() %>/jelly?page=ranking" class="${currentPage == 'ranking' ? 'active' : ''}">Ranking?</a>
         <!-- use ajax to render filtering posts -->
-        <!-- setAttribute("style", "street") to determine active page -->
-        <a href="<%= request.getContextPath() %>/jelly?page=styleFilter&style=classic" class="${style == 'classic' ? 'active' : ''}">classic</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=styleFilter&style=street" class="${style == 'street' ? 'active' : ''}">street</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=styleFilter&style=modern" class="${style == 'modern' ? 'active' : ''}">modern</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=styleFilter&style=vintage" class="${style == 'vintage' ? 'active' : ''}">vintage</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=styleFilter&style=minimal" class="${style == 'minimal' ? 'active' : ''}">minimal</a>
       </nav>
       <form class="header-form" action="<%= request.getContextPath() %>/jelly?page=search" method="get">
         <button>

@@ -17,8 +17,15 @@ public class StyleListAction implements Action{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		// set attribute of all posts
+		String styleCode = request.getParameter("styleCode");
+		System.out.println(styleCode);
+		if (styleCode == null) {
+			// 껍데기를 출력하는 요청이
+			return "/views/style/styleList.jsp";
+		}
+		int code = Integer.parseInt(styleCode);
 		PostDAO dao = new PostDAO();
-		ArrayList<PostVO> list = dao.selectAll();
+		ArrayList<PostVO> list = dao.selectByStyleCategory(code);
 		ArrayList<StylePostInfoVO> styleListInfo = new ArrayList<>();
 		for(PostVO vo: list) {
 			// get first image associated with post id
@@ -37,11 +44,12 @@ public class StyleListAction implements Action{
 			String profileImageUrl = userVO.getProfileImage();
 			
 			StylePostInfoVO obj = new StylePostInfoVO(vo.getPostId(), vo.getUserId(), nickname, vo.getTitle(), postImageUrl, profileImageUrl, vo.getLikesCount());
+			System.out.println(obj.toString());
 			styleListInfo.add(obj);
 		}
 		request.setAttribute("postList", styleListInfo);
 		
 		
-		return "/views/style/styleList.jsp";
+		return "/views/style/stylePostList.jsp";
 	}
 }

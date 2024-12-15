@@ -99,6 +99,46 @@ public class PostDAO {
 		return list;
 	}
 	
+	public ArrayList<PostVO> selectByStyleCategory(int category){
+		ArrayList<PostVO> list = new ArrayList<PostVO>();
+		sb.setLength(0);
+		if(category == 0) {
+			sb.append("select * from POST");
+		} else {
+			sb.append("select * from POST where style_category = ?");
+		}
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+        	if(category != 0) {
+        		pstmt.setInt(1, category);
+        	}
+        	rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+            	PostVO vo = new PostVO(
+            			rs.getInt("post_id"), 
+    					rs.getInt("user_id"), 
+    					rs.getInt("style_category"),
+    					rs.getString("title"), 
+    					rs.getString("content"), 
+    					rs.getInt("likes_count"),
+    					rs.getInt("comments_count"), 
+    					rs.getInt("views_count"), 
+    					rs.getTimestamp("created_at"),
+    					rs.getTimestamp("updated_at")
+                );
+                list.add(vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+		
+		return list;
+	}
+	
 	public ArrayList<PostVO> getByUserId(int userId){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
@@ -138,7 +178,7 @@ public class PostDAO {
 	// 조회수 증가 메서드
 	public void plusView(int postId) {
 		sb.setLength(0);
-        sb.append("update post ");
+        sb.append("update POST ");
         sb.append("set views_count = views_count + 1 ");
         sb.append("where post_id = ?");
         
