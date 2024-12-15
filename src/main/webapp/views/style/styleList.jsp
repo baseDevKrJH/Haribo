@@ -105,7 +105,7 @@
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" class="${style == 'vintage' ? 'active' : ''}">vintage</a>
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" class="${style == 'minimal' ? 'active' : ''}">minimal</a>
 	    <span class="buttons">
-	    	<a href="${pageContext.request.contextPath}/jelly?page=postNew">+new</a>
+	    	<a href="${pageContext.request.contextPath}/jelly?page=postNewStyle">+new</a>
 	    	<a href="${pageContext.request.contextPath}/jelly?page=myStyle">myStyle</a>
     	</span>
     </div>
