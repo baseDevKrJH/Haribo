@@ -24,7 +24,11 @@ public class StyleListAction implements Action{
 			// get first image associated with post id
 			PostImageDAO imageDAO = new PostImageDAO();
 			PostImageVO imageVO = imageDAO.getFirstImageByPostId(vo.getPostId());
+			
 			String postImageUrl = imageVO.getPostImageUrl();
+			if(postImageUrl == null) {
+				postImageUrl = "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+			}
 			
 			// get user information
 			UserDAO userDAO = new UserDAO();
