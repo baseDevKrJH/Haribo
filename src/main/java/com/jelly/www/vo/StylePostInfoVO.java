@@ -19,6 +19,4 @@ public class StylePostInfoVO {
     private String postImageUrl;
     private String profileImageUrl;
     private int likesCount;
-    
-    
 }

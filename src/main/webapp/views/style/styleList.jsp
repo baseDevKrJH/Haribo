@@ -16,14 +16,30 @@
 	var _MainPath = "<%= request.getContextPath() %>";
 	var _Style = {
 		isSubmit : false,	
-		getStyleList: function(styleCode) {
+		pageNum : 1,
+		styleCode : 0,
+		getStyleList: function(styleCode, pageNum) {
 			if (_Style.isSubmit) {
 				return;
 			}
+			if (pageNum === undefined) {
+				pageNum = 1;
+			}
+			// Clear the list and reset pageNum if the styleCode changes
+		    if (_Style.styleCode != styleCode) {
+		        _Style.pageNum = 1;
+		        $("#divStyleList").html("");
+		    } else if (pageNum === 1 && _Style.styleCode === styleCode) {
+		        // Reload the first page for the same styleCode
+		        $("#divStyleList").html("");
+		    }
+
+		    _Style.pageNum = pageNum; // Update the pageNum
+			_Style.styleCode = styleCode;
 			_Style.isSubimt = true;
 			$.ajax({
 			    type: 'GET',
-			    url: _MainPath + '/jelly?page=styleList&styleCode=' + styleCode,
+			    url: _MainPath + '/jelly?page=styleList&styleCode=' + styleCode + "&pageNum=" + _Style.pageNum,
 			    data: {},
 			    dataType: 'html',
 			    cache: false,
@@ -31,20 +47,52 @@
 			    	_Style._isSubmit = false;
 			    },
 			    success: function (html) {
-			        $("#divStyleList").html(html);
+		            if (!html.trim()) {
+		                console.log("No more content to load.");
+		                return;
+		            }
+
+		            if ($("#divStyleList").html().includes(html.trim())) {
+		                console.log("Duplicate content, not appending.");
+		                return;
+		            }
+
+		            $("#divStyleList").append(html);
 			    },
 			    error: function (request, status, error) {
 			        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			    }
 			});
+		},
+		
+		nextPage : function(){
+			_Style.getStyleList(_Style.styleCode, _Style.pageNum + 1);
 		}
 	};
 	
 	$(document).ready(function() {
 		_Style.getStyleList(0);
+		
+		let isLoading = false; 
+
+	    $(window).scroll(function () {
+	        if (isLoading) return;
+
+	        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+	            isLoading = true; 
+
+	            _Style.nextPage(); 
+
+	            setTimeout(function () {
+	                isLoading = false; 
+	            }, 1000);
+	        }
+	    });
+
 	});
 	
-		
+	
+
 	</script>
 <body>
 	<div class="filter">
@@ -56,6 +104,10 @@
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(3);" class="${style == 'modern' ? 'active' : ''}">modern</a>
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" class="${style == 'vintage' ? 'active' : ''}">vintage</a>
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" class="${style == 'minimal' ? 'active' : ''}">minimal</a>
+	    <span class="buttons">
+	    	<a href="${pageContext.request.contextPath}/jelly?page=postNew">+new</a>
+	    	<a href="${pageContext.request.contextPath}/jelly?page=myStyle">myStyle</a>
+    	</span>
     </div>
     
     <div class="posts" id="divStyleList">
