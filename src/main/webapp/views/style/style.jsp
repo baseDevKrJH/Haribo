@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h2>스타일</h2>
+	testing push for justin
 	<div>	
 		<a href="<%= request.getContextPath() %>/jelly?page=styleList">list
 	</div>
