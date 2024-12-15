@@ -24,9 +24,12 @@ public class StyleDetailAction implements Action {
 
 		if (pId != null) {
 			int postId = Integer.parseInt(pId);
+			
+			// 조회수 증가
+			PostDAO postDao = new PostDAO();
+			postDao.plusView(postId);
 
 			// 게시물 정보 조회
-			PostDAO postDao = new PostDAO();
 			PostVO postVo = postDao.selectOne(postId); 
 			
 			// 게시물 이미지 조회
