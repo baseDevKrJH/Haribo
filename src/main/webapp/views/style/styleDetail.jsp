@@ -7,96 +7,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Style Detail</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleDetail.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-  	<!-- 작성자 정보 표시 -->
-    <img src="${userVo.profileImage}" width=50px alt="프로필 이미지" />
-    <p>작성자: <a href="<%= request.getContextPath() %>/profile?userId=${userVo.userId}">${userVo.nickname}</a></p>
-    <button onclick="followUser(${userVo.userId})">팔로우버튼</button>
-    
+  <div class="container">
+    <!-- 작성자 정보 표시 -->
+    <div class="author-info">
+      <img src="${userVo.profileImage}" alt="프로필 이미지" />
+      <p><a href="<%= request.getContextPath() %>/profile?userId=${userVo.userId}">${userVo.nickname}</a></p>
+      <button>팔로우</button>
+    </div>
+
     <!-- 게시물 이미지 표시 -->
     <c:if test="${not empty postImageList}">
+      <div class="post-images">
         <c:forEach var="postImage" items="${postImageList}">
-            <div>
-                <img src="${postImage.postImageUrl}" alt="게시물 이미지">
-            </div>
+          <img src="${postImage.postImageUrl}" alt="게시물 이미지">
         </c:forEach>
+      </div>
     </c:if>
-    
-  	<!-- 게시물 정보 표시 -->
-    <h1>${postVo.title}</h1>
-    <p>작성일: ${postVo.createdAt}</p>
-    <p>${postVo.content}</p>
-    <p>좋아요: ${postVo.likesCount} | 조회수: ${postVo.viewsCount}</p>
-    
+
+    <!-- 게시물 정보 표시 -->
+    <div class="post-info">
+      <h1>${postVo.title}</h1>
+      <p>작성일: ${postVo.createdAt}</p>
+      <p>${postVo.content}</p>
+      <div class="stats">
+        <span>조회수 ${postVo.viewsCount}</span>
+        <span>좋아요 ${postVo.likesCount}</span>
+        <span>댓글 ${postVo.commentsCount}</span>
+        <span>저장 </span>
+      </div>
+    </div>
+
     <!-- 태그된 상품 표시 -->
-    <c:choose>
+    <div class="tagged-products">
+      <c:choose>
         <c:when test="${not empty productList}">
-            <h2>상품태그 ${productList.size()}개</h2>
-            <c:forEach var="product" items="${productList}">
-                <div>
-                    <img src="${product.imageUrl}" alt="${product.name}">
-                    <p><a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}">${product.name}</a></p>
-                    <p>${product.initialPrice}</p>
-                </div>
-            </c:forEach>
+          <h2>상품태그 ${productList.size()}개</h2>
+          <c:forEach var="product" items="${productList}">
+            <div class="product">
+              <img src="${product.imageUrl}" alt="${product.name}">
+              <p><a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}">${product.name}</a></p>
+              <p>${product.initialPrice}</p>
+            </div>
+          </c:forEach>
         </c:when>
         <c:otherwise>
-            <h2>상품태그 0개</h2>
+          <h2>상품태그 0개</h2>
         </c:otherwise>
-    </c:choose>
-    
-    <button onclick="likePost(${postVo.postId})">좋아요 버튼</button>
-    <button onclick="commentOnPost(${postVo.postId})">댓글 버튼</button>
-    <button onclick="savePost(${postVo.postId})">저장 버튼</button>
-    
+      </c:choose>
+    </div>
+
     <!-- 작성자의 다른 게시물 표시 -->
-    <h2>${userVo.nickname}님의 다른 스타일</h2>
-    <p><a href="${pageContext.request.contextPath}/jelly?page=profile&userId=${userVo.userId}">더보기</a></p>
-    <c:forEach var="post" items="${postList}">
-    	<c:if test="${post.postId != postVo.postId}">
-	        <div>
-	            <img src="${post.postImageUrl}" alt="" />
-	            <p>좋아요: ${post.likesCount}</p>
-	        </div>
-    	</c:if>
-    	<div>
-    		<img src="${post.postImageUrl}" alt="" />
-    		<p>좋아요: ${post.likesCount}</p>
-    	</div>
-    </c:forEach>
-    
-    
-    <%--
-    <!-- 좋아요, 저장 Ajax -->
-    <script>
-        function likePost(postId) {
-            fetch(`/likePost?postId=${postId}`, { method: 'POST' })
-                .then(res => res.json())
-                .then(data => alert(data.message))
-                .catch(err => console.error(err));
-        }
+    <div class="other-posts">
+      <h2>${userVo.nickname}님의 다른 스타일</h2>
+      <p><a href="${pageContext.request.contextPath}/jelly?page=profile&userId=${userVo.userId}">더보기</a></p>
+      <c:forEach var="post" items="${postList}">
+        <c:if test="${post.postId != postVo.postId}">
+          <div class="post">
+            <img src="${post.postImageUrl}" alt="" />
+            <p>좋아요: ${post.likesCount}</p>
+          </div>
+        </c:if>
+      </c:forEach>
+    </div>
+  </div>
 
-        function savePost(postId) {
-            fetch(`/savePost?postId=${postId}`, { method: 'POST' })
-                .then(res => res.json())
-                .then(data => alert(data.message))
-                .catch(err => console.error(err));
-        }
-
-        function followUser(userId) {
-            fetch(`/followUser?userId=${userId}`, { method: 'POST' })
-                .then(res => res.json())
-                .then(data => alert(data.message))
-                .catch(err => console.error(err));
-        }
-    </script>
-    --%>
-    
-    
-    
-    <%@ include file="/views/home/footer.jsp" %>
+  <%@ include file="/views/home/footer.jsp" %>
 </body>
 </html>

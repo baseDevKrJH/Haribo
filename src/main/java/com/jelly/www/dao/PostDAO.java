@@ -66,6 +66,7 @@ public class PostDAO {
 		return postVO;
 	}
 	
+	// 작성자id로 가져오기
 	public ArrayList<PostVO> getByUserId(int userId){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
@@ -100,6 +101,25 @@ public class PostDAO {
         }
 		
 		return list;
+	}
+	
+	// 조회수 증가 메서드
+	public void plusView(int postId) {
+		sb.setLength(0);
+        sb.append("update post ");
+        sb.append("set views_count = views_count + 1 ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("조회수 증가 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
 	}
 
 	// 자원 해제 메서드
