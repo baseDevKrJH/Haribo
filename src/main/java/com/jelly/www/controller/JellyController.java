@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.jelly.www.action.*;
-
 import java.io.IOException;
 
 @WebServlet("/jelly")
@@ -15,15 +14,14 @@ public class JellyController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	
-		// 한글처리 요청 인코딩
-		req.setCharacterEncoding("UTF-8");
-		// 응답의 컨텐츠 타입 지정
-		resp.setContentType("text/html;charset=UTF-8");	
-		
+        // 한글처리 요청 인코딩
+        req.setCharacterEncoding("UTF-8");
+        // 응답의 컨텐츠 타입 지정
+        resp.setContentType("text/html;charset=UTF-8");
+
         // 요청 파라미터
         String page = req.getParameter("page");
-        String url = null;
+        String url = null; 
         Action action = null;
 
         // GET 요청 처리
@@ -33,7 +31,7 @@ public class JellyController extends HttpServlet {
             url = "/views/login/login.jsp"; // 로그인 페이지 처리
         } else if (page.equals("joinForm")) {
             url = "/views/join/joinForm.jsp"; // 회원가입 페이지 이동
-        } else if (page.equals("logout")) {                              
+        } else if (page.equals("logout")) {
             action = new LogoutAction(); // 로그아웃 처리
         } else if (page.equals("wish")) {
             if (isUserLoggedIn(req)) {
@@ -76,18 +74,20 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("popular")) {
             action = new PopularAction(); // 인기상품 페이지 처리
         } else if (page.equals("productDetail")) {
-        	action = new ProductDetailAction(); // 상품 디테일 페이지 처리
+            action = new ProductDetailAction(); // 상품 디테일 페이지 처리
         } else if (page.equals("event1")) {
             url = "/views/event/event1.jsp"; // Event1 페이지 처리
         } else if (page.equals("event2")) {
             url = "/views/event/event2.jsp"; // Event2 페이지 처리
         } else if (page.equals("faq")) {
-        	url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
-        } else if (page.equals("notice")) {
-            url = "/views/notice/notice.jsp"; // 공지사항 페이지로 이동 -> 이거 url 아니고 NoticeAction으로 줄건데 일단 임시로 해놓음
+            url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
+        } else if (page.equals("filter")) { 
+            // GET 요청으로 필터를 호출하면 안됨
+            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "GET 요청은 허용안됨.");
+            return;
         } else {
             url = "/views/error/404.jsp"; // 에러 페이지 처리
-        } 
+        }
 
         // Action 실행
         if (action != null) {
@@ -103,16 +103,15 @@ public class JellyController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	
-		// 한글처리 요청 인코딩
-		req.setCharacterEncoding("UTF-8");
-		// 응답의 컨텐츠 타입 지정
-		resp.setContentType("text/html;charset=UTF-8");	
-		
+        // 한글처리 요청 인코딩
+        req.setCharacterEncoding("UTF-8");
+        // 응답의 컨텐츠 타입 지정
+        resp.setContentType("application/json;charset=UTF-8");
+        
+//        System.out.println("[JellyController] doPost 호출됨");
 
         // 요청 파라미터
         String page = req.getParameter("page");
-        String url = null;
         Action action = null;
 
         // POST 요청 처리
@@ -120,20 +119,20 @@ public class JellyController extends HttpServlet {
             action = new LoginAction(); // 로그인 요청 처리
         } else if ("joinOk".equals(page)) {
             action = new JoinOkAction(); // 회원가입 요청 처리
+        } else if ("filter".equals(page)) {
+//        	System.out.println("[JellyController] Filter 요청 처리 중");
+            // 필터 요청은 FilterController로 처리할거임
+            FilterController filterController = new FilterController();
+            filterController.handleRequest(req, resp);
+            return; // FilterController에서 응답을 직접 처리할거니까 리턴시켜서 끝냄
         } else {
-            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "메서드 확인");
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "요청 처리 대상이 업스입ㄴ.");
             return;
         }
 
         // Action 실행
         if (action != null) {
-            url = action.execute(req, resp);
-        }
-
-        // 페이지 이동
-        if (url != null && !resp.isCommitted()) {
-            RequestDispatcher rd = req.getRequestDispatcher(url);
-            rd.forward(req, resp);
+            action.execute(req, resp);
         }
     }
 

@@ -187,85 +187,107 @@ public class ProductDAO {
         }
     }
 
-    // 브랜드, 사이즈, 가격 필터링하는 메서드 (상품 페이지에서 필터링할때 사용) -> 사이즈가 근데 필터가 안됨.. 사이즈가 null로 떠버림
-    public List<ProductVO> filterByBrandsSizesAndPrice(List<String> brands, List<String> sizes, String priceRange) {
+    // 상품 필터링 메서드(브랜드, 카테고리, 가격) 12시간걸려서 만든 메서드..
+    public List<ProductVO> filterByBrandsCategoriesAndPrice(List<String> brands, List<Integer> categories, String priceRange) {
         List<ProductVO> list = new ArrayList<>();
-        sb.setLength(0);
-        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
-        sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
-        sb.append("FROM PRODUCT WHERE 1=1 ");
+        StringBuilder sb = new StringBuilder();
 
-        // 브랜드 필터 추가
-        if (!brands.isEmpty()) {
-            sb.append("AND BRAND IN (");
-            for (int i = 0; i < brands.size(); i++) {
-                sb.append("?");
-                if (i < brands.size() - 1) sb.append(", ");
-            }
+        // 기본 SQL 작성
+        sb.append("SELECT p.PRODUCT_ID, p.NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
+        sb.append("p.INITIAL_PRICE, p.IMAGE_URL ");
+        sb.append("FROM PRODUCT p ");
+        sb.append("JOIN CATEGORY c ON p.CATEGORY_ID = c.CATEGORY_ID ");
+        sb.append("WHERE 1=1 ");
+
+        // 브랜드 필터 조건 추가
+        if (brands != null && !brands.isEmpty()) {
+            sb.append("AND p.BRAND IN (");
+            sb.append(String.join(", ", brands.stream().map(b -> "?").toArray(String[]::new)));
             sb.append(") ");
+//            System.out.println("브랜드 필터 조건 추가: " + brands); 
         }
 
-        // 사이즈 필터 추가
-        if (!sizes.isEmpty()) {
-            sb.append("AND MODEL_NUMBER IN (");
-            for (int i = 0; i < sizes.size(); i++) {
-                sb.append("?");
-                if (i < sizes.size() - 1) sb.append(", ");
-            }
-            sb.append(") ");
+        // 카테고리 필터 조건 추가
+        if (categories != null && !categories.isEmpty()) {
+            sb.append("AND (p.CATEGORY_ID IN (");
+            sb.append(String.join(", ", categories.stream().map(c -> "?").toArray(String[]::new)));
+            sb.append(") OR c.PARENT_ID IN (");
+            sb.append(String.join(", ", categories.stream().map(c -> "?").toArray(String[]::new)));
+            sb.append(")) ");
+//            System.out.println("카테고리 필터 조건 추가: " + categories); 
         }
 
-        // 가격 필터 추가
-        if (priceRange != null && !priceRange.isEmpty()) {
+        // 가격 필터 조건 추가
+        if (priceRange != null) {
             switch (priceRange) {
                 case "50000":
-                    sb.append("AND INITIAL_PRICE <= 50000 ");
+                    sb.append("AND p.INITIAL_PRICE <= 50000 ");
+                    System.out.println("가격 필터: 50000 이하");
                     break;
                 case "100000":
-                    sb.append("AND INITIAL_PRICE > 50000 AND INITIAL_PRICE <= 100000 ");
+                    sb.append("AND p.INITIAL_PRICE > 50000 AND p.INITIAL_PRICE <= 100000 ");
+                    System.out.println("가격 필터: 50000 ~ 100000");
                     break;
                 case "200000":
-                    sb.append("AND INITIAL_PRICE > 100000 AND INITIAL_PRICE <= 200000 ");
+                    sb.append("AND p.INITIAL_PRICE > 100000 AND p.INITIAL_PRICE <= 200000 ");
+                    System.out.println("가격 필터: 100000 ~ 200000");
                     break;
                 case "300000":
-                    sb.append("AND INITIAL_PRICE > 200000 ");
+                    sb.append("AND p.INITIAL_PRICE > 200000 ");
+                    System.out.println("가격 필터: 200000 이상");
                     break;
             }
         }
 
+        // 생성된 SQL 출력
+//        System.out.println("Generated SQL: " + sb.toString());
+
         try {
-            pstmt = conn.prepareStatement(sb.toString());
+            PreparedStatement pstmt = conn.prepareStatement(sb.toString());
             int paramIndex = 1;
 
-            // 브랜드 값 설정
-            for (String brand : brands) {
-                pstmt.setString(paramIndex++, brand);
+            // 브랜드 필터 값 설정
+            if (brands != null && !brands.isEmpty()) {
+                for (String brand : brands) {
+                    pstmt.setString(paramIndex++, brand);
+//                    System.out.println("Brand param: " + brand);
+                }
             }
 
-            // 사이즈 값 설정
-            for (String size : sizes) {
-                pstmt.setString(paramIndex++, size);
+            // 카테고리 필터 값 설정
+            if (categories != null && !categories.isEmpty()) {
+                for (Integer category : categories) {
+                    pstmt.setInt(paramIndex++, category);
+//                    System.out.println("Category : " + category);
+                }
+                for (Integer category : categories) { // parent_id 조건
+                    pstmt.setInt(paramIndex++, category);
+//                    System.out.println("Parent Category : " + category);
+                }
             }
 
-            rs = pstmt.executeQuery();
+            // 가격 필터 값 설정
+            if (priceRange != null) {
+                // 가격 범위는 쿼리에 있으니까 따로 필요없을듯
+            }
 
+            // SQL 실행 및 결과 처리
+            ResultSet rs = pstmt.executeQuery();
+            int rowCount = 0;
             while (rs.next()) {
-                ProductVO vo = new ProductVO(
+                ProductVO product = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
                     rs.getString("NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
                     rs.getInt("INITIAL_PRICE"),
-                    rs.getString("MODEL_NUMBER"),
-                    rs.getInt("CATEGORY_ID"),
-                    rs.getString("IMAGE_URL"),
-                    rs.getBoolean("IS_ACTIVE"),
-                    rs.getDate("CREATED_AT"),
-                    rs.getDate("UPDATED_AT")
+                    rs.getString("IMAGE_URL")
                 );
-                list.add(vo);
+                list.add(product);
+                rowCount++;
             }
+            // System.out.println("조회된 상품 수: " + rowCount);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -290,8 +312,8 @@ public class ProductDAO {
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, categoryName); // 상위 카테고리
-            pstmt.setString(2, categoryName); // 하위 카테고리
+            pstmt.setString(1, categoryName); 
+            pstmt.setString(2, categoryName);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -310,7 +332,7 @@ public class ProductDAO {
                     rs.getDate("UPDATED_AT")
                 );
                 list.add(vo);
-                System.out.println("카테고리별 조회 상품: " + vo);
+                // System.out.println("카테고리별 조회 상품: " + vo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -392,8 +414,8 @@ public class ProductDAO {
 
             while (rs.next()) {
                 ProductVO vo = new ProductVO();
-                vo.setSize(rs.getString("SIZE")); // 사이즈 설정
-                vo.setPrice(rs.getInt("PRICE")); // 가격 설정
+                vo.setSize(rs.getString("SIZE"));
+                vo.setPrice(rs.getInt("PRICE"));
                 sizePriceList.add(vo);
             }
         } catch (SQLException e) {

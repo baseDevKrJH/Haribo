@@ -13,8 +13,8 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/dev/lib/jakarta.servlet.jsp.jstl-3.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/dev/lib/jakarta.servlet.jsp.jstl-api-3.0.2.jar"/>
-	<classpathentry kind="lib" path="C:/dev/tomcat10/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Users/hyeongyoon/eclipse-workspace/tomcat10/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Users/hyeongyoon/lib/jakarta.servlet.jsp.jstl-3.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/hyeongyoon/lib/jakarta.servlet.jsp.jstl-api-3.0.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
