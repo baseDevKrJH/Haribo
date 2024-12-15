@@ -36,7 +36,7 @@ public class PostTagDAO {
 		ArrayList<PostTagVO> list = new ArrayList<PostTagVO>();
 		sb.setLength(0);
         sb.append("select post_tag_id, post_id, product_id, created_at ");
-        sb.append("from post_tag ");
+        sb.append("from POST_TAG ");
         sb.append("where post_id = ?");
 
         try {

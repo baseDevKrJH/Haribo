@@ -36,7 +36,7 @@ public class PostImageDAO {
 		ArrayList<PostImageVO> list = new ArrayList<PostImageVO>();
 		sb.setLength(0);
         sb.append("select post_image_id, post_image_url, post_id, seq ");
-        sb.append("from post_image ");
+        sb.append("from POST_IMAGE ");
         sb.append("where post_id = ? ");
         sb.append("order by seq asc");
 
@@ -45,7 +45,7 @@ public class PostImageDAO {
             pstmt.setInt(1, postId);
             rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 PostImageVO vo = new PostImageVO(
                     rs.getInt("post_image_id"),
                     rs.getString("post_image_url"),
@@ -61,6 +61,37 @@ public class PostImageDAO {
         }
 		
 		return list;
+	}
+	
+	
+	public PostImageVO getFirstImageByPostId(int postId) {
+		PostImageVO vo = null;
+		sb.setLength(0);
+        sb.append("select post_image_id, post_image_url, post_id, seq ");
+        sb.append("from POST_IMAGE ");
+        sb.append("where post_id = ? ");
+        sb.append("order by seq asc");
+
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                vo = new PostImageVO(
+                    rs.getInt("post_image_id"),
+                    rs.getString("post_image_url"),
+                    rs.getInt("post_id"),
+                    rs.getInt("seq")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+		
+		return vo;
 	}
 
 	// 자원 해제 메서드
