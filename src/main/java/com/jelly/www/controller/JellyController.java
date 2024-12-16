@@ -85,7 +85,11 @@ public class JellyController extends HttpServlet {
         	url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
         } else if (page.equals("notice")) {
             url = "/views/notice/notice.jsp"; // 공지사항 페이지로 이동 -> 이거 url 아니고 NoticeAction으로 줄건데 일단 임시로 해놓음
-        } else {
+        } else if (page.equals("findEmail")) {
+            action = new FindEmailAction(); // 이메일 찾기 페이지 처리
+        } else if (page.equals("findPw")) {
+            action = new FindPwAction(); // 비밀번호 찾기 페이지 처리
+        }  else {
             url = "/WEB-INF/views/error/404.jsp"; // 에러 페이지 처리
         } 
 
@@ -120,6 +124,10 @@ public class JellyController extends HttpServlet {
             action = new LoginAction(); // 로그인 요청 처리
         } else if ("joinOk".equals(page)) {
             action = new JoinOkAction(); // 회원가입 요청 처리
+        }  else if ("findoutEmail".equals(page)) {
+            action = new FindOutEmailAction();
+        }   else if ("confirmPw".equals(page)) {
+            action = new ConfirmPwAction(); // 비밀번호 찾기 페이지 처리
         } else {
             resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "메서드 확인");
             return;
