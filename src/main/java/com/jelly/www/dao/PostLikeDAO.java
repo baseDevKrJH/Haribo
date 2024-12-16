@@ -72,7 +72,7 @@ public class PostLikeDAO {
             pstmt.setInt(1, vo.getPostId());
             pstmt.setInt(2, vo.getUserId());
             pstmt.executeUpdate();
-            System.out.println("게시물 좋아요 데이터 추가 완료: " + vo);
+            System.out.println("게시물 좋아요 데이터 추가 완료");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
