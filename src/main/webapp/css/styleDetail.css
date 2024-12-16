@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  width: 1280px;
+  width: 1160px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -15,9 +15,15 @@ body {
 /* 작성자 정보 스타일 */
 .author-info {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 15px;
   margin-bottom: 20px;
+}
+
+.author-info .profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .author-info img {
@@ -27,22 +33,28 @@ body {
   object-fit: cover;
 }
 
-.author-info a {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+.author-info .info {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.followBtn {
+.author-info .info .date {
+  font-size: 12px;
+  color: #999;
+}
+
+.follow-btn {
   font-size: 14px;
-  padding: 5px 10px;
+  padding: 10px 20px;
   background-color: #222222;
   color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: background-color 0.3s;
 }
 
-.author-info button:hover {
+.follow-btn:hover {
   background-color: #444444;
 }
 
@@ -59,7 +71,7 @@ body {
   border-radius: 10px;
   object-fit: cover;
   transition: transform 0.3s;
-}x
+}
 
 /* 게시물 정보 스타일 */
 .post-info {
@@ -79,9 +91,20 @@ body {
 
 .post-info .stats {
   display: flex;
-  gap: 20px;
-  font-size: 14px;
-  color: #333;
+  justify-content: flex-end;
+  gap: 30px;
+  align-items: center;
+}
+
+.post-info .stats span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post-info .stats img {
+  width: 24px;
+  height: 24px;
 }
 
 /* 태그된 상품 스타일 */
@@ -94,80 +117,62 @@ body {
   margin-bottom: 15px;
 }
 
-.tagged-products .product {
-  display: flex;
-  align-items: center;
+.tagged-products .product-grid {
+  display: grid;
+grid-template-columns: repeat(5, 1fr);
   gap: 15px;
-  margin-bottom: 15px;
 }
 
-.tagged-products .product img {
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.tagged-products .product a {
-  font-size: 14px;
-  font-weight: bold;
-  color: #222222;
-  transition: color 0.3s;
-}
-
-.tagged-products .product a:hover {
-  color: #444444;
-}
-
-.tagged-products .product p {
-  font-size: 12px;
-  color: #666;
-}
-
-/* 작성자의 다른 게시물 스타일 */
-.other-posts {
-  margin-bottom: 30px;
-}
-
-.other-posts h2 {
-  font-size: 18px;
-  margin-bottom: 15px;
-}
-
-.other-posts .post {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.tagged-products .product {
   text-align: center;
-  margin-bottom: 15px;
-}
-
-.other-posts .post img {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  object-fit: cover;
-  margin-bottom: 10px;
-  transition: transform 0.3s;
-}
-
-.other-posts .post img:hover {
-  transform: scale(1.05);
-}
-
-.other-posts .post p {
-  font-size: 14px;
-  color: #333;
-}
-
-/* 공통 링크 및 버튼 스타일 */
-a {
   text-decoration: none;
   color: inherit;
 }
 
-button {
-  border: none;
-  cursor: pointer;
-  background: none;
+.tagged-products .product img {
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* 구분선 스타일 */
+.divider {
+  border: 0;
+  height: 1px;
+  background: #ddd;
+  margin: 20px 0;
+}
+
+/* 다른 스타일 그리드 */
+.other-posts .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.other-posts .more-btn {
+  text-decoration: none;
+  font-size: 14px;
+  color: #909090;
+}
+
+.other-posts .post-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+}
+
+.other-posts .post {
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.other-posts .post img {
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  border-radius: 10px;
 }
