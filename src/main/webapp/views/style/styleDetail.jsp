@@ -80,7 +80,7 @@
       <c:forEach var="post" items="${postList}">
         <c:if test="${post.postId != postVo.postId}">
           <div class="post">
-          	<p><a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}">${post.title}</a></p>
+          	<p><a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}"><img src="${post.thumbnailImageUrl}" alt="게시물 썸네일" /></a></p>
             <p>좋아요: ${post.likeCount}</p>
           </div>
         </c:if>
