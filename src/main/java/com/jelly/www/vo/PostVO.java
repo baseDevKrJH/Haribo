@@ -15,6 +15,7 @@ public class PostVO {
     private int styleCategory; // 스타일 카테고리 ID (1~7)
     private String title; // 게시물 제목
     private String content; // 게시물 내용
+    private String thumbnailImageUrl; // 썸네일 이미지
     private int likeCount; // 좋아요 수
     private int commentCount; // 댓글 수
     private int viewCount; // 조회수
