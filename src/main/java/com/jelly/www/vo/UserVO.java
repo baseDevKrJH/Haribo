@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 public class UserVO {
 	private int userId;             // 사용자 고유 ID
-    private String username;        // 사용자 이름
+    private String userName;        // 사용자 이름
     private String nickname;        // 닉네임
     private String email;           // 이메일
     private String password;        // 비밀번호

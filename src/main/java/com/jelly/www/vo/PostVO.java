@@ -15,9 +15,10 @@ public class PostVO {
     private int styleCategory; // 스타일 카테고리 ID (1~7)
     private String title; // 게시물 제목
     private String content; // 게시물 내용
-    private int likesCount; // 좋아요 수
-    private int commentsCount; // 댓글 수
-    private int viewsCount; // 조회수
+    private int likeCount; // 좋아요 수
+    private int commentCount; // 댓글 수
+    private int viewCount; // 조회수
+    private int saveCount; // 저장 수
     private Timestamp createdAt; // 게시물 생성 날짜
     private Timestamp updatedAt; // 게시물 수정 날짜
 }
