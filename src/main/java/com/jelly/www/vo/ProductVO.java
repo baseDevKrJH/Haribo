@@ -11,24 +11,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductVO {
-    private int productId;
-    private String productName;
-    private String description;
-    private String brand;
-    private Date releaseDate;
-    private int initialPrice;
-    private String modelNumber;
-    private int categoryId;
-    private String imageUrl;
-    private boolean isActive;
-    private Date createdAt;
-    private Date updatedAt;
+    private int productId;           // 상품 ID
+    private String productName;             // 상품 이름
+    private String description;      // 상품 설명
+    private String brand;            // 브랜드
+    private Date releaseDate;        // 출시일
+    private int initialPrice;        // 발매가
+    private String modelNumber;      // 모델 번호
+    private int categoryId;          // 카테고리 ID
+    private String imageUrl;         // 이미지 URL
+    private boolean isActive;        // 활성 상태
+    private Date createdAt;          // 생성일
+    private Date updatedAt;          // 수정일
 
-    private List<String> sizes;  // 사이즈 목록
-    private String size;         // 개별 사이즈
-    private int price;           // 개별 가격
+    private List<String> sizes;      // 사이즈 목록
+    private String size;             // 단일 사이즈 사이즈,가격 조회용
+    private int price;               // 가격 사이즈,가격 조회용
 
-    // 필요한 생성자 (size와 price는 필요없음)
+    // 전체
     public ProductVO(int productId, String productName, String description, String brand, Date releaseDate, int initialPrice,
                      String modelNumber, int categoryId, String imageUrl, boolean isActive, Date createdAt, Date updatedAt) {
         this.productId = productId;
@@ -43,5 +43,23 @@ public class ProductVO {
         this.isActive = isActive;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    // 필터링 메서드에서 쓰는거임
+    public ProductVO(int productId, String productName, String description, String brand, Date releaseDate, int initialPrice,
+                     String imageUrl) {
+        this.productId = productId;
+        this.productName = productName;
+        this.description = description;
+        this.brand = brand;
+        this.releaseDate = releaseDate;
+        this.initialPrice = initialPrice;
+        this.imageUrl = imageUrl;
+    }
+
+    // 사이즈,가격 조회용
+    public ProductVO(String size, int price) {
+        this.size = size;
+        this.price = price;
     }
 }
