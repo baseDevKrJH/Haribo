@@ -17,7 +17,7 @@ public class UserVO {
     private String email;           // 이메일
     private String password;        // 비밀번호
     private String phoneNumber;     // 전화번호
-    private String birth;           // 생년월일
+    private String birthDate;           // 생년월일
     private String kakaoId;         // 카카오 로그인 ID
     private String naverId;         // 네이버 로그인 ID
     private String profileImage;    // 프로필 이미지
