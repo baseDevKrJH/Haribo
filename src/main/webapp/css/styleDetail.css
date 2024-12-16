@@ -36,14 +36,14 @@ body {
 .author-info button {
   font-size: 14px;
   padding: 5px 10px;
-  background-color: #007bff;
+  background-color: #222222;
   color: #fff;
   border-radius: 5px;
   transition: background-color 0.3s;
 }
 
 .author-info button:hover {
-  background-color: #0056b3;
+  background-color: #444444;
 }
 
 /* 게시물 이미지 스타일 */
@@ -115,12 +115,12 @@ body {
 .tagged-products .product a {
   font-size: 14px;
   font-weight: bold;
-  color: #007bff;
+  color: #222222;
   transition: color 0.3s;
 }
 
 .tagged-products .product a:hover {
-  color: #0056b3;
+  color: #444444;
 }
 
 .tagged-products .product p {

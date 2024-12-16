@@ -46,6 +46,7 @@
 	            data-post-id="${postVo.postId}"
 	            data-user-id="${userVo.userId}"
 	        >
+	        <!-- 유저아이디가 아닌 세션아이디로 수정해야함 -->
         	<span id="likes-count">${postVo.likesCount}</span>
         </span>
         <span>댓글 ${postVo.commentsCount}</span>
