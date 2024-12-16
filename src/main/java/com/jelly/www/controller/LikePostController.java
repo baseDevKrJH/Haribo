@@ -46,7 +46,7 @@ public class LikePostController extends HttpServlet {
 
         // JSON 응답 생성
     	JSONObject jsonResponse = new JSONObject();
-    	jsonResponse.put("likesCount", postVo.getLikeCount());
+    	jsonResponse.put("likeCount", postVo.getLikeCount());
     	jsonResponse.put("isLike", isLike);
 
         // 응답

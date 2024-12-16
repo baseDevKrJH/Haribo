@@ -35,7 +35,7 @@
       <p>작성일: ${postVo.createdAt}</p>
       <p>${postVo.content}</p>
       <div class="stats">
-        <span>조회수 ${postVo.viewsCount}</span>
+        <span>조회수 ${postVo.viewCount}</span>
         <span>
 	    	<img 
 	            id="like-btn" 
@@ -47,9 +47,9 @@
 	            data-user-id="${userVo.userId}"
 	        >
 	        <!-- 유저아이디가 아닌 세션아이디로 수정해야함 -->
-        	<span id="likes-count">${postVo.likesCount}</span>
+        	<span id="like-count">${postVo.likeCount}</span>
         </span>
-        <span>댓글 ${postVo.commentsCount}</span>
+        <span>댓글 ${postVo.commentCount}</span>
         <span>저장 </span>
       </div>
     </div>
@@ -61,8 +61,8 @@
           <h2>상품태그 ${productList.size()}개</h2>
           <c:forEach var="product" items="${productList}">
             <div class="product">
-              <img src="${product.imageUrl}" alt="${product.name}">
-              <p><a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}">${product.name}</a></p>
+              <img src="${product.imageUrl}" alt="${product.productName}">
+              <p><a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}">${product.productName}</a></p>
               <p>${product.initialPrice}</p>
             </div>
           </c:forEach>
@@ -81,7 +81,7 @@
         <c:if test="${post.postId != postVo.postId}">
           <div class="post">
           	<p><a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}">${post.title}</a></p>
-            <p>좋아요: ${post.likesCount}</p>
+            <p>좋아요: ${post.likeCount}</p>
           </div>
         </c:if>
       </c:forEach>

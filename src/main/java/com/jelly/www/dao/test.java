@@ -11,10 +11,15 @@ import com.jelly.www.vo.UserVO;
 public class test {
 	public static void main(String[] args) {
 
+		int postId = 2;
+		
+		// 조회수 증가
 		PostDAO postDao = new PostDAO();
-		ArrayList<PostVO> postList = postDao.getByUserId(2);
-			
-		System.out.println(postList.size());
-		System.out.println(postDao.selectAll().size());
+		postDao.plusView(postId);
+
+		// 게시물 정보 조회
+		PostVO postVo = postDao.selectOne(postId);
+		
+		System.out.println(postVo);
 	}
 }

@@ -83,9 +83,9 @@ public class PostDAO {
     					rs.getInt("style_category"),
     					rs.getString("title"), 
     					rs.getString("content"), 
-    					rs.getInt("likes_count"),
-    					rs.getInt("comments_count"), 
-    					rs.getInt("views_count"), 
+    					rs.getInt("like_count"),
+    					rs.getInt("comment_count"), 
+    					rs.getInt("view_count"), 
     					rs.getInt("save_count"),
     					rs.getTimestamp("created_at"),
     					rs.getTimestamp("updated_at")
@@ -164,9 +164,9 @@ public class PostDAO {
     					rs.getInt("style_category"),
     					rs.getString("title"), 
     					rs.getString("content"), 
-    					rs.getInt("likes_count"),
-    					rs.getInt("comments_count"), 
-    					rs.getInt("views_count"), 
+    					rs.getInt("like_count"),
+    					rs.getInt("comment_count"), 
+    					rs.getInt("view_count"), 
     					rs.getInt("save_count"),
     					rs.getTimestamp("created_at"),
     					rs.getTimestamp("updated_at")
@@ -186,7 +186,7 @@ public class PostDAO {
 	public void plusView(int postId) {
 		sb.setLength(0);
         sb.append("update POST ");
-        sb.append("set views_count = views_count + 1 ");
+        sb.append("set view_count = view_count + 1 ");
         sb.append("where post_id = ?");
         
         try {
@@ -205,7 +205,7 @@ public class PostDAO {
 	public void plusLike(int postId) {
 		sb.setLength(0);
         sb.append("update POST ");
-        sb.append("set likes_count = likes_count + 1 ");
+        sb.append("set like_count = like_count + 1 ");
         sb.append("where post_id = ?");
         
         try {
@@ -224,7 +224,7 @@ public class PostDAO {
 	public void minusLike(int postId) {
 		sb.setLength(0);
         sb.append("update POST ");
-        sb.append("set likes_count = likes_count - 1 ");
+        sb.append("set like_count = like_count - 1 ");
         sb.append("where post_id = ?");
         
         try {

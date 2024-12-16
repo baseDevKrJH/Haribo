@@ -35,10 +35,10 @@ public class PostImageDAO {
 	public ArrayList<PostImageVO> getByPostId(int postId) {
 		ArrayList<PostImageVO> list = new ArrayList<PostImageVO>();
 		sb.setLength(0);
-        sb.append("select post_image_id, post_image_url, post_id, seq ");
+        sb.append("select post_image_id, post_image_url, post_id, post_image_order ");
         sb.append("from POST_IMAGE ");
         sb.append("where post_id = ? ");
-        sb.append("order by seq asc");
+        sb.append("order by post_image_order asc");
 
         try {
         	pstmt = conn.prepareStatement(sb.toString());
@@ -50,7 +50,7 @@ public class PostImageDAO {
                     rs.getInt("post_image_id"),
                     rs.getString("post_image_url"),
                     rs.getInt("post_id"),
-                    rs.getInt("seq")
+                    rs.getInt("post_image_order")
                 );
                 list.add(vo);
             }
@@ -67,10 +67,10 @@ public class PostImageDAO {
 	public PostImageVO getFirstImageByPostId(int postId) {
 		PostImageVO vo = null;
 		sb.setLength(0);
-        sb.append("select post_image_id, post_image_url, post_id, seq ");
+        sb.append("select post_image_id, post_image_url, post_id, post_image_order ");
         sb.append("from POST_IMAGE ");
         sb.append("where post_id = ? ");
-        sb.append("order by seq asc");
+        sb.append("order by post_image_order asc");
 
         try {
         	pstmt = conn.prepareStatement(sb.toString());
@@ -82,7 +82,7 @@ public class PostImageDAO {
                     rs.getInt("post_image_id"),
                     rs.getString("post_image_url"),
                     rs.getInt("post_id"),
-                    rs.getInt("seq")
+                    rs.getInt("post_image_order")
                 );
             }
         } catch (SQLException e) {

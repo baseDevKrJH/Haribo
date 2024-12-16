@@ -4,7 +4,7 @@ $(document).ready(function(){
 		const postId = $(this).data("post-id");
 		const userId = $(this).data("user-id");
 		const likeBtn = $(this);
-		const likesCount = $("#likes-count");
+		const likeCount = $("#like-count");
 		
 		$.ajax({
 			url: contextPath + '/likePost',
@@ -14,7 +14,7 @@ $(document).ready(function(){
 				// 좋아요 상태 반전
 				likeBtn.attr("src", response.isLike ? contextPath + '/img/after_like.png' : contextPath + '/img/before_like.png');
 				// 좋아요 개수 업데이트
-				likesCount.text(response.likesCount);
+				likeCount.text(response.likeCount);
 			},
 			error: function(xhr, status, error) {
                 console.error("Ajax 오류:", status, error);
