@@ -10,6 +10,11 @@
   <title>검색 결과</title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/product.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+  body {
+  	width: 1280;
+  }
+  </style>
 </head>
 <body>
   <div class="container">

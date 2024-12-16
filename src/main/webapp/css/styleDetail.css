@@ -12,7 +12,7 @@ body {
   padding: 20px;
 }
 
-/* 작성자 정보 스타일 */
+/* 작성자 정보 */
 .author-info {
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@ body {
   transform: scale(1.05);
 }
 
-/* 게시물 정보 스타일 */
+/* 게시물 정보 */
 .post-info {
   margin-bottom: 30px;
 }
@@ -128,7 +128,7 @@ body {
   color: #666;
 }
 
-/* 작성자의 다른 게시물 스타일 */
+/* 작성자의 다른 게시물 */
 .other-posts {
   margin-bottom: 30px;
 }
@@ -164,7 +164,7 @@ body {
   color: #333;
 }
 
-/* 공통 링크 및 버튼 스타일 */
+/* 공통 링크 및 버튼 */
 a {
   text-decoration: none;
   color: inherit;

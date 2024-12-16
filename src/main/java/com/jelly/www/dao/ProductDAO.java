@@ -47,7 +47,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("PRODUCT_NAME"),  // name을 productName으로 수정
+                    rs.getString("PRODUCT_NAME"), 
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -86,7 +86,7 @@ public class ProductDAO {
             if (rs.next()) {
                 vo = new ProductVO(
                         rs.getInt("PRODUCT_ID"),
-                        rs.getString("PRODUCT_NAME"),  // name을 productName으로 수정
+                        rs.getString("PRODUCT_NAME"),
                         rs.getString("DESCRIPTION"),
                         rs.getString("BRAND"),
                         rs.getDate("RELEASE_DATE"),
@@ -124,7 +124,7 @@ public class ProductDAO {
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, vo.getProductName());  // name을 productName으로 수정
+            pstmt.setString(1, vo.getProductName());
             pstmt.setString(2, vo.getDescription());
             pstmt.setString(3, vo.getBrand());
             pstmt.setDate(4, new java.sql.Date(vo.getReleaseDate().getTime()));
@@ -301,7 +301,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("PRODUCT_NAME"),  // `NAME`을 `PRODUCT_NAME`으로 변경
+                    rs.getString("PRODUCT_NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
