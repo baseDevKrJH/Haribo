@@ -8,5 +8,17 @@
 </head>
 <body>
 	<h2>스타일</h2>
+	<div>	
+		<a href="<%= request.getContextPath() %>/jelly?page=styleList">list
+	</div>
+	<div>
+		<a href="<%= request.getContextPath() %>/jelly?page=styleDetail&postId=1">detail
+	</div>
+	<div>
+		<a href="<%= request.getContextPath() %>/jelly?page=styleWrite">write
+	</div>
+	<div>
+		<a href="<%= request.getContextPath() %>/jelly?page=styleModify">modify
+	</div>
 </body>
 </html>
