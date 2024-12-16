@@ -61,10 +61,6 @@ body {
   transition: transform 0.3s;
 }
 
-.post-images img:hover {
-  transform: scale(1.05);
-}
-
 /* 게시물 정보 스타일 */
 .post-info {
   margin-bottom: 30px;
