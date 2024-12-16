@@ -26,7 +26,7 @@ public class ScrollAction {
         for (ProductVO product : productList) {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("imageUrl", product.getImageUrl());
-            jsonObj.put("name", product.getName());
+            jsonObj.put("name", product.getProductName());
             jsonObj.put("brand", product.getBrand());
             jsonObj.put("initialPrice", product.getInitialPrice());
             jsonArray.add(jsonObj);
