@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,11 +12,11 @@
     <div class="product_area">
       <!-- 상품 이미지 -->
       <div class="thumbnail">
-        <img src="${product.imageUrl}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.productName}">
       </div>
       <!-- 상품 텍스트 정보 -->
       <div class="product_list_info_summary">
-        <p class="product_title">${product.name}</p>
+        <p class="product_title">${product.productName}</p>
         <p class="product_subtitle">${product.description}</p>
         <p class="product_model">${product.modelNumber}</p>
       </div>

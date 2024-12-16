@@ -33,21 +33,21 @@ public class ProductDAO {
         }
     }
 
- // 1. 전체 조회
+    // 1. 전체 조회
     public List<ProductVO> selectAll() {
         List<ProductVO> list = new ArrayList<>();
         sb.setLength(0);
-        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT FROM PRODUCT");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
             rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),  // name을 productName으로 수정
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -74,7 +74,7 @@ public class ProductDAO {
     public ProductVO selectOne(int productId) {
         ProductVO vo = null;
         sb.setLength(0);
-        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
         sb.append("FROM PRODUCT WHERE PRODUCT_ID = ?");
 
@@ -86,7 +86,7 @@ public class ProductDAO {
             if (rs.next()) {
                 vo = new ProductVO(
                         rs.getInt("PRODUCT_ID"),
-                        rs.getString("NAME"),
+                        rs.getString("PRODUCT_NAME"),  // name을 productName으로 수정
                         rs.getString("DESCRIPTION"),
                         rs.getString("BRAND"),
                         rs.getDate("RELEASE_DATE"),
@@ -118,13 +118,13 @@ public class ProductDAO {
     // 3. 데이터 추가
     public void insertOne(ProductVO vo) {
         sb.setLength(0);
-        sb.append("INSERT INTO PRODUCT (NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("INSERT INTO PRODUCT (PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT) ");
         sb.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, vo.getName());
+            pstmt.setString(1, vo.getProductName());  // name을 productName으로 수정
             pstmt.setString(2, vo.getDescription());
             pstmt.setString(3, vo.getBrand());
             pstmt.setDate(4, new java.sql.Date(vo.getReleaseDate().getTime()));
@@ -162,13 +162,13 @@ public class ProductDAO {
     // 5. 데이터 수정
     public void updateOne(ProductVO vo) {
         sb.setLength(0);
-        sb.append("UPDATE PRODUCT SET NAME = ?, DESCRIPTION = ?, BRAND = ?, RELEASE_DATE = ?, ");
+        sb.append("UPDATE PRODUCT SET PRODUCT_NAME = ?, DESCRIPTION = ?, BRAND = ?, RELEASE_DATE = ?, ");
         sb.append("INITIAL_PRICE = ?, MODEL_NUMBER = ?, CATEGORY_ID = ?, IMAGE_URL = ?, IS_ACTIVE = ?, ");
         sb.append("UPDATED_AT = NOW() WHERE PRODUCT_ID = ?");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, vo.getName());
+            pstmt.setString(1, vo.getProductName());  // name을 productName으로 수정
             pstmt.setString(2, vo.getDescription());
             pstmt.setString(3, vo.getBrand());
             pstmt.setDate(4, new java.sql.Date(vo.getReleaseDate().getTime()));
@@ -186,14 +186,14 @@ public class ProductDAO {
         	close();
         }
     }
-
-    // 상품 필터링 메서드(브랜드, 카테고리, 가격) 12시간걸려서 만든 메서드..
+    
+    // 필터
     public List<ProductVO> filterByBrandsCategoriesAndPrice(List<String> brands, List<Integer> categories, String priceRange) {
         List<ProductVO> list = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
         // 기본 SQL 작성
-        sb.append("SELECT p.PRODUCT_ID, p.NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
+        sb.append("SELECT p.PRODUCT_ID, p.PRODUCT_NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
         sb.append("p.INITIAL_PRICE, p.IMAGE_URL ");
         sb.append("FROM PRODUCT p ");
         sb.append("JOIN CATEGORY c ON p.CATEGORY_ID = c.CATEGORY_ID ");
@@ -202,19 +202,17 @@ public class ProductDAO {
         // 브랜드 필터 조건 추가
         if (brands != null && !brands.isEmpty()) {
             sb.append("AND p.BRAND IN (");
-            sb.append(String.join(", ", brands.stream().map(b -> "?").toArray(String[]::new)));
+            sb.append(String.join(",", brands.stream().map(b -> "?").toArray(String[]::new)));
             sb.append(") ");
-//            System.out.println("브랜드 필터 조건 추가: " + brands); 
         }
 
         // 카테고리 필터 조건 추가
         if (categories != null && !categories.isEmpty()) {
             sb.append("AND (p.CATEGORY_ID IN (");
-            sb.append(String.join(", ", categories.stream().map(c -> "?").toArray(String[]::new)));
+            sb.append(String.join(",", categories.stream().map(c -> "?").toArray(String[]::new)));
             sb.append(") OR c.PARENT_ID IN (");
-            sb.append(String.join(", ", categories.stream().map(c -> "?").toArray(String[]::new)));
+            sb.append(String.join(",", categories.stream().map(c -> "?").toArray(String[]::new)));
             sb.append(")) ");
-//            System.out.println("카테고리 필터 조건 추가: " + categories); 
         }
 
         // 가격 필터 조건 추가
@@ -222,25 +220,18 @@ public class ProductDAO {
             switch (priceRange) {
                 case "50000":
                     sb.append("AND p.INITIAL_PRICE <= 50000 ");
-                    System.out.println("가격 필터: 50000 이하");
                     break;
                 case "100000":
                     sb.append("AND p.INITIAL_PRICE > 50000 AND p.INITIAL_PRICE <= 100000 ");
-                    System.out.println("가격 필터: 50000 ~ 100000");
                     break;
                 case "200000":
                     sb.append("AND p.INITIAL_PRICE > 100000 AND p.INITIAL_PRICE <= 200000 ");
-                    System.out.println("가격 필터: 100000 ~ 200000");
                     break;
                 case "300000":
                     sb.append("AND p.INITIAL_PRICE > 200000 ");
-                    System.out.println("가격 필터: 200000 이상");
                     break;
             }
         }
-
-        // 생성된 SQL 출력
-//        System.out.println("Generated SQL: " + sb.toString());
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sb.toString());
@@ -250,34 +241,27 @@ public class ProductDAO {
             if (brands != null && !brands.isEmpty()) {
                 for (String brand : brands) {
                     pstmt.setString(paramIndex++, brand);
-//                    System.out.println("Brand param: " + brand);
                 }
             }
 
             // 카테고리 필터 값 설정
             if (categories != null && !categories.isEmpty()) {
                 for (Integer category : categories) {
-                    pstmt.setInt(paramIndex++, category);
-//                    System.out.println("Category : " + category);
+                    pstmt.setInt(paramIndex++, category); // CATEGORY_ID
                 }
-                for (Integer category : categories) { // parent_id 조건
+                for (Integer category : categories) { // PARENT_ID
                     pstmt.setInt(paramIndex++, category);
-//                    System.out.println("Parent Category : " + category);
                 }
             }
 
-            // 가격 필터 값 설정
-            if (priceRange != null) {
-                // 가격 범위는 쿼리에 있으니까 따로 필요없을듯
-            }
+            // 가격 필터 값은 쿼리에서 이미 추가되었음
 
             // SQL 실행 및 결과 처리
-            ResultSet rs = pstmt.executeQuery();
-            int rowCount = 0;
+            rs = pstmt.executeQuery();
             while (rs.next()) {
                 ProductVO product = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),  // `PRODUCT_NAME` 사용
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -285,9 +269,7 @@ public class ProductDAO {
                     rs.getString("IMAGE_URL")
                 );
                 list.add(product);
-                rowCount++;
             }
-            // System.out.println("조회된 상품 수: " + rowCount);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -297,13 +279,13 @@ public class ProductDAO {
     }
     
 
-    // 카테고리별 상품 조회
+ // 카테고리별 상품 조회
     public List<ProductVO> selectByCategory(String categoryName) {
         List<ProductVO> list = new ArrayList<>();
         sb.setLength(0);
 
         // 해당 카테고리와 하위 카테고리 포함 조회
-        sb.append("SELECT p.PRODUCT_ID, p.NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
+        sb.append("SELECT p.PRODUCT_ID, p.PRODUCT_NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
         sb.append("p.INITIAL_PRICE, p.MODEL_NUMBER, p.CATEGORY_ID, p.IMAGE_URL, p.IS_ACTIVE, ");
         sb.append("p.CREATED_AT, p.UPDATED_AT ");
         sb.append("FROM PRODUCT p ");
@@ -319,7 +301,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),  // `NAME`을 `PRODUCT_NAME`으로 변경
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -379,7 +361,7 @@ public class ProductDAO {
 //        return list;
 //    }
     
-    // 상품 사이즈 목록 조회
+ // 상품 사이즈 목록 조회
     public List<String> selectSizesByProductId(int productId) {
         List<String> sizes = new ArrayList<>();
         sb.setLength(0);
@@ -400,7 +382,7 @@ public class ProductDAO {
         }
         return sizes;
     }
-    
+
     // 사이즈와 가격 조회 (상품 모든 사이즈버튼, 구매, 판매 버튼 누르면 나오는 모달창에 사용)
     public List<ProductVO> selectSizesAndPricesByProductId(int productId) {
         List<ProductVO> sizePriceList = new ArrayList<>();
@@ -425,15 +407,14 @@ public class ProductDAO {
         }
         return sizePriceList;
     }
-    
-    
+
     // 검색어 관련 메서드
     public List<ProductVO> searchProducts(String query) {
         List<ProductVO> list = new ArrayList<>();
         sb.setLength(0);
-        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
-        sb.append("FROM PRODUCT WHERE NAME LIKE ? OR MODEL_NUMBER LIKE ? OR BRAND LIKE ?");
+        sb.append("FROM PRODUCT WHERE PRODUCT_NAME LIKE ? OR MODEL_NUMBER LIKE ? OR BRAND LIKE ?");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
@@ -447,7 +428,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -469,11 +450,7 @@ public class ProductDAO {
         }
         return list;
     }
-    
-    
-    
-    
-    
+
     // 자원 해제 메서드
     public void close() {
         try {

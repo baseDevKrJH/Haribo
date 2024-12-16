@@ -23,7 +23,7 @@
     <!-- 왼쪽: 상품 이미지 -->
     <div class="product-image-section">
       <div class="product-image">
-        <img src="${product.imageUrl}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.productName}">
       </div>
     </div>
 
@@ -39,7 +39,7 @@
       </div>
 
       <!-- 상품명 및 상세설명 -->
-      <div class="product-name">${product.name}</div>
+      <div class="product-name">${product.productName}</div>
       <div class="product-description">${product.description}</div>
 		
       <!-- 사이즈 버튼 -->

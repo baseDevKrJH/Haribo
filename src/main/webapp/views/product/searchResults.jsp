@@ -23,10 +23,10 @@
         <c:forEach var="product" items="${searchResults}">
           <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product-card">
             <div class="image-wrapper">
-              <img src="${product.imageUrl}" alt="${product.name}">
+              <img src="${product.imageUrl}" alt="${product.productName}">
             </div>
             <div class="brand">${product.brand}</div>
-            <div class="product-name">${product.name}</div>
+            <div class="product-name">${product.productName}</div>
             <div class="price">${product.initialPrice}원</div>
           </a>
         </c:forEach>

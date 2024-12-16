@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductVO {
     private int productId;           // 상품 ID
-    private String name;             // 상품 이름
+    private String productName;             // 상품 이름
     private String description;      // 상품 설명
     private String brand;            // 브랜드
     private Date releaseDate;        // 출시일
@@ -29,10 +29,10 @@ public class ProductVO {
     private int price;               // 가격 사이즈,가격 조회용
 
     // 전체
-    public ProductVO(int productId, String name, String description, String brand, Date releaseDate, int initialPrice,
+    public ProductVO(int productId, String productName, String description, String brand, Date releaseDate, int initialPrice,
                      String modelNumber, int categoryId, String imageUrl, boolean isActive, Date createdAt, Date updatedAt) {
         this.productId = productId;
-        this.name = name;
+        this.productName = productName;
         this.description = description;
         this.brand = brand;
         this.releaseDate = releaseDate;
@@ -46,10 +46,10 @@ public class ProductVO {
     }
 
     // 필터링 메서드에서 쓰는거임
-    public ProductVO(int productId, String name, String description, String brand, Date releaseDate, int initialPrice,
+    public ProductVO(int productId, String productName, String description, String brand, Date releaseDate, int initialPrice,
                      String imageUrl) {
         this.productId = productId;
-        this.name = name;
+        this.productName = productName;
         this.description = description;
         this.brand = brand;
         this.releaseDate = releaseDate;
