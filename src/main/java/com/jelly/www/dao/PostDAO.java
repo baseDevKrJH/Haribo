@@ -103,18 +103,18 @@ public class PostDAO {
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
 		if(category == 0) {
-			sb.append("select * from POST order by post_id desc limit ?, 3");
+			sb.append("select * from POST order by post_id desc limit ?, 6");
 		} else {
-			sb.append("select * from POST where style_category = ? order by post_id desc limit ?, 3");
+			sb.append("select * from POST where style_category = ? order by post_id desc limit ?, 6");
 		}
         
         try {
         	pstmt = conn.prepareStatement(sb.toString());
         	if(category == 0) {
-        		pstmt.setInt(1, (currentPage-1)*3);
+        		pstmt.setInt(1, (currentPage-1)*6);
         	} else {
         		pstmt.setInt(1, category);
-        		pstmt.setInt(2, (currentPage-1)*3);
+        		pstmt.setInt(2, (currentPage-1)*6);
         	}
         	rs = pstmt.executeQuery();
 

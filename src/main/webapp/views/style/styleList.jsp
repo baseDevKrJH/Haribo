@@ -70,6 +70,7 @@
 		}
 	};
 	
+	// init event handlers
 	$(document).ready(function() {
 		_Style.getStyleList(0);
 		
