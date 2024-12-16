@@ -17,7 +17,7 @@
     <div class="author-info">
       <img src="${userVo.profileImage}" alt="프로필 이미지" />
       <p><a href="<%= request.getContextPath() %>/profile?userId=${userVo.userId}">${userVo.nickname}</a></p>
-      <button>팔로우</button>
+      <button class="followBtn">팔로우</button>
     </div>
 
     <!-- 게시물 이미지 표시 -->

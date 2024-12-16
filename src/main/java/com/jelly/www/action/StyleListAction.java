@@ -46,7 +46,7 @@ public class StyleListAction implements Action{
 			String nickname = userVO.getNickname();
 			String profileImageUrl = userVO.getProfileImage();
 			
-			StylePostInfoVO obj = new StylePostInfoVO(vo.getPostId(), vo.getUserId(), nickname, vo.getTitle(), postImageUrl, profileImageUrl, vo.getLikesCount());
+			StylePostInfoVO obj = new StylePostInfoVO(vo.getPostId(), vo.getUserId(), nickname, vo.getTitle(), postImageUrl, profileImageUrl, vo.getLikeCount());
 			System.out.println(obj.toString());
 			styleListInfo.add(obj);
 		}
