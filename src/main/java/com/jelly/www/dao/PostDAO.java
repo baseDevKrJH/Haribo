@@ -130,9 +130,9 @@ public class PostDAO {
     					rs.getString("title"), 
     					rs.getString("content"), 
     					rs.getString("thumbnail_image_url"), 
-    					rs.getInt("likes_count"),
-    					rs.getInt("comments_count"), 
-    					rs.getInt("views_count"), 
+    					rs.getInt("like_count"),
+    					rs.getInt("comment_count"), 
+    					rs.getInt("view_count"), 
     					rs.getInt("save_count"),
     					rs.getTimestamp("created_at"),
     					rs.getTimestamp("updated_at")

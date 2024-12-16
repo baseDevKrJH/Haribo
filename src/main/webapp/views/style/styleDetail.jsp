@@ -50,7 +50,7 @@
         	<span id="like-count">${postVo.likeCount}</span>
         </span>
         <span>댓글 ${postVo.commentCount}</span>
-        <span>저장 </span>
+        <span>저장 ${postVo.saveCount}</span>
       </div>
     </div>
 

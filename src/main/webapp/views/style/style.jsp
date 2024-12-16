@@ -12,7 +12,7 @@
 		<a href="<%= request.getContextPath() %>/jelly?page=styleList">list
 	</div>
 	<div>
-		<a href="<%= request.getContextPath() %>/jelly?page=styleDetail&postId=2">detail
+		<a href="<%= request.getContextPath() %>/jelly?page=styleDetail&postId=1">detail
 	</div>
 	<div>
 		<a href="<%= request.getContextPath() %>/jelly?page=styleWrite">write
