@@ -94,9 +94,15 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("filter")) {
             resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "GET 요청은 허용되지 않습니다.");
             return;
-        } else {
-            url = "/views/error/404.jsp"; // 에러 페이지 처리
-        }
+        } else if (page.equals("notice")) {
+            url = "/views/notice/notice.jsp"; // 공지사항 페이지로 이동 -> 이거 url 아니고 NoticeAction으로 줄건데 일단 임시로 해놓음
+        } else if (page.equals("findEmail")) {
+            action = new FindEmailAction(); // 이메일 찾기 페이지 처리
+        } else if (page.equals("findPw")) {
+            action = new FindPwAction(); // 비밀번호 찾기 페이지 처리
+        }  else {
+            url = "/WEB-INF/views/error/404.jsp"; // 에러 페이지 처리
+        } 
 
         // Action 실행
         if (action != null) {
@@ -135,6 +141,10 @@ public class JellyController extends HttpServlet {
             FilterController filterController = new FilterController();
             filterController.handleRequest(req, resp);
             return; // FilterController에서 응답을 직접 처리
+        }  else if ("findoutEmail".equals(page)) {
+            action = new FindOutEmailAction();
+        }   else if ("confirmPw".equals(page)) {
+            action = new ConfirmPwAction(); // 비밀번호 찾기 페이지 처리
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "요청 처리 대상이 없습니다.");
             return;

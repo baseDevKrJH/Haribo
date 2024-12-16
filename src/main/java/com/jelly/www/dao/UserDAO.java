@@ -239,13 +239,140 @@ public class UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            close();
         }
         
         return false; // 중복이 없으면 false 
     }
     
+//     //8. 가입 시 입력한 휴대폰 번호로 이메일 찾기
+//    public UserVO findEmail(String phonenumber) {
+//        UserVO user = null;
+//        sb.setLength(0);
+//        sb.append("SELECT EMAIL FROM USER WHERE PHONE_NUMBER = ?");
+//
+//        try {
+//            pstmt = conn.prepareStatement(sb.toString());
+//            pstmt.setString(1, phonenumber);
+//            rs = pstmt.executeQuery();
+//
+//            if (rs.next()) {
+//                user = new UserVO(
+//                    rs.getInt("user_id"),
+//                    rs.getString("username"),
+//                    rs.getString("nickname"),
+//                    rs.getString("email"),
+//                    rs.getString("password"),
+//                    rs.getString("phone_number"),
+//                    rs.getString("birth"),
+//                    rs.getString("kakao_id"),
+//                    rs.getString("naver_id"),
+//                    rs.getString("profile_image"),
+//                    rs.getTimestamp("created_at"),
+//                    rs.getTimestamp("updated_at")
+//                );
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            close();
+//        }
+//
+//        return user;
+//    }
+    
+    public UserVO findEmail(String phonenumber) {
+        UserVO user = null;
+        sb.setLength(0);
+        sb.append("SELECT * FROM USER WHERE PHONE_NUMBER = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setString(1, phonenumber);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                user = new UserVO(
+                		rs.getInt("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("nickname"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("birth_date"),
+                        rs.getString("kakao_id"),
+                        rs.getString("naver_id"),
+                        rs.getString("profile_image"),
+                        rs.getInt("follower_count"),                   
+                        rs.getInt("following_count"),    
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+
+        return user;
+    }
+    
+    // 9. 이메일로 정보찾기
+    public UserVO findEmailByUserEmail(String userEmail) {
+        UserVO user = null;
+        sb.setLength(0);
+        sb.append("SELECT * FROM USER WHERE EMAIL = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setString(1, userEmail);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                user = new UserVO(
+                		rs.getInt("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("nickname"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("birth_date"),
+                        rs.getString("kakao_id"),
+                        rs.getString("naver_id"),
+                        rs.getString("profile_image"),
+                        rs.getInt("follower_count"),                   
+                        rs.getInt("following_count"),    
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+    
+ // 10. 비밀번호 재설정
+    public UserVO updateUserPassword(String userEmail, String newPassword) {
+        UserVO user = null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE USER SET password = ? WHERE EMAIL = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, userEmail);
+            int result = pstmt.executeUpdate();
+
+            if (result > 0) {
+                user = findEmailByUserEmail(userEmail); // 비밀번호 업데이트 후 사용자 정보를 다시 조회
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+  
     
     // 자원 해제
     private void close() {
@@ -257,4 +384,5 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
+
 }

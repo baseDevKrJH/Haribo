@@ -45,7 +45,7 @@
 
     <!-- 에러 메시지 표시 -->
     <c:if test="${not empty error}">
-        <div class="error-message" style="color: red; text-align: center; font-weight: bold; margin-bottom: 20px;">
+        <div class="error-message" style="color: red; text-align: center; font-weight: 500; margin-bottom: 20px;">
             ${error}
         </div>
     </c:if>
@@ -53,7 +53,13 @@
     <form action="<%= request.getContextPath() %>/jelly?page=joinOk" method="post">
         <div class="form-group">
             <label for="email">이메일 주소</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="email" required /> 
+            <br/>
+    <c:if test="${not empty emailError}">
+        <div class="error-message" style="color: red; font-size:11px; text-align: left; font-weight: 500; margin-top:5px; margin-bottom: 20px;">
+            ${emailError}
+        </div>
+    </c:if>
         </div>
         <div class="form-group">
             <label for="username">이름</label>
@@ -66,6 +72,15 @@
         <div class="form-group">
             <label for="password">비밀번호</label>
             <input type="password" id="password" name="password" placeholder="영문, 숫자, 특수문자 포함 8~16자" required />
+           <c:if test="${not empty passwordError}">
+        <div class="error-message" style="color: red; font-size:11px; text-align: left; font-weight: 500; margin-top:5px; margin-bottom: 20px;">
+            ${passwordError}
+        </div>
+    </c:if>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호 확인</label>
+            <input type="password" id="confirmpw" name="confirmpw" required />
         </div>
 
         <div class="checkbox-group">
@@ -82,4 +97,7 @@
     </form>
 </div>
 </body>
+<script type="text/javascript">
+	
+</script>
 </html>

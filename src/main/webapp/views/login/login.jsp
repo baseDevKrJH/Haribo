@@ -6,6 +6,26 @@
 <meta charset="UTF-8">
 <title>Login.jsp</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css" />
+<style type="text/css">
+.error-message {
+	color: red;
+	font-size: 0.9em;
+	margin-top: 5px; 
+	margin-bottom: 5px; 
+}
+
+#error-message-email {
+	color: red;
+	font-size: 0.9em; 
+	margin-top: 5px;
+}
+
+#error-message-password {
+    color: red;
+    font-size: 0.9em; 
+    margin-top: 5px; 
+}
+</style>
 </head>
 <body>
 <div class="header">
@@ -29,23 +49,31 @@
 <div class="container">
     <img src="<%= request.getContextPath() %>/img/logo2.png" alt="" id="logo2" />
     <br /><br /><br />
-    <c:if test="${not empty error}">
-        <div class="error-message">${error}</div>
+    <c:if test="${not empty errorMessage}">
+        <div class="error-message">${errorMessage}</div>
     </c:if>
+    <br>
     <form action="<%= request.getContextPath() %>/jelly?page=login" method="post">
         <div class="form-group">
             <label for="email">이메일 주소</label>
             <input type="email" id="email" name="email" required />
+    <c:if test="${not empty emailError}">
+        <div id="error-message-email">${emailError}</div>
+    </c:if>
         </div>
         <br />
         <div class="form-group">
             <label for="password">비밀번호</label>
             <input type="password" id="password" name="password" required />
+    <c:if test="${not empty passwordError}">
+        <div id="error-message-password">${passwordError}</div>
+    </c:if>
         </div>
         <button type="submit" class="login-btn">로그인</button>
     </form>
     <div class="links">
         <a href="<%= request.getContextPath() %>/jelly?page=joinForm" class="custom-link">이메일로 가입</a>
+        <a href="<%= request.getContextPath() %>/jelly?page=findEmail" class="custom-link">이메일 찾기</a>
         <a href="<%= request.getContextPath() %>/jelly?page=findPw" class="custom-link">비밀번호 찾기</a>
     </div>
     <br /><br />
