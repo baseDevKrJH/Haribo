@@ -145,7 +145,7 @@ public class PostDAO {
 	public ArrayList<PostVO> getByUserId(int userId){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
-        sb.append("select * from post ");
+        sb.append("select * from POST ");
         sb.append("where user_id = ? ");
         sb.append("order by created_at desc");
 

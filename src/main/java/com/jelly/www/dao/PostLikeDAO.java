@@ -40,7 +40,7 @@ public class PostLikeDAO {
 		
 		sb.setLength(0);
         sb.append("select 1 ");
-        sb.append("from post_like ");
+        sb.append("from POST_LIKE ");
         sb.append("where post_id = ? and user_id = ?");
         
         try {
@@ -64,7 +64,7 @@ public class PostLikeDAO {
 	 // 게시물 좋아요 데이터 추가
     public void insertOne(PostLikeVO vo) {
         sb.setLength(0);
-        sb.append("insert into post_like (post_id, user_id, liked_at) ");
+        sb.append("insert into POST_LIKE (post_id, user_id, liked_at) ");
         sb.append("values (?, ?, now())");
 
         try {
@@ -83,7 +83,7 @@ public class PostLikeDAO {
     // 게시물 좋아요 데이터 삭제
     public void deleteOne(int postId, int userId) {
         sb.setLength(0);
-        sb.append("delete from post_like ");
+        sb.append("delete from POST_LIKE ");
         sb.append("where post_id = ? and user_id = ? ");
 
         try {
