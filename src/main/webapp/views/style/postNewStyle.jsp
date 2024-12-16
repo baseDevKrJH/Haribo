@@ -11,6 +11,6 @@
 	things i need here
 	pictures
 	title
-	new new first commit after fork
+	conflict
 </body>
 </html>
