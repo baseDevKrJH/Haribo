@@ -44,7 +44,7 @@ public class UserDAO {
             while (rs.next()) {
                 UserVO user = new UserVO(
                     rs.getInt("user_id"),
-                    rs.getString("username"),
+                    rs.getString("user_name"),
                     rs.getString("nickname"),
                     rs.getString("email"),
                     rs.getString("password"),
@@ -83,7 +83,7 @@ public class UserDAO {
             if (rs.next()) {
                 user = new UserVO(
                     rs.getInt("user_id"),
-                    rs.getString("username"),
+                    rs.getString("user_name"),
                     rs.getString("nickname"),
                     rs.getString("email"),
                     rs.getString("password"),
@@ -110,7 +110,7 @@ public class UserDAO {
     // 3. 사용자 추가
     public int insertOne(UserVO user) {
         sb.setLength(0);
-        sb.append("INSERT INTO USER (username, nickname, email, password, phone_number, birth, kakao_id, naver_id, profile_image, created_at, updated_at) ");
+        sb.append("INSERT INTO USER (user_name, nickname, email, password, phone_number, birth, kakao_id, naver_id, profile_image, created_at, updated_at) ");
         sb.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
 
         int result = 0;
