@@ -73,7 +73,7 @@ public class FilterController extends HttpServlet {
         for (ProductVO product : filteredProducts) {
             JSONObject productJson = new JSONObject();
             productJson.put("productId", product.getProductId());
-            productJson.put("name", product.getName());
+            productJson.put("name", product.getProductName());
             productJson.put("description", product.getDescription());
             productJson.put("brand", product.getBrand());
             productJson.put("releaseDate", product.getReleaseDate() != null ? product.getReleaseDate().toString() : null);

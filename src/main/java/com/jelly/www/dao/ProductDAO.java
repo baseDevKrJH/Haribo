@@ -37,7 +37,7 @@ public class ProductDAO {
     public List<ProductVO> selectAll() {
         List<ProductVO> list = new ArrayList<>();
         sb.setLength(0);
-        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT FROM PRODUCT");
 
         try {
@@ -47,7 +47,7 @@ public class ProductDAO {
             if (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -74,7 +74,7 @@ public class ProductDAO {
     public ProductVO selectOne(int productId) {
         ProductVO vo = null;
         sb.setLength(0);
-        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
         sb.append("FROM PRODUCT WHERE PRODUCT_ID = ?");
 
@@ -86,7 +86,7 @@ public class ProductDAO {
             if (rs.next()) {
                 vo = new ProductVO(
                         rs.getInt("PRODUCT_ID"),
-                        rs.getString("NAME"),
+                        rs.getString("PRODUCT_NAME"),
                         rs.getString("DESCRIPTION"),
                         rs.getString("BRAND"),
                         rs.getDate("RELEASE_DATE"),
@@ -119,13 +119,13 @@ public class ProductDAO {
     // 3. 데이터 추가
     public void insertOne(ProductVO vo) {
         sb.setLength(0);
-        sb.append("INSERT INTO PRODUCT (NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("INSERT INTO PRODUCT (PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT) ");
         sb.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, vo.getName());
+            pstmt.setString(1, vo.getProductName());
             pstmt.setString(2, vo.getDescription());
             pstmt.setString(3, vo.getBrand());
             pstmt.setDate(4, new java.sql.Date(vo.getReleaseDate().getTime()));
@@ -163,13 +163,13 @@ public class ProductDAO {
     // 5. 데이터 수정
     public void updateOne(ProductVO vo) {
         sb.setLength(0);
-        sb.append("UPDATE PRODUCT SET NAME = ?, DESCRIPTION = ?, BRAND = ?, RELEASE_DATE = ?, ");
+        sb.append("UPDATE PRODUCT SET PRODUCT_NAME = ?, DESCRIPTION = ?, BRAND = ?, RELEASE_DATE = ?, ");
         sb.append("INITIAL_PRICE = ?, MODEL_NUMBER = ?, CATEGORY_ID = ?, IMAGE_URL = ?, IS_ACTIVE = ?, ");
         sb.append("UPDATED_AT = NOW() WHERE PRODUCT_ID = ?");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, vo.getName());
+            pstmt.setString(1, vo.getProductName());
             pstmt.setString(2, vo.getDescription());
             pstmt.setString(3, vo.getBrand());
             pstmt.setDate(4, new java.sql.Date(vo.getReleaseDate().getTime()));
@@ -192,7 +192,7 @@ public class ProductDAO {
     public List<ProductVO> filterByBrandsSizesAndPrice(List<String> brands, List<String> sizes, String priceRange) {
         List<ProductVO> list = new ArrayList<>();
         sb.setLength(0);
-        sb.append("SELECT PRODUCT_ID, NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
         sb.append("FROM PRODUCT WHERE 1=1 ");
 
@@ -253,7 +253,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -282,7 +282,7 @@ public class ProductDAO {
         sb.setLength(0);
 
         // 해당 카테고리와 하위 카테고리 포함 조회
-        sb.append("SELECT p.PRODUCT_ID, p.NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
+        sb.append("SELECT p.PRODUCT_ID, p.PRODUCT_NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
         sb.append("p.INITIAL_PRICE, p.MODEL_NUMBER, p.CATEGORY_ID, p.IMAGE_URL, p.IS_ACTIVE, ");
         sb.append("p.CREATED_AT, p.UPDATED_AT ");
         sb.append("FROM PRODUCT p ");
@@ -298,7 +298,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -336,7 +336,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("NAME"),
+                    rs.getString("PRODUCT_NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
