@@ -24,8 +24,8 @@ public class LoginAction implements Action {
             HttpSession session = req.getSession();
             session.setAttribute("user", vo); // 로그인한 사용자 정보 세션에 저장
 
-            // 홈 페이지로 리다이렉트
-            return "/views/home/home.jsp";
+            // 루트 페이지로 리다이렉트
+            return "redirect:/haribo/jelly"; // 리다이렉트 URL 설정
         } else {
             // 로그인 실패
             System.out.println("로그인 실패");
