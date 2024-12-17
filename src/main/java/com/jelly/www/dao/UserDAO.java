@@ -8,9 +8,9 @@ import com.jelly.www.vo.UserVO;
 
 public class UserDAO {
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/test";
-    private String user = "SCOTT";
-    private String password = "TIGER";
+    private String url = "jdbc:mysql://localhost:3306/jelly";
+    private String user = "scott";
+    private String password = "tiger";
 
     private Connection conn;
     private PreparedStatement pstmt;
@@ -44,15 +44,17 @@ public class UserDAO {
             while (rs.next()) {
                 UserVO user = new UserVO(
                     rs.getInt("user_id"),
-                    rs.getString("username"),
+                    rs.getString("user_name"),
                     rs.getString("nickname"),
                     rs.getString("email"),
                     rs.getString("password"),
                     rs.getString("phone_number"),
-                    rs.getString("birth"),
+                    rs.getString("birth_date"),
                     rs.getString("kakao_id"),
                     rs.getString("naver_id"),
                     rs.getString("profile_image"),
+                    rs.getInt("follower_count"),                   
+                    rs.getInt("following_count"),                   
                     rs.getTimestamp("created_at"),
                     rs.getTimestamp("updated_at")
                 );
@@ -81,15 +83,17 @@ public class UserDAO {
             if (rs.next()) {
                 user = new UserVO(
                     rs.getInt("user_id"),
-                    rs.getString("username"),
+                    rs.getString("user_name"),
                     rs.getString("nickname"),
                     rs.getString("email"),
                     rs.getString("password"),
                     rs.getString("phone_number"),
-                    rs.getString("birth"),
+                    rs.getString("birth_date"),
                     rs.getString("kakao_id"),
                     rs.getString("naver_id"),
                     rs.getString("profile_image"),
+                    rs.getInt("follower_count"),                   
+                    rs.getInt("following_count"),
                     rs.getTimestamp("created_at"),
                     rs.getTimestamp("updated_at")
                 );
@@ -106,18 +110,18 @@ public class UserDAO {
     // 3. 사용자 추가
     public int insertOne(UserVO user) {
         sb.setLength(0);
-        sb.append("INSERT INTO USER (username, nickname, email, password, phone_number, birth, kakao_id, naver_id, profile_image, created_at, updated_at) ");
+        sb.append("INSERT INTO USER (user_name, nickname, email, password, phone_number, birth, kakao_id, naver_id, profile_image, created_at, updated_at) ");
         sb.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
 
         int result = 0;
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, user.getUsername());
+            pstmt.setString(1, user.getUserName());
             pstmt.setString(2, user.getNickname());
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getPassword());
             pstmt.setString(5, user.getPhoneNumber());
-            pstmt.setString(6, user.getBirth());
+            pstmt.setString(6, user.getBirthDate());
             pstmt.setString(7, user.getKakaoId());
             pstmt.setString(8, user.getNaverId());
             pstmt.setString(9, user.getProfileImage());
@@ -153,19 +157,19 @@ public class UserDAO {
     // 5. 사용자 정보 업데이트
     public int updateOne(UserVO user) {
         sb.setLength(0);
-        sb.append("UPDATE USER SET username = ?, nickname = ?, email = ?, password = ?, phone_number = ?, ");
-        sb.append("birth = ?, kakao_id = ?, naver_id = ?, profile_image = ?, updated_at = NOW() ");
+        sb.append("UPDATE USER SET user_name = ?, nickname = ?, email = ?, password = ?, phone_number = ?, ");
+        sb.append("birth_date = ?, kakao_id = ?, naver_id = ?, profile_image = ?, updated_at = NOW() ");
         sb.append("WHERE user_id = ?");
 
         int result = 0;
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, user.getUsername());
+            pstmt.setString(1, user.getUserName());
             pstmt.setString(2, user.getNickname());
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getPassword());
             pstmt.setString(5, user.getPhoneNumber());
-            pstmt.setString(6, user.getBirth());
+            pstmt.setString(6, user.getBirthDate());
             pstmt.setString(7, user.getKakaoId());
             pstmt.setString(8, user.getNaverId());
             pstmt.setString(9, user.getProfileImage());
@@ -195,15 +199,17 @@ public class UserDAO {
             if (rs.next()) {
                 user = new UserVO(
                     rs.getInt("user_id"),
-                    rs.getString("username"),
+                    rs.getString("user_name"),
                     rs.getString("nickname"),
                     rs.getString("email"),
                     rs.getString("password"),
                     rs.getString("phone_number"),
-                    rs.getString("birth"),
+                    rs.getString("birth_date"),
                     rs.getString("kakao_id"),
                     rs.getString("naver_id"),
                     rs.getString("profile_image"),
+                    rs.getInt("follower_count"),                   
+                    rs.getInt("following_count"),    
                     rs.getTimestamp("created_at"),
                     rs.getTimestamp("updated_at")
                 );

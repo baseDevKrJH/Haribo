@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+.profile-box {
+  border-bottom: lightgray 1px solid;
+  height: 100px;
+  margin: 10px 0 30px 0;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-info {
+  max-width: 700px;
+  width: 70%;
+  padding-left: 20px;
+}
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+}
+.profile-btns {
+  display: flex;
+  justify-content: space-between;
+  margin: auto 0;
+  max-width: 220px;
+  width: 90%;
+}
+.profile-info-btn {
+  width: 100px;
+  height: 43px;
+  font-size: 14px;
+  background-color: white;
+  border: lightgray 1px solid;
+  border-radius: 10px;
+}
+.profile-user-nickname {
+  font-size: 20px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.profile-user-email {
+  color: gray;
+  font-size: 14px;
+}

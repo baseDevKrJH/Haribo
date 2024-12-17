@@ -1,0 +1,53 @@
+@charset "UTF-8";
+.default-addressList {
+  margin: 60px 0 20px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: rgb(131, 131, 131) 2px solid;
+  padding-bottom: 20px;
+}
+.defaultAddress {
+  width: 30px;
+  height: 30px;
+  background: lightgray;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.addressList {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: lightgray 1px solid;
+  padding-bottom: 20px;
+}
+.addressee {
+  font-weight: bold;
+  font-size: 16px;
+}
+.addresseeInfo span {
+  font-size: 14px;
+  color: gray;
+  display: inline-block;
+  padding-top: 5px;
+}
+.address-btnGroup {
+  width: 153px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.address-btn {
+  height: 35px;
+  border: lightgray 1px solid;
+  border-radius: 10px;
+  color: gray;
+  font-size: 13px;
+}
+.default-address-btn {
+  height: 35px;
+  border: black 1px solid;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  font-size: 13px;
+}

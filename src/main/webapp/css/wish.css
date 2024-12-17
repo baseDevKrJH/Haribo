@@ -1,0 +1,112 @@
+@charset "UTF-8";
+.wish-section {
+  max-width: inherit;
+  max-width: inherit;
+  padding: 20px 0 0 0;
+  margin-bottom: 20px;
+}
+.wish-btn {
+  border: lightgray 1px solid;
+  background: white;
+  color: rgb(80, 80, 80);
+  font-size: 14px;
+  border-radius: 20px;
+  max-width: 65px;
+  width: 90%;
+  height: 35px;
+}
+.wish-btn:focus {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+.wish-header-contents {
+  color: gray;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.wish-items {
+  max-width: inherit;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  height: 120px;
+  border-bottom: 1px lightgray solid;
+}
+.wish-items img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+}
+.wish-item-details {
+  width: 73%;
+  height: 80px;
+  padding: 0 10px;
+}
+.wish-item-name,
+.wish-item-size {
+  font-size: 13px;
+  font-weight: bold;
+}
+.wish-item-description {
+  font-size: 13px;
+  color: gray;
+}
+
+.wish-item-rightsection {
+  height: 80px;
+}
+.buy-button,
+.sell-button {
+  width: 180px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+}
+
+.buy-button {
+  background-color: #ef6253;
+}
+
+.sell-button {
+  background-color: #41b979;
+}
+
+.buy-text,
+.sell-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 25px;
+  white-space: nowrap;
+}
+
+.buy-info,
+.sell-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.subtext {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.wish-item-delete {
+  font-size: 12px;
+  color: gray;
+  text-decoration: underline;
+  display: inline-block;
+  float: right;
+  margin-top: 5px;
+}

@@ -1,0 +1,11 @@
+@charset "UTF-8";
+.mypage-box {
+  border: lightgray 1px solid;
+  border-radius: 10px;
+  height: 100px;
+  margin-bottom: 30px;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

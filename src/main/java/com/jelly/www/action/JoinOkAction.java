@@ -17,7 +17,7 @@ public class JoinOkAction implements Action {
 
         // UserVO 객체 생성
         UserVO user = new UserVO();
-        user.setUsername(username);
+        user.setUserName(username);       
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setPassword(password);
