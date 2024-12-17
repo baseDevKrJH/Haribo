@@ -8,28 +8,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Style Detail</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/common.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleProfile.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/styleDetail.js"></script>
 </head>
 <body>
 	<div class="container">
-		<!-- 프로필 이미지 -->
-        <div class="profile-image">
-            <img src="${userVo.profileImage}" alt="유저 프로필 이미지">
-        </div>
-
-        <!-- 닉네임 -->
-        <div class="profile-nickname">
-            <h2>${userVo.nickname}</h2>
-        </div>
-
-        <!-- 팔로우 버튼 -->
-        <div class="follow-button">
-            <button id="follow-btn">팔로우</button>
-        </div>
+		<div class="user-info">
+      		<div class="profile">
+        		<img src="${userVo.profileImage}" alt="프로필 이미지" />
+        		<div class="info">
+          			<p><a href="<%= request.getContextPath() %>/jelly?page=styleProfile&userId=${userVo.userId}">${userVo.nickname}</a></p>
+        		</div>
+      		</div>
+	        <c:choose>
+				<c:when test="${sessionScope.user != null && sessionScope.user.userId == userVo.userId}">
+			  		
+				</c:when>
+			<c:otherwise>
+			  	<button id="follow-btn" class="follow-btn ${isFollow ? 'following' : '' }" 
+			            data-context-path="${pageContext.request.contextPath}" 
+			            data-user-id="${postVo.userId}">
+			      ${isFollow ? '팔로잉' : '팔로우'}
+			  	</button>
+		    </c:otherwise>
+		  	</c:choose>
+	   	</div>
 
         <!-- 팔로워 수 -->
         <div class="follower-count">
@@ -46,23 +50,20 @@
 		<!-- 스타일 -->
         <div class="style-section">
             <h3>스타일 ${postList.size()}</h3>
-            <button id="view-style">스타일 보기</button>
         </div>
 
         <div class="tagged-products">
-            <h3>태그 상품 ${productLIst.size()}</h3>
-            <button id="view-tagged-products">태그 상품 보기</button>
+            <h3>태그 상품 ${productSet.size()}</h3>
         </div>
 
         <!-- 저장된 스타일 -->
         <div class="saved-styles">
-            <h3>관심 스타일</h3>
-            <button id="view-saved-styles">관심 스타일 보기</button>
+            <h3>관심 스타일 ${savedPostList.size()}</h3>
         </div>
 
         <!-- 스타일 올리기 -->
         <div class="style-upload">
-            <button onclick="${pageContext.request.contextPath}/jelly?page=postNewStyle">스타일 업로드</button>
+        	<a href="${pageContext.request.contextPath}/upload?page=stylePost">스타일 업로드</a>
         </div>
 	</div>
 
