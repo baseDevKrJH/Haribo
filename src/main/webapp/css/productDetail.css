@@ -157,6 +157,11 @@
   background-color: #1290FC;
 }
 
+.buy-button:hover,
+.sell-button:hover {
+  cursor: pointer;
+}
+
 .buy-text,
 .sell-text {
   font-size: 18px;
