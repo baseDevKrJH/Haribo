@@ -298,43 +298,43 @@ public class PostDAO {
 		return postVO;
 	}
 
-		// 저장 증가 메서드
-		public void plusSave(int postId) {
-			sb.setLength(0);
-	        sb.append("update POST ");
-	        sb.append("set save_count = save_count + 1 ");
-	        sb.append("where post_id = ?");
-	        
-	        try {
-	        	pstmt = conn.prepareStatement(sb.toString());
-	            pstmt.setInt(1, postId);
-	            pstmt.executeUpdate();
-	            System.out.println("저장 증가 완료");
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        } finally {
-	            close();
-	        }
-		}
-		
-		// 저장 하락 메서드
-		public void minusSave(int postId) {
-			sb.setLength(0);
-	        sb.append("update POST ");
-	        sb.append("set save_count = save_count - 1 ");
-	        sb.append("where post_id = ?");
-	        
-	        try {
-	        	pstmt = conn.prepareStatement(sb.toString());
-	            pstmt.setInt(1, postId);
-	            pstmt.executeUpdate();
-	            System.out.println("저장 하락 완료");
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        } finally {
-	            close();
-	        }
-		}
+	// 저장 증가 메서드
+	public void plusSave(int postId) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set save_count = save_count + 1 ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("저장 증가 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
+	
+	// 저장 하락 메서드
+	public void minusSave(int postId) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set save_count = save_count - 1 ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("저장 하락 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
 
 	// 자원 해제 메서드
 	public void close() {

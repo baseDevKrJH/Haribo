@@ -8,11 +8,13 @@ import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostLikeDAO;
 import com.jelly.www.vo.PostLikeVO;
 import com.jelly.www.vo.PostVO;
+import com.jelly.www.vo.UserVO;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/likePost")
 public class LikePostController extends HttpServlet {

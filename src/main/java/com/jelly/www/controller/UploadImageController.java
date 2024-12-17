@@ -170,7 +170,7 @@ public class UploadImageController extends HttpServlet {
                     	imageVO.setPostImageUrl(fileURL);
                     	imageDAO.insertOne(imageVO);
                     	
-                    	url = "/views/style/style.jsp";
+                    	url = "/views/style/styleList.jsp";
                     }
 
                     part.write(filePath);
