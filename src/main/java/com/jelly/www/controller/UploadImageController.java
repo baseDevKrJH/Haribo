@@ -89,16 +89,7 @@ public class UploadImageController extends HttpServlet {
 		
 		// get user session
 		HttpSession session = request.getSession();
-	    UserVO user = (UserVO) session.getAttribute("user");
-
-	    if (user != null) {
-	        // Access user properties
-	        String username = user.getUserName();
-	        String password = user.getPassword();
-	        System.out.println(username + password);
-	    } 
-		
-		
+	    UserVO user = (UserVO) session.getAttribute("user"); 
 		
 		// in case we use file upload somewhere else
 		String uploadType = request.getParameter("uploadType");
@@ -112,8 +103,6 @@ public class UploadImageController extends HttpServlet {
         if ("stylePost".equals(uploadType)) {
         	upload_directory = "postImages";
         	uploadPath = request.getServletContext().getRealPath("") + upload_directory;
-        	System.out.println(request.getContextPath());
-        	System.out.println(request.getServletContext());
         } else {
         	response.getWriter().println("Invalid upload type.");
         }
@@ -123,11 +112,27 @@ public class UploadImageController extends HttpServlet {
         if(!uploadDir.exists()) {
 			uploadDir.mkdir();
 		}
-        
+        int seq = 1;
+    	// create new post first 
+    	PostDAO dao = new PostDAO();
+    	PostVO vo = new PostVO();
+    	vo.setUserId(user.getUserId());
+    	vo.setTitle(request.getParameter("title"));
+    	vo.setContent(request.getParameter("content"));
+    	vo.setStyleCategory(Integer.parseInt(request.getParameter("styleCategory")));
+    	dao.createNewPost(vo);
         
         try {
-        	int seq = 1;
+
+        	// get post number  
+        	PostVO newVO = dao.getUsersNewPost(user.getUserId());
+        	int postId = newVO.getPostId();
+        	System.out.println("postId: " + postId);
+        	
+        	
+        	
             for (Part part : request.getParts()) {
+            	System.out.println("iteration for: " + part.getName());
             	String submittedFileName = part.getSubmittedFileName();
                 if (submittedFileName != null && !submittedFileName.isEmpty()) {
                     // Sanitize file name
@@ -148,25 +153,16 @@ public class UploadImageController extends HttpServlet {
                     
                     // save to database
                     if(uploadType.equals("stylePost")) {
-                    	// create new post first 
-                    	PostDAO dao = new PostDAO();
-                    	PostVO vo = new PostVO();
-                    	vo.setUserId(user.getUserId());
-                    	vo.setTitle(request.getParameter("title"));
-                    	vo.setContent(request.getParameter("content"));
-                    	vo.setStyleCategory(Integer.parseInt(request.getParameter("styleCategory")));
-                    	vo.setThumbnailImageUrl(fileURL);
-                    	dao.createNewPost(vo);
-                    	
-                    	// get post number  
-                    	PostVO newVO = dao.getUsersNewPost(user.getUserId());
-                    	int postId = newVO.getPostId();
+                    	if(seq == 1) {
+                    		System.out.println("seq == 1 loop running true");
+                			dao.setThumbNailImageURL(postId, fileURL);
+                		}
              
                     	// save image to post_img table
                     	PostImageDAO imageDAO = new PostImageDAO();
                     	PostImageVO imageVO = new PostImageVO();
                     	imageVO.setPostId(postId);
-                    	imageVO.setPostImageOrder(1);
+                    	imageVO.setPostImageOrder(seq);
                     	imageVO.setPostImageUrl(fileURL);
                     	imageDAO.insertOne(imageVO);
                     	
@@ -176,6 +172,10 @@ public class UploadImageController extends HttpServlet {
                     part.write(filePath);
                     response.getWriter().println("File uploaded successfully: " + fileURL);
                 }
+                if(part.getName().equals("postImages")) {
+            		System.out.println("seq: " + seq);
+            		seq++;
+            	}
             }
         } catch (Exception e) {
             e.printStackTrace();

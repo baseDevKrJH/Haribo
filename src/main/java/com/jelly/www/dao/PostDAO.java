@@ -245,8 +245,8 @@ public class PostDAO {
 	
 	public void createNewPost(PostVO vo) {
 		sb.setLength(0);
-		sb.append("INSERT INTO POST (user_id, title, content, style_category, thumbnail_image_url, created_at, updated_at) ");
-		sb.append("values (?, ?, ?, ?, ?, NOW(), NOW())");
+		sb.append("INSERT INTO POST (user_id, title, content, style_category, created_at, updated_at) ");
+		sb.append("values (?, ?, ?, ?, NOW(), NOW())");
 		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -254,7 +254,24 @@ public class PostDAO {
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
 			pstmt.setInt(4, vo.getStyleCategory());
-			pstmt.setString(5, vo.getThumbnailImageUrl());
+	        pstmt.executeUpdate();
+	        System.out.println("created new post in dao");
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+            close();
+        }
+	}
+	
+	public void setThumbNailImageURL(int postId, String thumbnailURL) {
+		sb.setLength(0);
+		sb.append("update POST set thumbnail_image_url = ? where post_id = ? ");
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, thumbnailURL);
+			pstmt.setInt(2, postId);
 	        pstmt.executeUpdate();
 	        
 		} catch (SQLException e) {
@@ -263,6 +280,8 @@ public class PostDAO {
             close();
         }
 	}
+	
+	
 	
 	public PostVO getUsersNewPost(int userId) {
 		PostVO postVO = null;

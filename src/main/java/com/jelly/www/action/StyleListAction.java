@@ -32,10 +32,9 @@ public class StyleListAction implements Action{
 		ArrayList<StylePostInfoVO> styleListInfo = new ArrayList<>();
 		for(PostVO vo: list) {
 			// get first image associated with post id
-			PostImageDAO imageDAO = new PostImageDAO();
-			PostImageVO imageVO = imageDAO.getFirstImageByPostId(vo.getPostId());
 			
-			String postImageUrl = imageVO.getPostImageUrl();
+			
+			String postImageUrl = vo.getThumbnailImageUrl();
 			if(postImageUrl == null) {
 				postImageUrl = "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
 			}
@@ -47,7 +46,6 @@ public class StyleListAction implements Action{
 			String profileImageUrl = userVO.getProfileImage();
 			
 			StylePostInfoVO obj = new StylePostInfoVO(vo.getPostId(), vo.getUserId(), nickname, vo.getTitle(), postImageUrl, profileImageUrl, vo.getLikeCount());
-			System.out.println(obj.toString());
 			styleListInfo.add(obj);
 		}
 		request.setAttribute("postList", styleListInfo);

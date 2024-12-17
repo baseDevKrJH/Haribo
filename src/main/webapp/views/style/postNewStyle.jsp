@@ -105,7 +105,7 @@
             <textarea name="content" id="contentInput"></textarea>
 
             <label for="imageInput">Select Image:</label>
-            <input type="file" name="postImages" id="imageInput" multiple onchange="previewImages()">
+            <input type="file" name="postImages" id="imageInput" multiple="multiple" onchange="previewImages()">
             
             <!-- Image preview section -->
             <div id="imagePreview"></div>
