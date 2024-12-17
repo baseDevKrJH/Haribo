@@ -15,9 +15,14 @@
   <div class="container">
     <!-- 작성자 정보 표시 -->
     <div class="author-info">
-      <img src="${userVo.profileImage}" alt="프로필 이미지" />
-      <p><a href="<%= request.getContextPath() %>/profile?userId=${userVo.userId}">${userVo.nickname}</a></p>
-      <button class="followBtn">팔로우</button>
+      <div class="profile">
+        <img src="${userVo.profileImage}" alt="프로필 이미지" />
+        <div class="info">
+          <p><a href="<%= request.getContextPath() %>/jelly?page=styleProfile&userId=${userVo.userId}">${userVo.nickname}</a></p>
+          <p class="date">작성일: ${postVo.createdAt}</p>
+        </div>
+      </div>
+      <button class="follow-btn">팔로우</button>
     </div>
 
     <!-- 게시물 이미지 표시 -->
@@ -32,25 +37,24 @@
     <!-- 게시물 정보 표시 -->
     <div class="post-info">
       <h1>${postVo.title}</h1>
-      <p>작성일: ${postVo.createdAt}</p>
       <p>${postVo.content}</p>
       <div class="stats">
-        <span>조회수 ${postVo.viewCount}</span>
         <span>
-	    	<img 
-	            id="like-btn" 
-	            src="<%= request.getContextPath() %>/img/${isLike ? 'after_like.png' : 'before_like.png'}" 
-	            alt="좋아요 버튼" 
-	            style="cursor: pointer;"
-	            data-context-path="${pageContext.request.contextPath}"
-	            data-post-id="${postVo.postId}"
-	            data-user-id="${userVo.userId}"
-	        >
-	        <!-- 유저아이디가 아닌 세션아이디로 수정해야함 -->
-        	<span id="like-count">${postVo.likeCount}</span>
+          <img src="<%= request.getContextPath() %>/img/view.png" alt="조회수" />
+          <span>${postVo.viewCount}</span>
         </span>
-        <span>댓글 ${postVo.commentCount}</span>
-        <span>저장 ${postVo.saveCount}</span>
+        <span>
+          <img id="like-btn" src="<%= request.getContextPath() %>/img/${isLike ? 'after_like.png' : 'before_like.png'}" alt="좋아요 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}" data-user-id="${userVo.userId}">
+          <span id="like-count">${postVo.likeCount}</span>
+        </span>
+        <span>
+          <img id="comment-btn" src="<%= request.getContextPath() %>/img/comment.png" alt="댓글 버튼" />
+          <span>${postVo.commentCount}</span>
+        </span>
+        <span>
+          <img id="save-btn" src="<%= request.getContextPath() %>/img/before_save.png" alt="저장 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}" data-user-id="${userVo.userId}">
+          <span id="save-count">${postVo.saveCount}</span>
+        </span>
       </div>
     </div>
 
@@ -59,13 +63,15 @@
       <c:choose>
         <c:when test="${not empty productList}">
           <h2>상품태그 ${productList.size()}개</h2>
-          <c:forEach var="product" items="${productList}">
-            <div class="product">
-              <img src="${product.imageUrl}" alt="${product.productName}">
-              <p><a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}">${product.productName}</a></p>
-              <p>${product.initialPrice}</p>
-            </div>
-          </c:forEach>
+          <div class="product-grid">
+            <c:forEach var="product" items="${productList}" end="4">
+              <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product">
+                <img src="${product.imageUrl}" alt="${product.productName}" />
+                <p>${product.productName}</p>
+                <p>${product.initialPrice}</p>
+              </a>
+            </c:forEach>
+          </div>
         </c:when>
         <c:otherwise>
           <h2>상품태그 0개</h2>
@@ -73,18 +79,24 @@
       </c:choose>
     </div>
 
+    <hr class="divider" />
+
     <!-- 작성자의 다른 게시물 표시 -->
     <div class="other-posts">
-      <h2>${userVo.nickname}님의 다른 스타일</h2>
-      <p><a href="${pageContext.request.contextPath}/jelly?page=profile&userId=${userVo.userId}">더보기</a></p>
-      <c:forEach var="post" items="${postList}">
-        <c:if test="${post.postId != postVo.postId}">
-          <div class="post">
-          	<p><a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}"><img src="${post.thumbnailImageUrl}" alt="게시물 썸네일" /></a></p>
-            <p>좋아요: ${post.likeCount}</p>
-          </div>
-        </c:if>
-      </c:forEach>
+      <div class="header">
+        <h2>@${userVo.nickname}님의 다른 스타일</h2>
+        <p><a href="${pageContext.request.contextPath}/jelly?page=styleProfile&userId=${userVo.userId}" class="more-btn">더보기</a></p>
+      </div>
+      <div class="post-grid">
+        <c:forEach var="post" items="${postList}" end="4">
+          <c:if test="${post.postId != postVo.postId}">
+            <a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post">
+              <img src="${post.thumbnailImageUrl}" alt="게시물 썸네일" />
+              <p>좋아요: ${post.likeCount}</p>
+            </a>
+          </c:if>
+        </c:forEach>
+      </div>
     </div>
   </div>
 

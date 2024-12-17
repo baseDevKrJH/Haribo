@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 
 import com.jelly.www.dao.PostDAO;
-import com.jelly.www.dao.PostLikeDAO;
-import com.jelly.www.vo.PostLikeVO;
+import com.jelly.www.dao.PostSaveDAO;
+import com.jelly.www.vo.PostSaveVO;
 import com.jelly.www.vo.PostVO;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -14,11 +14,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/likePost")
-public class LikePostController extends HttpServlet {
+@WebServlet("/savePost")
+public class SavePostController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        boolean isLike = false;
+        boolean isSave = false;
     	
     	// 요청 데이터 읽기
     	int postId = Integer.parseInt(request.getParameter("postId"));
@@ -26,27 +26,27 @@ public class LikePostController extends HttpServlet {
 
         // DAO 호출
     	PostDAO postDao = new PostDAO();
-    	PostLikeDAO postLikeDao = new PostLikeDAO();
+    	PostSaveDAO postsaveDao = new PostSaveDAO();
     	
-    	if(postLikeDao.checkLike(postId, userId)) {
-    		// 좋아요 중이라면
-    		postLikeDao.deleteOne(postId, userId);
-    		postDao.minusLike(postId);
+    	if(postsaveDao.checkSave(postId, userId)) {
+    		// 저장 중이라면
+    		postsaveDao.deleteOne(postId, userId);
+    		postDao.minusSave(postId);
     	}
     	else {
-    		// 좋아요 중이 아니라면
-    		PostLikeVO postLikeVo = new PostLikeVO(postId, userId);
-    		postLikeDao.insertOne(postLikeVo);
-    		postDao.plusLike(postId);
-    		isLike = true;
+    		// 저장 중이 아니라면
+    		PostSaveVO postSaveVo = new PostSaveVO(postId, userId);
+    		postsaveDao.insertOne(postSaveVo);
+    		postDao.plusSave(postId);
+    		isSave = true;
     	}
     	
     	PostVO postVo = postDao.selectOne(postId);
 
         // JSON 응답 생성
     	JSONObject jsonResponse = new JSONObject();
-    	jsonResponse.put("likeCount", postVo.getLikeCount());
-    	jsonResponse.put("isLike", isLike);
+    	jsonResponse.put("saveCount", postVo.getSaveCount());
+    	jsonResponse.put("isSave", isSave);
 
         // 응답
         response.setContentType("application/json;charset=UTF-8");
