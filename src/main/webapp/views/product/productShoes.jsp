@@ -32,17 +32,23 @@
       <c:forEach var="product" items="${productList}">
         <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product-card">
           <div class="image-wrapper">
-            <img src="${product.imageUrl}" alt="${product.productName}"> <!-- 수정된 부분 -->
+            <img src="${product.imageUrl}" alt="${product.productName}">
           </div>
           <div class="brand">${product.brand}</div>
-          <div class="product-name">${product.productName}</div> <!-- 수정된 부분 -->
+          <div class="product-name">${product.productName}</div>
           <div class="price">${product.initialPrice}원</div>
         </a>
       </c:forEach>
     </div>
-  </div>
 
-  <!-- 필터 슬라이드 메뉴 -->
+    <!-- 로딩 중 -->
+	<div id="loading">
+  		<svg id="loading-svg" viewBox="25 25 50 50">
+    		<circle r="20" cy="50" cx="50"></circle>
+  		</svg>
+	</div>
+
+<!-- 필터 슬라이드 메뉴 -->
   <div class="filter-menu" id="filter-menu">
     <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
     <h2>필터</h2>
@@ -103,6 +109,51 @@
     <button class="reset-btn" id="reset-filter">초기화</button>
   </div>
 
+  <!-- 무한 스크롤 AJAX -->
+<script>
+$(document).ready(function () {
+    let currentPage = 1;
+    const $productContainer = $("#product-container");
+    const $loading = $("#loading");
+    let isLoading = false;
+
+    $(window).on("scroll", function () {
+        if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+            loadMoreProducts();
+        }
+    });
+
+    function loadMoreProducts() {
+        isLoading = true;
+        currentPage++;
+        $loading.fadeIn();
+
+        $.ajax({
+            url: "<%= request.getContextPath() %>/jelly",
+            type: "GET",
+            data: { page: "shoes", pageNo: currentPage },
+            success: function (data) {
+                if ($.trim(data) === "") {
+                    console.log("No more data to load.");
+                } else {
+                    setTimeout(function () {
+                        $productContainer.append(data); // 상품 리스트 HTML 추가
+                    }, 700); // 0.7초 로딩
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading products:", error);
+            },
+            complete: function () {
+                setTimeout(function () {
+                    $loading.fadeOut();
+                }, 1000); // 1초 후 로딩 숨김
+                isLoading = false;
+            }
+        });
+    }
+});
+</script>
   <script src="<%= request.getContextPath() %>/js/filter.js"></script>
   <%@ include file="/views/home/footer.jsp" %>
 </body>

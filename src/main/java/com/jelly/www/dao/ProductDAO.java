@@ -47,7 +47,7 @@ public class ProductDAO {
             while (rs.next()) {
                 ProductVO vo = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("PRODUCT_NAME"), 
+                    rs.getString("PRODUCT_NAME"),
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -99,18 +99,17 @@ public class ProductDAO {
                         rs.getDate("UPDATED_AT")
                 );
             }
-            
+
             // 상품이 존재하면 사이즈 목록을 추가로 조회
             if (vo != null) {
                 // 사이즈 목록 조회
                 List<String> sizes = selectSizesByProductId(productId);
-                vo.setSizes(sizes);              }
-            
-            
+                vo.setSizes(sizes); // 사이즈 추가
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	close();
+            close();
         }
         return vo;
     }
@@ -138,7 +137,7 @@ public class ProductDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	close();
+            close();
         }
     }
 
@@ -155,7 +154,7 @@ public class ProductDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	close();
+            close();
         }
     }
 
@@ -168,7 +167,7 @@ public class ProductDAO {
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, vo.getProductName());  // name을 productName으로 수정
+            pstmt.setString(1, vo.getProductName());
             pstmt.setString(2, vo.getDescription());
             pstmt.setString(3, vo.getBrand());
             pstmt.setDate(4, new java.sql.Date(vo.getReleaseDate().getTime()));
@@ -183,14 +182,14 @@ public class ProductDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	close();
+            close();
         }
     }
     
-    // 필터
+    // 6. 필터
     public List<ProductVO> filterByBrandsCategoriesAndPrice(List<String> brands, List<Integer> categories, String priceRange) {
         List<ProductVO> list = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
 
         // 기본 SQL 작성
         sb.append("SELECT p.PRODUCT_ID, p.PRODUCT_NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
@@ -254,14 +253,11 @@ public class ProductDAO {
                 }
             }
 
-            // 가격 필터 값은 쿼리에서 이미 추가되었음
-
-            // SQL 실행 및 결과 처리
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 ProductVO product = new ProductVO(
                     rs.getInt("PRODUCT_ID"),
-                    rs.getString("PRODUCT_NAME"),  // `PRODUCT_NAME` 사용
+                    rs.getString("PRODUCT_NAME"), 
                     rs.getString("DESCRIPTION"),
                     rs.getString("BRAND"),
                     rs.getDate("RELEASE_DATE"),
@@ -279,10 +275,10 @@ public class ProductDAO {
     }
     
 
- // 카테고리별 상품 조회
+    // 카테고리별 상품 조회
     public List<ProductVO> selectByCategory(String categoryName) {
         List<ProductVO> list = new ArrayList<>();
-        sb.setLength(0);
+        sb.setLength(0);  // StringBuffer 초기화
 
         // 해당 카테고리와 하위 카테고리 포함 조회
         sb.append("SELECT p.PRODUCT_ID, p.PRODUCT_NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
@@ -294,8 +290,8 @@ public class ProductDAO {
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setString(1, categoryName); 
-            pstmt.setString(2, categoryName);
+            pstmt.setString(1, categoryName);
+            pstmt.setString(2, categoryName); 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -314,7 +310,6 @@ public class ProductDAO {
                     rs.getDate("UPDATED_AT")
                 );
                 list.add(vo);
-                // System.out.println("카테고리별 조회 상품: " + vo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -324,64 +319,93 @@ public class ProductDAO {
         return list;
     }
     
-    // 무한스크롤 메서드(페이지네이션)....인데 구현안됨 어떻게함?
-//    public List<ProductVO> selectByPage(int page, int limit) {
-//        List<ProductVO> list = new ArrayList<>();
-//        int offset = (page - 1) * limit; // 시작 위치 계산
-//
-//        String sql = "SELECT * FROM PRODUCT ORDER BY RELEASE_DATE DESC LIMIT ? OFFSET ?";
-//        try {
-//            pstmt = conn.prepareStatement(sql);
-//            pstmt.setInt(1, limit);
-//            pstmt.setInt(2, offset);
-//            rs = pstmt.executeQuery();
-//
-//            while (rs.next()) {
-//                ProductVO vo = new ProductVO(
-//                    rs.getInt("PRODUCT_ID"),
-//                    rs.getString("NAME"),
-//                    rs.getString("DESCRIPTION"),
-//                    rs.getString("BRAND"),
-//                    rs.getDate("RELEASE_DATE"),
-//                    rs.getInt("INITIAL_PRICE"),
-//                    rs.getString("MODEL_NUMBER"),
-//                    rs.getInt("CATEGORY_ID"),
-//                    rs.getString("IMAGE_URL"),
-//                    rs.getBoolean("IS_ACTIVE"),
-//                    rs.getDate("CREATED_AT"),
-//                    rs.getDate("UPDATED_AT")
-//                );
-//                list.add(vo);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            close();
-//        }
-//        return list;
-//    }
-    
- // 상품 사이즈 목록 조회
-    public List<String> selectSizesByProductId(int productId) {
-        List<String> sizes = new ArrayList<>();
+    // 무한스크롤 관련 메서ㄷ
+    public List<ProductVO> selectByCategoryAndPage(String category, int page, int limit) {
+        List<ProductVO> list = new ArrayList<>();
+        if (page <= 0) page = 1;  // 페이지 번호가 0 이하이면 1로 설정
+        if (limit <= 0) limit = 10;  // 한 페이지에 출력할 상품 수 기본값 10
+
+        int offset = (page - 1) * limit;  // 페이지 번호에 따라 데이터의 시작 위치
+
         sb.setLength(0);
-        sb.append("SELECT SIZE FROM SIZE WHERE PRODUCT_ID = ?");
+        sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
+        sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
+        sb.append("FROM PRODUCT ");
+        sb.append("WHERE CATEGORY_ID = ? OR CATEGORY_ID IN (SELECT CATEGORY_ID FROM CATEGORY WHERE parent_id = ?) ");
+        sb.append("ORDER BY RELEASE_DATE DESC, PRODUCT_ID DESC LIMIT ? OFFSET ?");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setInt(1, productId);
+            pstmt.setInt(1, 1);  // 신발의 category_id
+            pstmt.setInt(2, 1);  // 하위 카테고리의 parent_id
+            pstmt.setInt(3, limit);  // 한 페이지에 출력할 상품 수 설정
+            pstmt.setInt(4, offset);  // 페이지네이션에 따른 데이터 시작 위치 설정
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                sizes.add(rs.getString("SIZE"));
+                ProductVO product = new ProductVO(
+                    rs.getInt("PRODUCT_ID"),
+                    rs.getString("PRODUCT_NAME"),
+                    rs.getString("DESCRIPTION"),
+                    rs.getString("BRAND"),
+                    rs.getDate("RELEASE_DATE"),
+                    rs.getInt("INITIAL_PRICE"),
+                    rs.getString("MODEL_NUMBER"),
+                    rs.getInt("CATEGORY_ID"),
+                    rs.getString("IMAGE_URL"),
+                    rs.getBoolean("IS_ACTIVE"),
+                    rs.getDate("CREATED_AT"),
+                    rs.getDate("UPDATED_AT")
+                );
+                list.add(product);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close();
         }
+        return list;
+    }
+
+ // 상품 사이즈 목록 조회
+    public List<String> selectSizesByProductId(int productId) {
+        List<String> sizes = new ArrayList<>();
+        sb.setLength(0);
+
+        sb.append("SELECT SIZE FROM SIZE WHERE PRODUCT_ID = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());  
+            pstmt.setInt(1, productId); 
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                sizes.add(rs.getString("SIZE")); // SIZE 값 추가
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
         return sizes;
     }
+
+    // PreparedStatement에서 사용할 플레이스홀더를 생성하는 도우미 메서드
+    private List<String> getPlaceholders(int count) {
+        // ArrayList를 생성하여 플레이스홀더를 저장할 리스트를 준비
+        List<String> placeholders = new ArrayList<>();
+
+        // count 만큼 반복하면서 "?" 플레이스홀더를 추가
+        for (int i = 0; i < count; i++) {
+            placeholders.add("?"); // 플레이스홀더 "?" 추가
+        }
+
+        // 생성된 플레이스홀더 리스트를 반환
+        return placeholders;
+    }
+
 
     // 사이즈와 가격 조회 (상품 모든 사이즈버튼, 구매, 판매 버튼 누르면 나오는 모달창에 사용)
     public List<ProductVO> selectSizesAndPricesByProductId(int productId) {

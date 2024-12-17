@@ -35,7 +35,7 @@
             </c:otherwise>
           </c:choose>
         </li>
-        <li>
+        <li> 
           <c:choose>
             <c:when test="${sessionScope.user != null}">
               <a href="<%= request.getContextPath() %>/jelly?page=logout">로그아웃</a>
@@ -58,11 +58,10 @@
     <!-- 헤더 BOTTOM -->
     <div class="header-section-bottom">
       <nav class="header-bottom-nav">
-        <a href="<%= request.getContextPath() %>/jelly?page=home" class="${currentPage == 'home' ? 'active' : ''}">HOME</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=shoes" class="${currentPage == 'shop' ? 'active' : ''}">SHOP</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=brand" class="${currentPage == 'brand' ? 'active' : ''}">BRAND</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=style" class="${currentPage == 'style' ? 'active' : ''}">STYLE</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=event1" class="${currentPage == 'event' ? 'active' : ''}">EVENT</a>
+        <a href="<%= request.getContextPath() %>/jelly?page=home" class="${currentPage eq 'home' ? 'active' : ''}">HOME</a>
+		<a href="<%= request.getContextPath() %>/jelly?page=shoes" class="${currentPage eq 'shop' ? 'active' : ''}">SHOP</a>
+		<a href="<%= request.getContextPath() %>/jelly?page=brand" class="${currentPage eq 'brand' ? 'active' : ''}">BRAND</a>
+		<a href="<%= request.getContextPath() %>/jelly?page=style" class="${currentPage eq 'style' ? 'active' : ''}">STYLE</a>
       </nav>
       <form class="header-form" action="<%= request.getContextPath() %>/jelly?page=search" method="get">
         <button>

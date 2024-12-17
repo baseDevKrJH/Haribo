@@ -66,7 +66,8 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("wallets")) {
             action = new WalletsAction(); // 지갑 페이지 처리
         } else if (page.equals("shoes")) {
-            action = new ShoesAction(); // 신발 페이지 처리
+            action = new ShoesAction(); // 신발 페이지
+            req.setAttribute("currentPage", "shop"); // 현재 페이지 설정
         } else if (page.equals("bags")) {
             action = new BagsAction(); // 가방 페이지 처리
         } else if (page.equals("style")) {
@@ -97,7 +98,7 @@ public class JellyController extends HttpServlet {
         } else {
             url = "/views/error/404.jsp"; // 에러 페이지 처리
         }
-
+        
         // Action 실행
         if (action != null) {
             url = action.execute(req, resp);
