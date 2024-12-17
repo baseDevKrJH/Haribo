@@ -54,18 +54,27 @@
     <h2>필터</h2>
     <div class="filter-options">
       <!-- 브랜드 필터 -->
-      <h3>브랜드</h3>
-      <div class="brand-filters">
-        <label for="brand-nike">
-          <input type="checkbox" id="brand-nike" name="brand" value="NIKE"> NIKE
-        </label>
-        <label for="brand-adidas">
-          <input type="checkbox" id="brand-adidas" name="brand" value="ADIDAS"> ADIDAS
-        </label>
-        <label for="brand-puma">
-          <input type="checkbox" id="brand-puma" name="brand" value="PUMA"> PUMA
-        </label>
-      </div>
+	<h3>브랜드</h3>
+		<div class="brand-filters">
+  			<label for="brand-nike">
+    			<input type="checkbox" id="brand-nike" name="brand" value="NIKE"> NIKE
+  			</label>
+  			<label for="brand-adidas">
+    			<input type="checkbox" id="brand-adidas" name="brand" value="ADIDAS"> ADIDAS
+  			</label>
+  			<label for="brand-celine">
+  			  <input type="checkbox" id="brand-celine" name="brand" value="CELINE"> CELINE
+ 			 </label>
+  			<label for="brand-dior">
+  			  <input type="checkbox" id="brand-dior" name="brand" value="DIOR"> DIOR
+  			</label>
+  			<label for="brand-new-balance">
+   			 <input type="checkbox" id="brand-new-balance" name="brand" value="NEW BALANCE"> NEW BALANCE
+  			</label>
+  			<label for="brand-ugg">
+    <input type="checkbox" id="brand-ugg" name="brand" value="UGG"> UGG
+  </label>
+</div>
 
       <!-- 하위 카테고리 필터 -->
       <h3>하위 카테고리</h3>

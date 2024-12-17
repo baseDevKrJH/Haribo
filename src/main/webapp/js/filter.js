@@ -96,7 +96,7 @@ $(document).ready(function () {
                   <img src="${product.imageUrl}" alt="${product.name}">
                 </div>
                 <div class="brand">${product.brand}</div>
-                <div class="product-name">${product.name}</div>
+                <div class="product-name">${product.productName}</div>
                 <div class="price">${product.initialPrice.toLocaleString()}원</div>
               </a>
             `;

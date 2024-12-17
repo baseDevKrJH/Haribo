@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.jelly.www.action.*;
+
 import java.io.IOException;
 
 @WebServlet("/jelly")
@@ -81,7 +82,7 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("event")) {
             action = new EventAction(); // 이벤트 페이지 처리
         } else if (page.equals("popular")) {
-            action = new PopularAction(); // 인기상품 페이지 처리
+            action = new ProductPopularAction(); // 인기상품 페이지 처리
         } else if (page.equals("productDetail")) {
             action = new ProductDetailAction(); // 상품 디테일 페이지 처리
         } else if (page.equals("event1")) {

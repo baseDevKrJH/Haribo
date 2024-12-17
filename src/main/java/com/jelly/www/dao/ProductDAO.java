@@ -319,7 +319,7 @@ public class ProductDAO {
         return list;
     }
     
-    // 무한스크롤 관련 메서ㄷ
+    // 무한 스크롤 관련
     public List<ProductVO> selectByCategoryAndPage(String category, int page, int limit) {
         List<ProductVO> list = new ArrayList<>();
         if (page <= 0) page = 1;  // 페이지 번호가 0 이하이면 1로 설정
@@ -331,13 +331,16 @@ public class ProductDAO {
         sb.append("SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, BRAND, RELEASE_DATE, INITIAL_PRICE, ");
         sb.append("MODEL_NUMBER, CATEGORY_ID, IMAGE_URL, IS_ACTIVE, CREATED_AT, UPDATED_AT ");
         sb.append("FROM PRODUCT ");
-        sb.append("WHERE CATEGORY_ID = ? OR CATEGORY_ID IN (SELECT CATEGORY_ID FROM CATEGORY WHERE parent_id = ?) ");
+        sb.append("WHERE CATEGORY_ID IN ( ");
+        sb.append("   SELECT CATEGORY_ID FROM CATEGORY WHERE NAME = ? OR PARENT_ID = ");
+        sb.append("   (SELECT CATEGORY_ID FROM CATEGORY WHERE NAME = ?) ");
+        sb.append(") ");
         sb.append("ORDER BY RELEASE_DATE DESC, PRODUCT_ID DESC LIMIT ? OFFSET ?");
 
         try {
             pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setInt(1, 1);  // 신발의 category_id
-            pstmt.setInt(2, 1);  // 하위 카테고리의 parent_id
+            pstmt.setString(1, category);  // 상위 카테고리 이름
+            pstmt.setString(2, category);  // 하위 카테고리의 parent_id를 가져오기 위해 category 이름 사용
             pstmt.setInt(3, limit);  // 한 페이지에 출력할 상품 수 설정
             pstmt.setInt(4, offset);  // 페이지네이션에 따른 데이터 시작 위치 설정
 
@@ -368,7 +371,7 @@ public class ProductDAO {
         return list;
     }
 
- // 상품 사이즈 목록 조회
+    // 상품 사이즈 목록 조회
     public List<String> selectSizesByProductId(int productId) {
         List<String> sizes = new ArrayList<>();
         sb.setLength(0);
@@ -473,6 +476,48 @@ public class ProductDAO {
             close();
         }
         return list;
+    }
+    
+    // 판매량이 높은 상품 조회 메서드 (Popular에서 사용)
+    public List<ProductVO> getPopularProducts() {
+        List<ProductVO> productList = new ArrayList<>();
+        sb.setLength(0);
+        sb.append("SELECT ");
+        sb.append("p.product_id, ");
+        sb.append("p.product_name, ");
+        sb.append("p.brand, ");
+        sb.append("p.initial_price, ");
+        sb.append("p.image_url, ");
+        sb.append("COUNT(t.trade_id) AS total_sales ");
+        sb.append("FROM PRODUCT p ");
+        sb.append("JOIN PRODUCT_SELLER ps ON p.product_id = ps.product_id ");
+        sb.append("JOIN TRADE t ON t.product_seller_id = ps.product_seller_id ");
+        sb.append("WHERE p.is_active = TRUE ");
+        sb.append("GROUP BY p.product_id, p.product_name, p.brand, p.initial_price, p.image_url ");
+        sb.append("ORDER BY total_sales DESC, p.created_at DESC ");
+        sb.append("LIMIT 10");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ProductVO product = new ProductVO(
+                    rs.getInt("product_id"),
+                    rs.getString("product_name"),
+                    rs.getString("brand"),
+                    rs.getInt("initial_price"),
+                    rs.getString("image_url"),
+                    rs.getInt("total_sales")
+                );
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return productList;
     }
 
     // 자원 해제 메서드
