@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostImageDAO;
 import com.jelly.www.dao.PostLikeDAO;
+import com.jelly.www.dao.PostSaveDAO;
 import com.jelly.www.dao.PostTagDAO;
 import com.jelly.www.dao.ProductDAO;
 import com.jelly.www.dao.UserDAO;
@@ -16,11 +17,13 @@ import com.jelly.www.vo.UserVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class StyleDetailAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		
 		String pId = request.getParameter("postId");
 
 		if (pId != null) {
@@ -54,9 +57,18 @@ public class StyleDetailAction implements Action {
 			// 작성자의 다른 게시물 조회
 			ArrayList<PostVO> postList = postDao.getByUserId(postVo.getUserId());
 			
-			// 좋아요 중인지 조회
-			PostLikeDAO postLikeDao = new PostLikeDAO();
-			boolean isLike = postLikeDao.checkLike(postId, postVo.getUserId());
+			// 좋아요 / 저장 중인지 조회
+			boolean isLike = false;
+			boolean isSave = false;
+			HttpSession session = request.getSession();
+	        UserVO user = (UserVO) session.getAttribute("user");
+			
+			if(user != null) {
+				PostLikeDAO postLikeDao = new PostLikeDAO();
+				isLike = postLikeDao.checkLike(postId, user.getUserId());
+				PostSaveDAO postSaveDao = new PostSaveDAO();
+				isSave = postSaveDao.checkSave(postId, user.getUserId());
+			}
 			
 			request.setAttribute("postVo", postVo);
 			request.setAttribute("postImageList", postImageList);
@@ -64,6 +76,7 @@ public class StyleDetailAction implements Action {
 			request.setAttribute("productList", productList);
 			request.setAttribute("postList", postList);
 			request.setAttribute("isLike", isLike);
+			request.setAttribute("isSave", isSave);
 		}
 
 		return "/views/style/styleDetail.jsp";
