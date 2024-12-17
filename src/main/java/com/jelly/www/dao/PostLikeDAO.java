@@ -1,11 +1,8 @@
 package com.jelly.www.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 import com.jelly.www.vo.PostLikeVO;
-import com.jelly.www.vo.PostTagVO;
-import com.jelly.www.vo.ProductVO;
 
 public class PostLikeDAO {
 	// DB 연결 정보

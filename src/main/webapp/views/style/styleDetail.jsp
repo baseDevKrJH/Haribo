@@ -22,7 +22,7 @@
           <p class="date">작성일: ${postVo.createdAt}</p>
         </div>
       </div>
-      <button class="follow-btn">팔로우</button>
+      <button id="follow-btn" class="follow-btn ${isFollow ? 'following' : '' }" data-context-path="${pageContext.request.contextPath}" data-user-id="${postVo.userId}">${isFollow ? '팔로잉' : '팔로우'}</button>
     </div>
 
     <!-- 게시물 이미지 표시 -->

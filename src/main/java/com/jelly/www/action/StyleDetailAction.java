@@ -2,6 +2,7 @@ package com.jelly.www.action;
 
 import java.util.ArrayList;
 
+import com.jelly.www.dao.FollowDAO;
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostImageDAO;
 import com.jelly.www.dao.PostLikeDAO;
@@ -57,9 +58,10 @@ public class StyleDetailAction implements Action {
 			// 작성자의 다른 게시물 조회
 			ArrayList<PostVO> postList = postDao.getByUserId(postVo.getUserId());
 			
-			// 좋아요 / 저장 중인지 조회
+			// 좋아요 / 저장 / 팔로우 중인지 조회
 			boolean isLike = false;
 			boolean isSave = false;
+			boolean isFollow = false;
 			HttpSession session = request.getSession();
 	        UserVO user = (UserVO) session.getAttribute("user");
 			
@@ -68,6 +70,8 @@ public class StyleDetailAction implements Action {
 				isLike = postLikeDao.checkLike(postId, user.getUserId());
 				PostSaveDAO postSaveDao = new PostSaveDAO();
 				isSave = postSaveDao.checkSave(postId, user.getUserId());
+				FollowDAO followDao = new FollowDAO();
+				isFollow = followDao.checkFollow(user.getUserId(), postVo.getUserId());
 			}
 			
 			request.setAttribute("postVo", postVo);
@@ -77,6 +81,7 @@ public class StyleDetailAction implements Action {
 			request.setAttribute("postList", postList);
 			request.setAttribute("isLike", isLike);
 			request.setAttribute("isSave", isSave);
+			request.setAttribute("isFollow", isFollow);
 		}
 
 		return "/views/style/styleDetail.jsp";

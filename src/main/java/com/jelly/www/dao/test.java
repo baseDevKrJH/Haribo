@@ -2,6 +2,7 @@ package com.jelly.www.dao;
 
 import java.util.ArrayList;
 
+import com.jelly.www.vo.FollowVO;
 import com.jelly.www.vo.PostImageVO;
 import com.jelly.www.vo.PostTagVO;
 import com.jelly.www.vo.PostVO;
@@ -11,15 +12,14 @@ import com.jelly.www.vo.UserVO;
 public class test {
 	public static void main(String[] args) {
 
-		int postId = 2;
+		FollowDAO dao = new FollowDAO();
 		
-		// 조회수 증가
-		PostDAO postDao = new PostDAO();
-		postDao.plusView(postId);
-
-		// 게시물 정보 조회
-		PostVO postVo = postDao.selectOne(postId);
+//		dao.insertOne(new FollowVO(1, 2));
+//		System.out.println(dao.checkFollow(1, 2)); // true
+//		System.out.println(dao.getFollowerIdList(2)); // 1
+//		System.out.println(dao.getFollowingIdList(1)); // 2
+//		dao.deleteOne(1, 2);
 		
-		System.out.println(postVo);
+		dao.deleteOne(1, 5);
 	}
 }
