@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <title>Jelly</title>
+  <!-- upbutton.css -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/upbutton.css" />
 </head>
 <body>
   <jsp:include page="header.jsp" />
@@ -25,5 +26,9 @@
   <br />
   <jsp:include page="mainCoupon.jsp" />
   <jsp:include page="footer.jsp" />
+  
+  <!-- 맨 위로 이동 버튼 -->
+  <button class="btn_top" id="btnTop" title="맨 위로 가기"></button>
+  <script src="<%= request.getContextPath() %>/js/upbutton.js"></script>
 </body>
 </html>

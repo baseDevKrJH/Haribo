@@ -8,9 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jelly</title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/product.css">
+  <!-- upbutton.css -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/upbutton.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
+
+  	<!-- 맨 위로 이동 버튼 -->
+	<button class="btn_top" id="btnTop" title="맨 위로 가기"></button>
+	
   <div class="container">
     <!-- 카테고리 링크 -->
     <div class="categories">
@@ -163,6 +169,8 @@ $(document).ready(function () {
     }
 });
 </script>
+
+  <script src="<%= request.getContextPath() %>/js/upbutton.js"></script>
   <script src="<%= request.getContextPath() %>/js/filter.js"></script>
   <%@ include file="/views/home/footer.jsp" %>
 </body>

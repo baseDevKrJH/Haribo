@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productStickey.css" />
   <!-- Modal.css -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productModal.css" />
+  <!-- upbutton.css -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/upbutton.css" />
 </head>
 
 <body>
@@ -20,6 +22,9 @@
   <!-- productStickey.js -->
   <script src="<%= request.getContextPath() %>/js/productStickey.js"></script>
   
+  <!-- 맨 위로 이동 버튼 -->
+<button class="btn_top" id="btnTop" title="맨 위로 가기"></button>
+
   <div class="product-detail-container">
     <!-- 왼쪽: 상품 이미지 -->
     <div class="product-image-section">
@@ -263,6 +268,8 @@
     </div>
   </div>
 
+
+  <script src="<%= request.getContextPath() %>/js/upbutton.js"></script>
   <%@ include file="/views/home/footer.jsp" %>
 
 </body>
