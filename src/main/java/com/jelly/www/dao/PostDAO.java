@@ -242,6 +242,61 @@ public class PostDAO {
             close();
         }
 	}
+	
+	public void createNewPost(PostVO vo) {
+		sb.setLength(0);
+		sb.append("INSERT INTO POST (user_id, title, content, style_category, thumbnail_image_url, created_at, updated_at) ");
+		sb.append("values (?, ?, ?, ?, ?, NOW(), NOW())");
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, vo.getUserId());
+			pstmt.setString(2, vo.getTitle());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setInt(4, vo.getStyleCategory());
+			pstmt.setString(5, vo.getThumbnailImageUrl());
+	        pstmt.executeUpdate();
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+            close();
+        }
+	}
+	
+	public PostVO getUsersNewPost(int userId) {
+		PostVO postVO = null;
+		sb.setLength(0);
+		sb.append("SELECT * FROM POST WHERE user_id = ? ORDER BY created_at DESC LIMIT 1");
+
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, userId);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				postVO = new PostVO(
+					rs.getInt("post_id"), 
+					rs.getInt("user_id"), 
+					rs.getInt("style_category"),
+					rs.getString("title"), 
+					rs.getString("content"), 
+					rs.getString("thumbnail_image_url"), 
+					rs.getInt("like_count"),
+					rs.getInt("comment_count"), 
+					rs.getInt("view_count"), 
+					rs.getInt("save_count"),
+					rs.getTimestamp("created_at"),
+					rs.getTimestamp("updated_at")
+				);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return postVO;
+	}
 
 	// 자원 해제 메서드
 	public void close() {

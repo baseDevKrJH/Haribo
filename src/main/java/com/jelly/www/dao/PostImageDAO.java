@@ -1,9 +1,13 @@
 package com.jelly.www.dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
 import com.jelly.www.vo.PostImageVO;
+import com.jelly.www.vo.ProductVO;
 
 public class PostImageDAO {
 	// DB 연결 정보
@@ -51,6 +55,10 @@ public class PostImageDAO {
                     rs.getString("post_image_url"),
                     rs.getInt("post_id"),
                     rs.getInt("post_image_order")
+                    
+//                    // need to add to database
+//                    rs.getString("post_image_path")
+                 
                 );
                 list.add(vo);
             }
@@ -83,6 +91,10 @@ public class PostImageDAO {
                     rs.getString("post_image_url"),
                     rs.getInt("post_id"),
                     rs.getInt("post_image_order")
+                    
+                    
+//                 // need to add to database
+//                    rs.getString("post_image_path")
                 );
             }
         } catch (SQLException e) {
@@ -93,6 +105,38 @@ public class PostImageDAO {
 		
 		return vo;
 	}
+
+	
+	
+    public void insertOne(PostImageVO vo) {
+        sb.setLength(0);
+//        sb.append("insert into POST_IMAGE (post_image_url, post_id, post_image_order, post_image_path) ");
+//        sb.append("values (?, ?, ?);");
+        
+        sb.append("insert into POST_IMAGE (post_image_url, post_id, post_image_order) ");
+        sb.append("values (?, ?, ?);");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setString(1, vo.getPostImageUrl()); 
+            pstmt.setInt(2, vo.getPostId());
+            pstmt.setInt(3, vo.getPostImageOrder());
+            
+            
+//            // need to add to database
+//            pstmt.setString(4, vo.getPostImagePath()); 
+            
+            pstmt.executeUpdate();
+            System.out.println("상품 추가 완료: " + vo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	close();
+        }
+    }
+	
+	
+	
 
 	// 자원 해제 메서드
 	public void close() {

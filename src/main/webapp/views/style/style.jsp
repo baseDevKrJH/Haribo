@@ -20,5 +20,8 @@
 	<div>
 		<a href="<%= request.getContextPath() %>/jelly?page=styleModify">modify
 	</div>
+	<div>
+		<a href="<%= request.getContextPath() %>/upload?page=stylePost">new style
+	</div>
 </body>
 </html>
