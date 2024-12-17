@@ -7,8 +7,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.jelly.www.action.*;
+import com.jelly.www.dao.ProductDAO;
+import com.jelly.www.vo.ProductVO;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/jelly")
 public class JellyController extends HttpServlet {
