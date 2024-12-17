@@ -22,7 +22,20 @@
           <p class="date">작성일: ${postVo.createdAt}</p>
         </div>
       </div>
-      <button id="follow-btn" class="follow-btn ${isFollow ? 'following' : '' }" data-context-path="${pageContext.request.contextPath}" data-user-id="${postVo.userId}">${isFollow ? '팔로잉' : '팔로우'}</button>
+      <c:choose>
+		<c:when test="${sessionScope.user != null && sessionScope.user.userId == postVo.userId}">
+		  <div class="edit-btn" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}">
+		  	<a href="<%= request.getContextPath() %>/jelly?page=styleModify&postId=${postVo.postId}">스타일 수정하기</a>
+		  </div>
+		</c:when>
+		<c:otherwise>
+		  <button id="follow-btn" class="follow-btn ${isFollow ? 'following' : '' }" 
+		            data-context-path="${pageContext.request.contextPath}" 
+		            data-user-id="${postVo.userId}">
+		      ${isFollow ? '팔로잉' : '팔로우'}
+		  </button>
+	    </c:otherwise>
+	  </c:choose>
     </div>
 
     <!-- 게시물 이미지 표시 -->
