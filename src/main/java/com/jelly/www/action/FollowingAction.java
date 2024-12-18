@@ -14,7 +14,6 @@ public class FollowingAction implements Action {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		String uId = request.getParameter("userId");
-		System.out.println("uId: " + uId);
 
 		if (uId != null) {
 			int userId = Integer.parseInt(uId);
