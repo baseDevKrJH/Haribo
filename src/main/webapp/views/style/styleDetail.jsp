@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Style Detail</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleDetail.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styleComment.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/js/styleDetail.js"></script>
 </head>
@@ -61,7 +62,7 @@
           <span id="like-count">${postVo.likeCount}</span>
         </span>
         <span>
-          <img id="comment-btn" src="<%= request.getContextPath() %>/img/comment.png" alt="댓글 버튼" />
+          <img id="open-comment-btn" src="<%= request.getContextPath() %>/img/comment.png" alt="댓글 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}"/>
           <span>${postVo.commentCount}</span>
         </span>
         <span>
@@ -112,6 +113,28 @@
       </div>
     </div>
   </div>
+  
+  <div class="comment-menu" id="comment-menu">
+	 <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
+	 <h2>필터</h2>
+	 <div id="postInfo">
+	 	post information goes in here
+	 	<img src="<%= request.getContextPath() %>/img/filter.png" alt="profile Picture" >
+	   	<div class="username">user name</div>
+	   	<div class="contents">contents of the post</div>
+	 </div>
+	   		
+	 <div class="writeComment">
+	 	<input type="text" name="myComment" id="myComment" />
+		<input id="postComment" type="button" value="Comment" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}"/>
+	 </div>
+   	 
+   	 
+   	 <div id="comments">
+		comments go here
+   	 </div>
+ </div>
+ <script src="<%= request.getContextPath() %>/js/comments.js"></script>
 
   <%@ include file="/views/home/footer.jsp" %>
 </body>

@@ -22,7 +22,6 @@ public class FollowDAO {
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
-			System.out.println("MySQL DB 연결 성공");
 		} catch (ClassNotFoundException e) {
 			System.err.println("MySQL 드라이버 로드 실패");
 			e.printStackTrace();

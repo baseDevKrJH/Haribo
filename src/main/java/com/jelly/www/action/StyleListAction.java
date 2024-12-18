@@ -39,6 +39,7 @@ public class StyleListAction implements Action{
 			boolean isLike = false;
 			HttpSession session = request.getSession();
 	        UserVO user = (UserVO) session.getAttribute("user");
+	        
 			if(user != null) {
 				PostLikeDAO postLikeDao = new PostLikeDAO();
 				isLike = postLikeDao.checkLike(vo.getPostId(), user.getUserId());

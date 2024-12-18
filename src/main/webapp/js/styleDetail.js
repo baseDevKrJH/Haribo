@@ -29,35 +29,33 @@ $(document).ready(function() {
 			})
 		})
 		
-	$(".like-btn").on("click", function() {
-	    const contextPath = $(this).data("context-path");
-	    const postId = $(this).data("post-id");
-	    const likeBtn = $(this); // The clicked like button
-	    const likeCount = $(this).siblings(".like-count"); // Target like-count next to the clicked button
+	$("#like-btn").on("click", function() {
+	        const contextPath = $(this).data("context-path");
+	        const postId = $(this).data("post-id");
+	        const likeBtn = $(this);
+	        const likeCount = $("#like-count");
 
-	    $.ajax({
-	        url: contextPath + '/likePost',
-	        type: "POST",
-	        data: { postId: postId },
-	        success: function(response) {
-	            // Toggle the like button image based on response
-	            likeBtn.attr("src", response.isLike ? contextPath + '/img/after_like.png' : contextPath + '/img/before_like.png');
-	            
-	            // Update only this post's like-count
-	            likeCount.text(response.likeCount);
-	        },
-	        error: function(xhr, status, error) {
-	            if (xhr.status === 401) { // 로그인 필요
-	                alert("로그인이 필요합니다.");
-	                window.location.href = contextPath + '/views/login/login.jsp'; // 로그인 페이지로 이동
-	            } else {
-	                console.error("Ajax 오류:", status, error);
-	                alert("서버 요청 중 오류가 발생했습니다.");
+	        $.ajax({
+	            url: contextPath + '/likePost',
+	            type: "POST",
+	            data: {postId: postId},
+	            success: function(response) {
+	                // 좋아요 상태 반전
+	                likeBtn.attr("src", response.isLike ? contextPath + '/img/after_like.png' : contextPath + '/img/before_like.png');
+	                // 좋아요 개수 업데이트
+	                likeCount.text(response.likeCount);
+	            },
+	            error: function(xhr, status, error) {
+	                if (xhr.status === 401) { // 로그인 필요
+	                    alert("로그인이 필요합니다.");
+	                    window.location.href = contextPath + '/views/login/login.jsp'; // 로그인 페이지로 이동
+	                } else {
+	                    console.error("Ajax 오류:", status, error);
+	                    alert("서버 요청 중 오류가 발생했습니다.");
+	                }
 	            }
-	        }
-	    });
-	});
-
+	        })
+	    })
 
 	$("#save-btn").on("click", function() {
 		const contextPath = $(this).data("context-path");

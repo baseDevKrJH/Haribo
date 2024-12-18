@@ -20,7 +20,6 @@ public class SizeDAO {
         try {
             Class.forName(DRIVER);
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("SizeDAO: MySQL DB 연결 성공");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

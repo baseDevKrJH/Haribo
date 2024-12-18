@@ -37,6 +37,7 @@ public class LikePostController extends HttpServlet {
 	    	
 	    	// 요청 데이터 읽기
 	    	int postId = Integer.parseInt(request.getParameter("postId"));
+	    	System.out.println("inside like post controller: postId: " + postId);
 	
 	        // DAO 호출
 	    	PostDAO postDao = new PostDAO();
@@ -44,22 +45,28 @@ public class LikePostController extends HttpServlet {
 	    	
 	    	if(postLikeDao.checkLike(postId, userId)) {
 	    		// 좋아요 중이라면
+	    		System.out.println("data exists user already likes");
 	    		postLikeDao.deleteOne(postId, userId);
+	    		System.out.println("deleting");
 	    		postDao.minusLike(postId);
 	    	}
 	    	else {
 	    		// 좋아요 중이 아니라면
+	    		System.out.println("data does not exist. liking post");
 	    		PostLikeVO postLikeVo = new PostLikeVO(postId, userId);
 	    		postLikeDao.insertOne(postLikeVo);
+	    		System.out.println("created new data of image like");
 	    		postDao.plusLike(postId);
 	    		isLike = true;
 	    	}
+	    	
 	    	
 	    	PostVO postVo = postDao.selectOne(postId);
 	
 	        // JSON 응답 생성
 	    	jsonResponse.put("likeCount", postVo.getLikeCount());
 	    	jsonResponse.put("isLike", isLike);
+	    	jsonResponse.put("success", true); // Add success flag
 	
 	        // 응답
 	        response.setContentType("application/json;charset=UTF-8");
