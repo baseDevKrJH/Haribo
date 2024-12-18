@@ -18,5 +18,6 @@ public class StylePostInfoVO {
     private String title; // 게시물 제목
     private String postImageUrl;
     private String profileImageUrl;
-    private int likesCount;
+    private int likeCount;
+    private boolean isLike;
 }

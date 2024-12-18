@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="${pageContext.request.contextPath}/js/styleDetail.js"></script>
+
 
 <!-- post list -->
 <c:forEach var="post" items="${postList}">
+	<%
+
+	%>
 	<a href= "${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post-card">
 		<div class="imageWrapper">
 			<!-- get image from imageDAO -->
@@ -13,8 +18,8 @@
 			<img src="${post.profileImageUrl}" alt="${post.nickname}'s profile picture" class="profilePic"/>
 			<span class="username">${post.nickname}</span>
 			<span class="likebtn">
-				<button class="heart" onclick="alert('i like this'); return false;">like</button>
-				<span>${post.likesCount}</span>
+				<img id="like-btn" class="like-btn" src="<%= request.getContextPath() %>/img/${isLike ? 'after_like.png' : 'before_like.png'}" alt="좋아요 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${post.postId}" onclick="return false;">
+          		<span class="like-count">${post.likeCount}</span>
 			</span>
 		</div>
 		<div class="title">

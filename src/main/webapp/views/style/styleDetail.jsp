@@ -57,7 +57,7 @@
           <span>${postVo.viewCount}</span>
         </span>
         <span>
-          <img id="like-btn" src="<%= request.getContextPath() %>/img/${isLike ? 'after_like.png' : 'before_like.png'}" alt="좋아요 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}">
+          <img id="like-btn" class="like-btn" src="<%= request.getContextPath() %>/img/${isLike ? 'after_like.png' : 'before_like.png'}" alt="좋아요 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}">
           <span id="like-count">${postVo.likeCount}</span>
         </span>
         <span>
