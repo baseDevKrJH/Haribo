@@ -3,6 +3,8 @@ $(document).ready(function() {
 			const contextPath = $(this).data("context-path");
 			const followingId = $(this).data("user-id");
 			const followBtn = $(this);
+			const followerCount = $("#follower-count");
+			const followingCount = $("#following-count");
 
 			$.ajax({
 				url: contextPath + '/follow',
@@ -16,6 +18,8 @@ $(document).ready(function() {
 				      // 팔로잉 -> 팔로우 상태로 변경
 				      followBtn.removeClass("following").text("팔로우");
 				    }
+					followerCount.text("팔로워 " + response.followerCount);
+					followingCount.text("팔로잉 " + response.followingCount);
 				},
 				error: function(xhr, status, error) {
 			        if (xhr.status === 401) { // 로그인 필요

@@ -78,7 +78,11 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("styleProfile")) {
         	action = new StyleProfileAction(); // 스타일 프로필 처리
         } else if (page.equals("styleModify")) {
-        	action = new StyleModifyAction(); // 스타일 프로필 처리
+        	action = new StyleModifyAction(); // 스타일 수정 처리
+        } else if (page.equals("follower")) {
+        	action = new FollowerAction(); // 팔로워 처리
+        } else if (page.equals("following")) {
+        	action = new FollowingAction(); // 팔로잉 처리	
         } else if (page.equals("event")) {
             action = new EventAction(); // 이벤트 페이지 처리
         } else if (page.equals("popular")) {
