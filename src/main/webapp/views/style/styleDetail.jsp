@@ -9,6 +9,7 @@
   <title>Style Detail</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleDetail.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styleComment.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comment.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/js/styleDetail.js"></script>
 </head>
@@ -63,7 +64,7 @@
         </span>
         <span>
           <img id="open-comment-btn" src="<%= request.getContextPath() %>/img/comment.png" alt="댓글 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}"/>
-          <span>${postVo.commentCount}</span>
+          <span id="comment-count">${postVo.commentCount}</span>
         </span>
         <span>
           <img id="save-btn" src="<%= request.getContextPath() %>/img/${isSave ? 'after_save.png' : 'before_save.png'}" alt="저장 버튼" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}">
@@ -116,22 +117,28 @@
   
   <div class="comment-menu" id="comment-menu">
 	 <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
-	 <h2>필터</h2>
-	 <div id="postInfo">
-	 	post information goes in here
-	 	<img src="<%= request.getContextPath() %>/img/filter.png" alt="profile Picture" >
-	   	<div class="username">user name</div>
-	   	<div class="contents">contents of the post</div>
-	 </div>
-	   		
-	 <div class="writeComment">
-	 	<input type="text" name="myComment" id="myComment" />
-		<input id="postComment" type="button" value="Comment" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}"/>
-	 </div>
+	 <h2>Comments</h2>
+		<!-- Post Information -->
+		<div id="postInfo">
+		    <a href="<%= request.getContextPath() %>/jelly?page=styleProfile&userId=${userVo.userId}" id="postProfileLink">
+		        <img src="${userVo.profileImage}" alt="Profile Picture" id="postProfilePicture">
+		        <span id="postNickname">${userVo.nickname}</span>
+		    </a>
+		    <div id="postContents">${postVo.content}</div>
+		</div>
+		
+		<!-- Write Comment Section -->
+		<div id="writeComment">
+		    <input type="text" name="myComment" id="myComment" placeholder="Write a comment..." />
+		    <input id="postComment" type="button" value="Comment" 
+		           data-context-path="${pageContext.request.contextPath}" 
+		           data-post-id="${postVo.postId}" 
+		           data-comment-count="${postVo.commentCount}"/>
+		</div>
    	 
    	 
    	 <div id="comments">
-		comments go here
+		
    	 </div>
  </div>
  <script src="<%= request.getContextPath() %>/js/comments.js"></script>

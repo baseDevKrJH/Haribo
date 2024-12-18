@@ -20,4 +20,9 @@ public class CommentVO {
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 	
+	public CommentVO(int postId, int userId, String content) {
+		this.postId = postId;
+		this.userId = userId;
+		this.content = content;
+	}
 }

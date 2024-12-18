@@ -1,0 +1,141 @@
+@charset "UTF-8";
+.comment-info {
+    display: flex;
+    align-items: center; /* Aligns the items (nickname and content) vertically */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0; /* Adds a separator between comments */
+    padding-bottom: 10px;
+    gap: 10px; /* Spacing between the profile picture and the rest of the content */
+}
+
+/* Profile picture styling */
+.comment-profile-picture {
+    width: 50px; /* Sets size of profile picture */
+    height: 50px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover;
+    border: 2px solid #ddd; /* Optional border for the profile picture */
+}
+
+/* Profile and nickname wrapper */
+.comment-profile-link {
+    text-decoration: none;
+    color: #333; /* Neutral color for links */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between profile image and nickname */
+}
+
+/* Nickname and content wrapper */
+.comment-profile-link .comment-nickname {
+    margin-right: 8px; /* Spacing between the nickname and comment content */
+    font-size: 1rem;
+    color: #333; /* Consistent text color */
+}
+
+/* Comment content */
+.comment-contents {
+    font-size: 0.9rem;
+    color: #555; /* Slightly muted color for the comment content */
+    line-height: 1.4;
+    white-space: pre-wrap; /* Preserves line breaks in the comment content */
+}
+
+/* Post information container */
+#postInfo {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0; /* Separator below post info */
+    padding-bottom: 10px;
+    gap: 10px; /* Space between profile picture and text */
+}
+
+/* Profile picture styling in post info */
+#postProfilePicture {
+    width: 60px; /* Larger size for post author profile */
+    height: 60px;
+    border-radius: 50%; /* Circular profile picture */
+    object-fit: cover;
+    border: 2px solid #ddd; /* Optional border for profile picture */
+}
+
+/* Profile link wrapper */
+#postProfileLink {
+    text-decoration: none;
+    color: #333; /* Neutral color for links */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between profile image and nickname */
+}
+
+/* Post nickname styling */
+#postNickname {
+    font-size: 1.2rem; /* Slightly larger font for post author's nickname */
+    margin-right: 10px;
+}
+
+/* Post content styling */
+#postContents {
+    font-size: 1rem;
+    color: #555; /* Muted color for post content */
+    line-height: 1.6;
+    margin-top: 5px; /* Spacing between nickname and content */
+}
+
+/* Write Comment Section */
+#writeComment {
+    display: flex;
+    align-items: center; /* Align input and button horizontally */
+    gap: 10px; /* Space between input box and button */
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0; /* Line separating #writeComment from #comments */
+}
+
+/* Input box styling */
+#myComment {
+    flex: 1; /* Makes the input box take up the remaining space */
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc; /* Border for input */
+    border-radius: 4px; /* Rounded corners */
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+#myComment:focus {
+    border-color: #007BFF; /* Change border color on focus */
+}
+
+/* Comment button styling */
+#postComment {
+    padding: 8px 16px;
+    font-size: 1rem;
+    background-color: #007BFF; /* Primary button color */
+    color: #fff; /* White text for contrast */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#postComment:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+.delete-comment-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.delete-comment-btn:hover {
+    background-color: darkred;
+}
+

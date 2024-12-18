@@ -204,6 +204,44 @@ public class PostDAO {
         }
 	}
 	
+	// 조회수 증가 메서드
+	public void plusComment(int postId) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set comment_count = comment_count + 1 ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("comment수 증가 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
+	
+	// 조회수 증가 메서드
+	public void minusComment(int postId) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set comment_count = comment_count - 1 ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("comment수 minus 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
+	
 	// 좋아요 증가 메서드
 	public void plusLike(int postId) {
 		sb.setLength(0);

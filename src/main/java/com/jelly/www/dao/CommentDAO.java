@@ -37,6 +37,23 @@ public class CommentDAO {
 			}
 		}
 		
+	    // 게시물 좋아요 데이터 삭제
+	    public void deleteOne(int commentId) {
+	        sb.setLength(0);
+	        sb.append("delete from COMMENT ");
+	        sb.append("where comment_id = ?");
+
+	        try {
+	            pstmt = conn.prepareStatement(sb.toString());
+	            pstmt.setInt(1, commentId);
+	            pstmt.executeUpdate();
+	            System.out.println("comment 데이터 삭제 완료");
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } 
+	    }
+		
+		
 		 // 팔로우 데이터 추가
 	    public void insertOne(CommentVO vo) {
 	        sb.setLength(0);
