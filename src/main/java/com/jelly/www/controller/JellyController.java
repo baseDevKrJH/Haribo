@@ -89,6 +89,10 @@ public class JellyController extends HttpServlet {
             action = new FindEmailAction(); // 이메일 찾기 페이지 처리
         } else if (page.equals("findPw")) {
             action = new FindPwAction(); // 비밀번호 찾기 페이지 처리
+        } else if (page.equals("userAccount")) {
+            url = "/views/mypage/userAccount.jsp"; // 판매 정산 계좌 이동
+        } else if (page.equals("profileInfo")) {
+            url = "/views/mypage/profileInfo.jsp"; // 프로필 관리 계좌 이동
         }  else {
             url = "/WEB-INF/views/error/404.jsp"; // 에러 페이지 처리
         } 
@@ -122,8 +126,10 @@ public class JellyController extends HttpServlet {
         // POST 요청 처리
         if ("login".equals(page)) {
             action = new LoginAction(); // 로그인 요청 처리
-        } else if ("joinOk".equals(page)) {
-            action = new JoinOkAction(); // 회원가입 요청 처리
+        } else if ("joinNum".equals(page)) {
+            action = new JoinNumAction(); // 인증 코드 처리
+        }  else if ("joinOk".equals(page)) {
+            action = new JoinOkAction(); // 인증코드 입력 후 회원가입 요청 처리
         }  else if ("findoutEmail".equals(page)) {
             action = new FindOutEmailAction();
         }   else if ("confirmPw".equals(page)) {

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -6,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/header.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/subHeader.css">
   <title>Jelly</title>
 </head>
 <body>
@@ -38,8 +39,7 @@
         <li>
           <c:choose>
             <c:when test="${sessionScope.user != null}">
-            <span style="font-weight: bolder;">안녕하세요, ${sessionScope.user.userName}님!</span>
-              <a href="<%= request.getContextPath() %>/jelly?page=logout"> 로그아웃</a>
+              <a href="<%= request.getContextPath() %>/jelly?page=logout">로그아웃</a>
             </c:when>
             <c:otherwise>
               <a href="<%= request.getContextPath() %>/jelly?page=login">로그인</a>
@@ -54,17 +54,6 @@
       <a href="<%= request.getContextPath() %>/jelly?page=home" class="header-section-logo">
         <img src="<%= request.getContextPath() %>/img/jellyLogo.png" alt="jellyLogo">
       </a>
-    </div>
-
-    <!-- 헤더 BOTTOM -->
-    <div class="header-section-bottom">
-      <nav class="header-bottom-nav">
-        <a href="<%= request.getContextPath() %>/jelly?page=home" class="${currentPage == 'home' ? 'active' : ''}">HOME</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=shoes" class="${currentPage == 'shop' ? 'active' : ''}">SHOP</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=brand" class="${currentPage == 'brand' ? 'active' : ''}">BRAND</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=style" class="${currentPage == 'style' ? 'active' : ''}">STYLE</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=event1" class="${currentPage == 'event' ? 'active' : ''}">EVENT</a>
-      </nav>
       <form class="header-form" action="<%= request.getContextPath() %>/jelly?page=search" method="get">
         <button>
           <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>joinOk.jsp</title>
+<title>joinNum.jsp</title>
 <%-- <link rel="stylesheet" href="<%= request.getContextPath() %>/css/joinok.css"/> --%>
 <style type="text/css">
 
@@ -395,9 +395,8 @@ form {
       </div>
     </div>
     <div class="container">
-    <%--   <img src="<%= request.getContextPath() %>/img/logo2.png" alt="" id="logo2" /> --%>
+      <form action="<%= request.getContextPath() %>/jelly?page=joinOk" method="post" onsubmit="alert('회원가입이 완료되었습니다.')">
       <br /><br /><br />
-      <form>
         <div class="form-group">
           <label for="email" class="email">이메일 인증 요청</label>
           <br /><br />
@@ -405,26 +404,21 @@ form {
           <p class="p-content">가입한 메일로 전송된 인증번호를</p>
           <p class="p-content">입력하면 회원가입이 완료됩니다.</p>
           <br /> <br>
-<%--           <h3><c:out value="${email}" /></h3> --%>
           <label for="email">인증번호</label>
-            <input type="text" id="number" name="number" placeholder="인증 번호를 입력하세요" required />
+            <input type="text" id="num" name="num" placeholder="인증 번호를 입력하세요" required />
             <br /> <br/>
-<!-- 			<button type="button" class="submit-btn">확인</button> -->
 			<c:if test="${not empty Error }">
 			${error }
 			</c:if>
         </div>
         <br />
-      </form>
       <label for="email">이메일을 받지 못하셨나요?</label>
       <br /><br /><br />
+        <button type="submit" class="login-btn">가입 완료</button>
+        </form>
       <form action="">
         <button type="button" class="email-btn">이메일 재전송</button>
       </form>
-      <form action="<%= request.getContextPath() %>/jelly?page=login" method="post">
-        <button type="submit" class="login-btn">가입 완료</button>
-      </form>
     </div>
-    
 </body>
 </html>

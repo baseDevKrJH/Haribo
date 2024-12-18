@@ -5,73 +5,53 @@ import com.jelly.www.vo.UserVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class JoinOkAction implements Action {
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        // 사용자 입력값 가져오기
-        String username = req.getParameter("username");
-        String email = req.getParameter("email");
-        String phoneNumber = req.getParameter("phone_number");
-        String password = req.getParameter("password");
-        String emailError = null;
-        String passwordError = null;
+        HttpSession session = req.getSession();
 
-        // UserVO 객체 생성
-        UserVO user = new UserVO();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPhoneNumber(phoneNumber);
-        user.setPassword(password);
+        String inputCode = req.getParameter("num");
+        String sessionCode = (String) session.getAttribute("tempNum");
 
-        // DAO 생성
-        UserDAO dao = new UserDAO();
+        if (inputCode != null && inputCode.equals(sessionCode)) {
+            // 세션에 저장된 사용자 데이터 가져오기
+            String email = (String) session.getAttribute("email");
+            String name = (String) session.getAttribute("name");
+            String phone = (String) session.getAttribute("phone");
+            String password = (String) session.getAttribute("password");
 
-        // 이메일 유효성 검사
-        if (email == null || !email.contains("@") || email.length() < 10) {
-        	System.out.println("이메일 양식 에러");
-            emailError = "정확한 이메일 주소를 입력하세요.";
-        }
-
-        // 비밀번호 유효성 검사
-        if (password == null || password.length() < 8 || password.length() > 16) {
-        	System.out.println("비밀번호 글자 수 에러");
-            passwordError = "비밀번호는 8자 이상, 16자 이하로 입력하세요.";
-        }
-        
-        // 중복 회원 체크
-        if (dao.isDuplicate(email, phoneNumber)) {
-            System.out.println("중복된 회원 존재");
-            req.setAttribute("error", "이미 가입된 이메일 또는 전화번호입니다.");
+            if (email == null || name == null || phone == null || password == null) {
+                // 세션에서 필요한 데이터가 없을 경우 에러 처리
+                req.setAttribute("errorMessage", "정보를 세션에서 찾을 수 없습니다. 다시 시도해주세요.");
+                return "/views/join/joinNum.jsp";
             }
-        
-        if (emailError == null && passwordError == null) {
-        	
-        	// 중복이 없을 경우 사용자 데이터 삽입
-        	int result = dao.insertOne(user);
-        	
-        	// 결과에 따라 적절한 페이지로 이동
-        	if (result > 0) {
-        		System.out.println("회원가입 성공");
-        		req.setAttribute("success", true);
-        		return "/views/join/joinOk.jsp"; // 성공 -> 결과 페이지로 
-        	} else {
-        		System.out.println("회원가입 실패");
-        		req.setAttribute("error", "회원가입에 실패했습니다. 다시 시도해주세요.");
-        		return "/views/join/joinForm.jsp"; // 실패 -> 다시 회원가입 폼으로 보냄
-        	}
+
+            System.out.println("email : " + email);
+            System.out.println("name : " + name);
+            System.out.println("phone : " + phone);
+            System.out.println("password : " + password);
+
+            // 데이터베이스에 저장
+            UserVO user = new UserVO();
+            user.setEmail(email);
+            user.setUserName(name);
+            user.setPhoneNumber(phone);
+            user.setPassword(password);
+
+            UserDAO dao = new UserDAO();
+            dao.insertOne(user);
+
+            // 세션 데이터 삭제
+            session.invalidate();
+            System.out.println("회원가입 성공");
+            return "/views/login/login.jsp";     
+            
         } else {
-            // 이메일이나 비밀번호가 유효하지 않은 경우, 에러 메시지를 요청 속성에 추가
-            if (emailError != null) {
-                req.setAttribute("emailError", emailError);
-            }
-            if (passwordError != null) {
-                req.setAttribute("passwordError", passwordError);
-            }
-
-            // 로그인 페이지로 이동
-            return "/views/join/joinForm.jsp";
+            req.setAttribute("errorMessage", "인증 코드가 일치하지 않습니다.");
+            return "/views/join/joinNum.jsp";
         }
-        
     }
 }

@@ -29,10 +29,7 @@ public class ConfirmPwAction implements Action {
 			String userEmail = vo.getEmail();
 
 			// 임시 비밀번호 생성
-			String tempPassword = generateTemporaryPassword();
-
-			// 사용자 비밀번호 업데이트
-//			vo.setPassword(tempPassword);
+			String tempPassword = generateTempPw();
 
 	        // 사용자 비밀번호 업데이트
 	       vo = dao.updateUserPassword(userEmail, tempPassword);
@@ -72,7 +69,7 @@ public class ConfirmPwAction implements Action {
 			try {
 				// 보낼 메일 객체
 				Message message = new MimeMessage(session);
-				message.setFrom(new InternetAddress(username, "test", "UTF-8"));
+				message.setFrom(new InternetAddress(username, "JELLY", "UTF-8"));
 				message.setRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
 				message.setSubject(title);
 				message.setContent(sb.toString(), "text/html; charset=UTF-8");
@@ -86,15 +83,15 @@ public class ConfirmPwAction implements Action {
 			return "views/find/confirmPw.jsp";
 		} else {
 			System.out.println("해당 이메일로 등록된 회원이 없습니다.");
-			return "views/find/confirmPw.jsp";
+			return "views/find/findPw.jsp";
 		}
 	}
 
 	// 임시 비밀번호 생성 메서드
-	private String generateTemporaryPassword() {
+	private String generateTempPw() {
 		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		StringBuilder sb = new StringBuilder(10);
-		for (int i = 0; i < 10; i++) {
+		StringBuilder sb = new StringBuilder(8);
+		for (int i = 0; i < 8; i++) {
 			int index = (int) (Math.random() * characters.length());
 			sb.append(characters.charAt(index));
 		}

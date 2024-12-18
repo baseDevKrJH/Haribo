@@ -110,7 +110,7 @@ public class UserDAO {
     // 3. 사용자 추가
     public int insertOne(UserVO user) {
         sb.setLength(0);
-        sb.append("INSERT INTO USER (user_name, nickname, email, password, phone_number, birth, kakao_id, naver_id, profile_image, created_at, updated_at) ");
+        sb.append("INSERT INTO USER (user_name, nickname, email, password, phone_number, birth_date, kakao_id, naver_id, profile_image, created_at, updated_at) ");
         sb.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
 
         int result = 0;

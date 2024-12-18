@@ -50,7 +50,7 @@
         </div>
     </c:if>
 
-    <form action="<%= request.getContextPath() %>/jelly?page=joinOk" method="post">
+    <form action="<%= request.getContextPath() %>/jelly?page=joinNum" method="post">
         <div class="form-group">
             <label for="email">이메일 주소</label>
             <input type="email" id="email" name="email" required /> 
@@ -63,7 +63,7 @@
         </div>
         <div class="form-group">
             <label for="username">이름</label>
-            <input type="text" id="username" name="username" required />
+            <input type="text" id="username" name="user_name" required />
         </div>
         <div class="form-group">
             <label for="phone">휴대폰 번호</label>
@@ -93,6 +93,7 @@
                 <li>✔ [선택] 프로모션 정보 수신 동의</li>
             </ul>
         </div>
+        
         <button type="submit" class="submit-btn">이메일 인증하고 가입하기</button>
     </form>
 </div>
