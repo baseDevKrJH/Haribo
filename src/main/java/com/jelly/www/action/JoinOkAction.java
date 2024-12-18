@@ -44,8 +44,6 @@ public class JoinOkAction implements Action {
             UserDAO dao = new UserDAO();
             dao.insertOne(user);
 
-            // 세션 데이터 삭제
-            session.invalidate();
             System.out.println("회원가입 성공");
             return "/views/login/login.jsp";     
             

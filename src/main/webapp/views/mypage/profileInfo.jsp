@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/views/home/subHeader.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,12 +22,12 @@
 			<div class="profile-box">
 				<div>
 					<img
-						src="https://toppng.com/uploads/preview/emoji-iphone-nerd-115497289397n7uzmyvxq.png"
+						src="<%= request.getContextPath() %>/img/profile2.png"
 						alt="프로필 사진" class="profile-image" />
 				</div>
 				<div class="profile-info">
-					<span class="profile-user-nickname">ritto</span> <br /> <span
-						class="profile-user-email">ritto7875@gmail.com</span>
+					<span class="profile-user-nickname">${user.userName}</span> <br /> <span
+						class="profile-user-email">${user.email}</span>
 				</div>
 				<div class="profile-btns">
 					<input type="button" value="이미지 변경" class="profile-info-btn" /> <input

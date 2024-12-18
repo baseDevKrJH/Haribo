@@ -90,7 +90,7 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("findPw")) {
             action = new FindPwAction(); // 비밀번호 찾기 페이지 처리
         } else if (page.equals("userAccount")) {
-            url = "/views/mypage/userAccount.jsp"; // 판매 정산 계좌 이동
+        	action = new UserAccountSAction();// 판매 정산 계좌 이동(조회 후 세션에 저장)
         } else if (page.equals("profileInfo")) {
             url = "/views/mypage/profileInfo.jsp"; // 프로필 관리 계좌 이동
         }  else {
@@ -134,6 +134,8 @@ public class JellyController extends HttpServlet {
             action = new FindOutEmailAction();
         }   else if ("confirmPw".equals(page)) {
             action = new ConfirmPwAction(); // 비밀번호 찾기 페이지 처리
+        } else if ("userAccount".equals(page)) {
+            action = new UserAccountAction(); // 판매 정산 계좌 추가 페이지 처리
         } else {
             resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "메서드 확인");
             return;

@@ -56,6 +56,7 @@ public class JoinNumAction implements Action {
 
 			// 입력값 세션에 저장
 			HttpSession session = req.getSession();
+			session.setAttribute("user", user);
 			session.setAttribute("name", username);
 			session.setAttribute("email", email);
 			session.setAttribute("phone", phonenumber);

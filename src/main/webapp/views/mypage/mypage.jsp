@@ -19,7 +19,7 @@
       <div class="mypage-content">
         <div class="mypage-box">
           <div>
-            <img src="${user.profileImage}" alt="프로필 사진" class="profile-image" />
+            <img src="<%= request.getContextPath() %>/img/profile2.png" alt="프로필 사진" class="profile-image" />
           </div>
           <div class="profile-info">
             <span class="profile-user-nickname">${user.userName}</span> <br />

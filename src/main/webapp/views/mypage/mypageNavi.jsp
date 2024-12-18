@@ -22,7 +22,7 @@
               <a href="<%=request.getContextPath()%>/jelly?page=" style="color:black; font-weight: bold">구매내역</a>
             </c:when>
             <c:otherwise>
-              <a href="<%=request.getContextPath()%>/jelly?page=" style="font-weight: bold">구매내역</a>
+              <a href="<%=request.getContextPath()%>/jelly?page=">구매내역</a>
             </c:otherwise>
       </c:choose>
       </p>
