@@ -19,6 +19,12 @@
     <div class="shop-grid">
       <!-- 첫 번째 행 -->
       <div class="shop-item">
+        <a href="<%= request.getContextPath() %>/jelly?page=shoes">
+          <img src="<%= request.getContextPath() %>/img/shoeCategory.png" alt="신발">
+        </a>
+        <p>신발</p>
+      </div>
+      <div class="shop-item">
         <a href="<%= request.getContextPath() %>/jelly?page=outer">
           <img src="<%= request.getContextPath() %>/img/outerCategory.png" alt="아우터">
         </a>
@@ -35,12 +41,6 @@
           <img src="<%= request.getContextPath() %>/img/bottomCategory.png" alt="하의">
         </a>
         <p>하의</p>
-      </div>
-      <div class="shop-item">
-        <a href="<%= request.getContextPath() %>/jelly?page=shoes">
-          <img src="<%= request.getContextPath() %>/img/shoeCategory.png" alt="신발">
-        </a>
-        <p>신발</p>
       </div>
 
       <!-- 두 번째 행 -->

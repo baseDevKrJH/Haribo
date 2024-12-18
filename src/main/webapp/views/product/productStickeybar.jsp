@@ -37,31 +37,30 @@
     </div>
   </div>
 
-
-  <!-- 구매 모달 -->
-  <div class="modal-overlay" id="sticky-buy-modal">
-    <div class="modal-content">
-      <button class="modal-close" id="sticky-buy-close">&times;</button>
-      <h3 class="modal-title">구매 사이즈 선택</h3>
-      <div class="size-grid">
-        <c:forEach var="sizePrice" items="${sizePriceList}">
-          <div class="size-item">
-            <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${sizePrice.size}" class="size-button">
-              <span>${sizePrice.size}</span>
-              <c:choose>
-                <c:when test="${sizePrice.price == -1}">
-                  <span class="price bid-label">구매 입찰</span>
-                </c:when>
-                <c:otherwise>
-                  <span class="price">${sizePrice.price}원</span>
-                </c:otherwise>
-              </c:choose>
-            </a>
-          </div>
-        </c:forEach>
-      </div>
+<!-- Sticky Bar의 구매 모달 -->
+<div class="modal-overlay" id="sticky-buy-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="sticky-buy-close">&times;</button>
+    <h3 class="modal-title">구매 사이즈 선택</h3>
+    <div class="size-grid">
+      <c:forEach var="size" items="${sizeList}">
+        <div class="size-item">
+          <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
+            <span>${size}</span>
+            <c:choose>
+              <c:when test="${sizeButtons[size] == '구매 입찰'}">
+                <span class="price bid-label">구매 입찰</span>
+              </c:when>
+              <c:otherwise>
+                <span class="price">${sizeButtons[size]}</span>
+              </c:otherwise>
+            </c:choose>
+          </a>
+        </div>
+      </c:forEach>
     </div>
   </div>
+</div>
 
   <!-- 판매 모달 -->
   <div class="modal-overlay" id="sticky-sell-modal">
@@ -80,6 +79,26 @@
       </div>
     </div>
   </div>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+	    const wishButton = document.querySelector(".btn_wish2");
+
+	    wishButton.addEventListener("click", function(event) {
+	        event.preventDefault(); // 기본 동작 방지
+
+	        // 상태 토글 (활성화 ↔ 비활성화)
+	        if (wishButton.classList.contains("disabled")) {
+	            // 비활성화 상태 -> 활성화 상태로 변경
+	            wishButton.classList.remove("disabled");
+	            wishButton.textContent = "관심등록"; // 텍스트 변경
+	        } else {
+	            // 활성화 상태 -> 비활성화 상태로 변경
+	            wishButton.classList.add("disabled");
+	            wishButton.textContent = "관심등록됨"; // 텍스트 변경
+	        }
+	    });
+	});
+  </script>
   <!-- productModal.js -->
   <script src="<%= request.getContextPath() %>/js/productModal.js"></script>
 </body>

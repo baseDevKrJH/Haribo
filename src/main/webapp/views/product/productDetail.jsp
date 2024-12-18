@@ -228,7 +228,6 @@
     <button class="modal-close" id="buy-modal-close">&times;</button>
     <h3 class="modal-title">구매 사이즈 선택</h3>
     <div class="size-grid">
-      <!-- 고정된 사이즈 리스트 -->
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
           <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
