@@ -21,4 +21,5 @@ public class StyleCommentVO {
 	private Timestamp updatedAt;
 	private String profileImage;
 	private String nickname;
+	private int commentCount;
 }

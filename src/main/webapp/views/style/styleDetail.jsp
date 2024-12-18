@@ -129,7 +129,7 @@
 		
 		<!-- Write Comment Section -->
 		<div id="writeComment">
-		    <input type="text" name="myComment" id="myComment" placeholder="Write a comment..." />
+		    <textarea name="myComment" id="myComment" placeholder="Write a comment..."></textarea>
 		    <input id="postComment" type="button" value="Comment" 
 		           data-context-path="${pageContext.request.contextPath}" 
 		           data-post-id="${postVo.postId}" 

@@ -1,12 +1,5 @@
 @charset "UTF-8";
-.comment-info {
-    display: flex;
-    align-items: center; /* Aligns the items (nickname and content) vertically */
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0; /* Adds a separator between comments */
-    padding-bottom: 10px;
-    gap: 10px; /* Spacing between the profile picture and the rest of the content */
-}
+
 
 /* Profile picture styling */
 .comment-profile-picture {
@@ -125,6 +118,27 @@
 #postComment:hover {
     background-color: #0056b3; /* Darker shade on hover */
 }
+
+
+
+.delete-comment-btn:hover {
+    background-color: darkred;
+}
+
+
+/* Adjust comment container to provide space for the delete button */
+.comment-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    gap: 10px;
+    position: relative;
+    padding-right: 80px; /* Added padding to the right to accommodate the delete button */
+}
+
+/* Modify delete button positioning if necessary */
 .delete-comment-btn {
     background-color: red;
     color: white;
@@ -133,9 +147,9 @@
     cursor: pointer;
     border-radius: 5px;
     font-size: 0.9rem;
-}
-
-.delete-comment-btn:hover {
-    background-color: darkred;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 

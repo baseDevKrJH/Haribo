@@ -126,13 +126,15 @@ $(document).ready(function () {
   });
   
   $comments.on("click", ".delete-comment-btn", function () {
-	  let commentCount = parseInt($(this).data("comment-count"), 10) || 0;
-	  console.log(commentCount);
+	  const commentNum = $("#comment-count");
+	
       const deleteCommentId = $(this).data("comment-id");
+	  const countOfComment = $(this).data("comment-count");
 	  const contextPath = $(this).data("context-path");
 	  const postId = $(this).data("post-id");
 	  console.log("postId:" + postId);
 	  console.log("commendId: " + deleteCommentId);
+	  console.log("countOfComment: " + countOfComment);
 	  let comment = $("#myComment").val();
 	  $.ajax({
 	    url: contextPath + '/comment',
@@ -144,8 +146,7 @@ $(document).ready(function () {
 	    success: function (html) {
 	      console.log("success");
 	      $("#comments").html(html);
-		  document.getElementById('myComment').value = '';
-		  
+		  commentNum.text(countOfComment - 1);
 	    },
 	    error: function (xhr, status, error) {
 	      if (xhr.status === 401) {

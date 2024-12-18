@@ -10,6 +10,7 @@ import com.jelly.www.dao.CommentDAO;
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.UserDAO;
 import com.jelly.www.vo.CommentVO;
+import com.jelly.www.vo.PostVO;
 import com.jelly.www.vo.StyleCommentVO;
 import com.jelly.www.vo.StylePostInfoVO;
 import com.jelly.www.vo.UserVO;
@@ -68,9 +69,8 @@ public class CommentController extends HttpServlet{
     		ArrayList<CommentVO> list = commentDAO.getCommentOfPost(postId);
     		ArrayList<StyleCommentVO> styleCommentInfo = new ArrayList<>();
     		
-    		
-    		
-    		
+    		PostVO postVO = postDAO.selectOne(postId);
+
     		// loop through comment list to create returning value object
     		for(CommentVO vo: list) {
     			// get user profile picture and user nickname
@@ -84,7 +84,8 @@ public class CommentController extends HttpServlet{
     					vo.getCreatedAt(),
     					vo.getUpdatedAt(),
     					userVO.getProfileImage(),
-    					userVO.getNickname()
+    					userVO.getNickname(),
+    					postVO.getCommentCount()
     					);
     			styleCommentInfo.add(obj);
     			req.setAttribute("commentList", styleCommentInfo);

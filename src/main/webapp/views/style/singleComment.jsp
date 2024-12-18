@@ -13,7 +13,10 @@
         <span class="comment-contents">${comment.content}</span>
         
         <c:if test="${user.userId == comment.userId}">
-            <button class="delete-comment-btn" data-comment-id="${comment.commentId}" data-context-path="${pageContext.request.contextPath}" data-post-id="${comment.postId}">Delete</button>
+            <button class="delete-comment-btn" data-comment-id="${comment.commentId}" 
+            data-context-path="${pageContext.request.contextPath}" 
+            data-post-id="${comment.postId}" 
+            data-comment-count="${comment.commentCount}">Delete</button>
         </c:if>
     </div>
 </c:forEach>
