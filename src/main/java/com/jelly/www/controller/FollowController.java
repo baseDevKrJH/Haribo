@@ -56,9 +56,17 @@ public class FollowController extends HttpServlet {
 	    		userDao.plusFollow(followerId, followingId);
 	    		isFollow = true;
 	    	}
+	    	
+	    	UserDAO userDao1 = new UserDAO();
+	    	UserVO userVo = userDao1.selectOne(followingId);
+	    			
+	    	int followerCount = userVo.getFollowerCount();
+	    	int followingCount = userVo.getFollowingCount();
 	
 	        // JSON 응답 생성
 	    	jsonResponse.put("isFollow", isFollow);
+	    	jsonResponse.put("followerCount", followerCount);
+	    	jsonResponse.put("followingCount", followingCount);
 	
 	        // 응답
 	        response.setContentType("application/json;charset=UTF-8");

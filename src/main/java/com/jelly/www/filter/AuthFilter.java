@@ -20,8 +20,7 @@ public class AuthFilter implements Filter {
 
         // 로그인이 필요한 페이지들 (마이페이지, 관심, 로그인)
         if ((uri.contains("/mypage") || uri.contains("/saved")) && !loggedIn) {
-            resp.sendRedirect(req.getContextPath() + "/home?page=login");
-            return;
+        	resp.sendRedirect(req.getContextPath() + "/jelly?page=login");
         }
         
         
