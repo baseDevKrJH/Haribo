@@ -7,11 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.jelly.www.action.*;
-import com.jelly.www.dao.ProductDAO;
-import com.jelly.www.vo.ProductVO;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/jelly")
 public class JellyController extends HttpServlet {
@@ -39,12 +36,6 @@ public class JellyController extends HttpServlet {
             url = "/views/join/joinForm.jsp"; // 회원가입 페이지 이동
         } else if (page.equals("logout")) {
             action = new LogoutAction(); // 로그아웃 처리
-        } else if (page.equals("wish")) {
-            if (isUserLoggedIn(req)) {
-                action = new WishAction(); // 관심 페이지 처리
-            } else {
-                url = "/views/login/login.jsp"; // 로그인 페이지로 리다이렉트
-            }
         } else if (page.equals("mypage")) {
             if (isUserLoggedIn(req)) {
                 action = new MypageAction(); // 마이 페이지 처리
@@ -77,11 +68,11 @@ public class JellyController extends HttpServlet {
         } else if (page.equals("style")) {
             action = new StyleAction(); // 스타일 페이지 처리
         } else if (page.equals("styleDetail")) {
-        	action = new StyleDetailAction(); // 스타일 페이지 처리
+            action = new StyleDetailAction(); // 스타일 페이지 처리
         } else if (page.equals("styleList")) {
-        	action = new StyleListAction(); // 스타일 list 처리
+            action = new StyleListAction(); // 스타일 list 처리
         } else if (page.equals("postNewStyle")) {
-        	action = new PostNewStyleAction(); // 스타일 post 처리
+            action = new PostNewStyleAction(); // 스타일 post 처리
         } else if (page.equals("event")) {
             action = new EventAction(); // 이벤트 페이지 처리
         } else if (page.equals("popular")) {
@@ -102,7 +93,7 @@ public class JellyController extends HttpServlet {
         } else {
             url = "/views/error/404.jsp"; // 에러 페이지 처리
         }
-        
+
         // Action 실행
         if (action != null) {
             url = action.execute(req, resp);
@@ -139,7 +130,9 @@ public class JellyController extends HttpServlet {
         } else if ("filter".equals(page)) {
             FilterController filterController = new FilterController();
             filterController.handleRequest(req, resp);
-            return; // FilterController에서 응답을 직접 처리
+            return; // FilterController에서 응답을 직접 처ㄹ
+        } else if ("wishlistToggle".equals(page)) {
+            action = new WishlistToggleAction(); // 관심상품 토글 처리
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "요청 처리 대상이 없습니다.");
             return;

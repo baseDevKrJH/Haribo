@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productModal.css" />
   <!-- upbutton.css -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/upbutton.css" />
+  <!-- jQuery 추가 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -94,17 +96,73 @@
         </a>
       </div>
       
-      <!-- 관심저장 버튼 -->
-      <div class="additional-button">
-        <a href="<%= request.getContextPath() %>/views/product/wish.jsp" class="btn btn_wish outlinegrey large">
-          <div class="wishlist-icon">
-            <img src="<%= request.getContextPath() %>/img/bookmark-icon.png" alt="Bookmark">
-          </div>
-          <span class="wishlist-text">관심상품</span> 
-          <span class="wishCount">210</span>
-        </a>
-      </div>
+<c:choose>
+    <c:when test="${not empty user}">
+        <!-- 로그인 상태 -->
+        <div class="additional-button">
+            <button id="wishlist-button" 
+                    data-context-path="<%= request.getContextPath() %>" 
+                    data-product-id="${product.productId}" 
+                    data-user-id="${user.userId}" 
+                    class="btn btn_wish outlinegrey large">
+                <div class="wishlist-icon">
+                    <img src="<%= request.getContextPath() %>/img/bookmark-icon.png" alt="Bookmark">
+                </div>
+                <span id="wishlist-text" class="wishlist-text">관심상품</span>
+            </button>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <!-- 비로그인 상태 -->
+        <div class="additional-button">
+            <button onclick="location.href='<%= request.getContextPath() %>/jelly?page=login';" class="btn btn_wish outlinegrey large">
+                <div class="wishlist-icon">
+                    <img src="<%= request.getContextPath() %>/img/bookmark-icon.png" alt="Bookmark">
+                </div>
+                <span class="wishlist-text">관심등록</span>
+            </button>
+        </div>
+    </c:otherwise>
+</c:choose>
 
+<script>
+$(document).ready(function () {
+    $("#wishlist-button").on("click", function () {
+        const contextPath = $(this).data("context-path");
+        const productId = $(this).data("product-id");
+        const userId = $(this).data("user-id");
+        const wishlistButton = $(this);
+        const wishlistText = $("#wishlist-text");
+
+        console.log("Ajax 요청 시작: productId=" + productId + ", userId=" + userId); // 콘솔에 요청 확인
+
+        $.ajax({
+            url: contextPath + '/jelly', // URL 확인
+            type: "POST",
+            data: {
+                page: "wishlistToggle", // 페이지 이름 확인
+                productId: productId,
+                userId: userId
+            },
+            success: function (response) {
+                console.log("AJAX 응답 성공", response); // 응답 확인
+                // 상태에 따라 버튼 스타일과 텍스트 변경
+                if (response.status === "added") {
+                    wishlistButton.addClass("active");
+                    wishlistText.text("관심상품에 추가됨");
+                } else if (response.status === "removed") {
+                    wishlistButton.removeClass("active");
+                    wishlistText.text("관심상품");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Ajax 오류:", status, error);
+                alert("서버 요청 중 오류가 발생했습니다.");
+            }
+        });
+    });
+});
+</script>
       <!-- 배송 정보 섹션 -->
       <div class="delivery_way_wrap">
         <h3 class="delivery_title">배송 정보</h3>

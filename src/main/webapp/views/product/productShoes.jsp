@@ -16,7 +16,7 @@
 
   	<!-- 맨 위로 이동 버튼 -->
 	<button class="btn_top" id="btnTop" title="맨 위로 가기"></button>
-	
+  
   <div class="container">
     <!-- 카테고리 링크 -->
     <div class="categories">
