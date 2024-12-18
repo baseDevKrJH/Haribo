@@ -16,6 +16,7 @@ public class UserDAO {
     private PreparedStatement pstmt;
     private ResultSet rs;
     private StringBuilder sb = new StringBuilder();
+    private StringBuilder sb1 = new StringBuilder();
 
     public UserDAO() {
         try {
@@ -246,6 +247,64 @@ public class UserDAO {
         return false; // 중복이 없으면 false 
     }
     
+
+	// 팔로우 증가 메서드
+	public void plusFollow(int followerId, int followingId) {
+		sb.setLength(0);
+        sb.append("update USER ");
+        sb.append("set follower_count = follower_count + 1 ");
+        sb.append("where user_id = ?");
+        
+        sb1.setLength(0);
+        sb1.append("update USER ");
+        sb1.append("set following_count = following_count + 1 ");
+        sb1.append("where user_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, followingId);
+            pstmt.executeUpdate();
+            
+            pstmt = conn.prepareStatement(sb1.toString());
+            pstmt.setInt(1, followerId);
+            pstmt.executeUpdate();
+            
+            System.out.println("팔로우 증가 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
+	
+	// 팔로우 하락 메서드
+	public void minusFollow(int followerId, int followingId) {
+		sb.setLength(0);
+        sb.append("update USER ");
+        sb.append("set follower_count = follower_count - 1 ");
+        sb.append("where user_id = ?");
+        
+        sb1.setLength(0);
+        sb1.append("update USER ");
+        sb1.append("set following_count = following_count - 1 ");
+        sb1.append("where user_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, followingId);
+            pstmt.executeUpdate();
+            
+            pstmt = conn.prepareStatement(sb1.toString());
+            pstmt.setInt(1, followerId);
+            pstmt.executeUpdate();
+            
+            System.out.println("팔로우 하락 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
     
     // 자원 해제
     private void close() {

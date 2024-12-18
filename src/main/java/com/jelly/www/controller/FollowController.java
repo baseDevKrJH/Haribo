@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import com.jelly.www.dao.FollowDAO;
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostSaveDAO;
+import com.jelly.www.dao.UserDAO;
 import com.jelly.www.vo.FollowVO;
 import com.jelly.www.vo.PostSaveVO;
 import com.jelly.www.vo.PostVO;
@@ -42,14 +43,17 @@ public class FollowController extends HttpServlet {
 	
 	        // DAO 호출
 	    	FollowDAO followDao = new FollowDAO();
+	    	UserDAO userDao = new UserDAO();
 	    	
 	    	if(followDao.checkFollow(followerId, followingId)) {
 	    		// 팔로우 중이라면
 	    		followDao.deleteOne(followerId, followingId);
+	    		userDao.minusFollow(followerId, followingId);
 	    	}
 	    	else {
 	    		// 팔로우 중이 아니라면
 	    		followDao.insertOne(new FollowVO(followerId, followingId));
+	    		userDao.plusFollow(followerId, followingId);
 	    		isFollow = true;
 	    	}
 	

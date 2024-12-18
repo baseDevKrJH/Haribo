@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.jelly.www.vo.PostLikeVO;
 import com.jelly.www.vo.PostSaveVO;
 import com.jelly.www.vo.PostTagVO;
+import com.jelly.www.vo.PostVO;
 import com.jelly.www.vo.ProductVO;
 
 public class PostSaveDAO {
@@ -98,6 +99,35 @@ public class PostSaveDAO {
         } finally {
         	close();
         }
+    }
+    
+    // 유저 아이디로 조회
+    public ArrayList<PostSaveVO> getByUserId(int userId){
+    	ArrayList<PostSaveVO> list = new ArrayList<PostSaveVO>();
+    	
+    	sb.setLength(0);
+        sb.append("select post_id, user_id from POST_SAVE ");
+        sb.append("where user_id = ? ");
+
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+            	PostSaveVO vo = new PostSaveVO(
+            			rs.getInt("post_id"),
+            			rs.getInt("user_id")
+                );
+                list.add(vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+		
+		return list;
     }
 
 	// 자원 해제 메서드
