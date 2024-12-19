@@ -132,7 +132,17 @@
 							<img src="${savedPost.thumbnailImageUrl}" alt="저장된 게시물 썸네일" />
 						</div>
 						<div class="underPost">
-							<p>좋아요: ${savedPost.likeCount}</p>
+							<img 
+						        id="like-btn-${savedPost.postId}" 
+						        class="like-btn"
+						        src="<%= request.getContextPath() %>/img/${post.like ? 'after_like.png' : 'before_like.png'}"
+						        alt="좋아요 버튼" 
+						        data-context-path="<%= request.getContextPath() %>"
+						        data-post-id="${savedPost.postId}"
+						        data-like-count = "${savedPost.likeCount}"
+						        onclick="return false;" />
+			        
+						    <span id="like-count-${savedPost.postId}" class="like-count">${savedPost.likeCount}</span>
 						</div>
 					</a>
 				</c:forEach>
