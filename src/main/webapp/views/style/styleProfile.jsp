@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleProfile.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/styleProfile.js"></script>
+<script src="<%= request.getContextPath() %>/js/listStyleLike.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -92,7 +93,17 @@
 							<img src="${post.thumbnailImageUrl}" alt="게시물 썸네일" />
 						</div>
 						<div class="underPost">
-							<p>좋아요: ${post.likeCount}</p>
+							<img 
+						        id="like-btn-${post.postId}" 
+						        class="like-btn"
+						        src="<%= request.getContextPath() %>/img/${post.like ? 'after_like.png' : 'before_like.png'}"
+						        alt="좋아요 버튼" 
+						        data-context-path="<%= request.getContextPath() %>"
+						        data-post-id="${post.postId}"
+						        data-like-count = "${post.likeCount}"
+						        onclick="return false;" />
+			        
+						    <span id="like-count-${post.postId}" class="like-count">${post.likeCount}</span>
 						</div>
 					</a>
 				</c:forEach>

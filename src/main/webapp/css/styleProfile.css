@@ -238,7 +238,8 @@ button {
 .underPost {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: right;
+  gap: 5px;
   padding: 10px;
 }
 

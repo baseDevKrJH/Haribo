@@ -1,10 +1,12 @@
 package com.jelly.www.action;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.jelly.www.dao.FollowDAO;
 import com.jelly.www.dao.PostDAO;
+import com.jelly.www.dao.PostLikeDAO;
 import com.jelly.www.dao.PostSaveDAO;
 import com.jelly.www.dao.PostTagDAO;
 import com.jelly.www.dao.ProductDAO;
@@ -13,6 +15,7 @@ import com.jelly.www.vo.PostSaveVO;
 import com.jelly.www.vo.PostTagVO;
 import com.jelly.www.vo.PostVO;
 import com.jelly.www.vo.ProductVO;
+import com.jelly.www.vo.StyleProfileListVO;
 import com.jelly.www.vo.UserVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +47,31 @@ public class StyleProfileAction implements Action {
 		
 			// 유저의 스타일 리스트 가져오기
 			PostDAO postDao = new PostDAO();
+			PostLikeDAO postLikeDAO =  new PostLikeDAO();
 			ArrayList<PostVO> postList = postDao.getByUserId(userId);
+			ArrayList<StyleProfileListVO> newPostList = new ArrayList<StyleProfileListVO>();
+			for(PostVO vo: postList) {
+				boolean isLike = false;
+				if(user != null) {
+					isLike = postLikeDAO.checkLike(vo.getPostId(), user.getUserId());
+				}
+				StyleProfileListVO obj = new StyleProfileListVO(
+						vo.getPostId(),
+						vo.getUserId(),
+						vo.getStyleCategory(),
+						vo.getTitle(),
+						vo.getContent(),
+						vo.getThumbnailImageUrl(),
+						vo.getLikeCount(),
+						vo.getCommentCount(),
+						vo.getViewCount(),
+						vo.getSaveCount(),
+						vo.getCreatedAt(),
+						vo.getUpdatedAt(),
+						isLike
+						);
+				newPostList.add(obj);
+			}
 			
 			// 태그 상품 리스트 가져오기
 			HashSet<ProductVO> productSet = new HashSet<ProductVO>();
@@ -69,7 +96,7 @@ public class StyleProfileAction implements Action {
 			// 요청 파라미터 설정
 			request.setAttribute("userVo", userVo);
 			request.setAttribute("isFollow", isFollow);
-			request.setAttribute("postList", postList);
+			request.setAttribute("postList", newPostList);
 			request.setAttribute("productSet", productSet);
 			request.setAttribute("savedPostList", savedPostList);
 			
