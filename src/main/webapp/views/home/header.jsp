@@ -63,6 +63,7 @@
 		<a href="<%= request.getContextPath() %>/jelly?page=shoes" class="${currentPage eq 'shop' ? 'active' : ''}">SHOP</a>
 		<a href="<%= request.getContextPath() %>/jelly?page=brand" class="${currentPage eq 'brand' ? 'active' : ''}">BRAND</a>
 		<a href="<%= request.getContextPath() %>/jelly?page=style" class="${currentPage eq 'style' ? 'active' : ''}">STYLE</a>
+		<a href="<%= request.getContextPath() %>/jelly?page=event" class="${currentPage eq 'event' ? 'active' : ''}">EVENT</a>
       </nav>
       <form class="header-form" action="<%= request.getContextPath() %>/jelly?page=search" method="get">
         <button>

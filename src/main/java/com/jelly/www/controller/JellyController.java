@@ -36,14 +36,6 @@ public class JellyController extends HttpServlet {
             url = "/views/join/joinForm.jsp"; // 회원가입 페이지 이동
         } else if (page.equals("logout")) {
             action = new LogoutAction(); // 로그아웃 처리
-        } else if (page.equals("mypage")) {
-            if (isUserLoggedIn(req)) {
-                action = new MypageAction(); // 마이 페이지 처리
-            } else {
-                url = "/views/login/login.jsp"; // 로그인 페이지로 리다이렉트
-            }
-        } else if (page.equals("notice")) {
-            action = new NoticeAction(); // 고객센터 페이지 처리
         } else if ("checkWishlist".equals(page)) {
                 action = new CheckWishlistAction();  // 관심상품 상태를 확인하는 액션
         } else if (page.equals("bottoms")) {
@@ -67,16 +59,6 @@ public class JellyController extends HttpServlet {
             req.setAttribute("currentPage", "shop"); // 현재 페이지 설정
         } else if (page.equals("bags")) {
             action = new BagsAction(); // 가방 페이지 처리
-        } else if (page.equals("style")) {
-            action = new StyleAction(); // 스타일 페이지 처리
-        } else if (page.equals("styleDetail")) {
-            action = new StyleDetailAction(); // 스타일 페이지 처리
-        } else if (page.equals("styleList")) {
-            action = new StyleListAction(); // 스타일 list 처리
-        } else if (page.equals("postNewStyle")) {
-            action = new PostNewStyleAction(); // 스타일 post 처리
-        } else if (page.equals("event")) {
-            action = new EventAction(); // 이벤트 페이지 처리
         } else if (page.equals("popular")) {
             action = new ProductPopularAction(); // 인기상품 페이지 처리
         } else if (page.equals("productDetail")) {
