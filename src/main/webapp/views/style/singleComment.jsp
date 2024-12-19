@@ -12,11 +12,21 @@
         </a>
         <span class="comment-contents">${comment.content}</span>
         
-        <c:if test="${user.userId == comment.userId}">
-            <button class="delete-comment-btn" data-comment-id="${comment.commentId}" 
-            data-context-path="${pageContext.request.contextPath}" 
-            data-post-id="${comment.postId}" 
-            data-comment-count="${comment.commentCount}">Delete</button>
-        </c:if>
+        <c:choose>
+		    <c:when test="${user.userId == comment.userId}">
+		        <button class="delete-comment-btn" data-comment-id="${comment.commentId}" 
+		                data-context-path="${pageContext.request.contextPath}" 
+		                data-post-id="${comment.postId}" 
+		                data-comment-count="${comment.commentCount}">Delete</button>
+		    </c:when>
+		    
+		    <%-- <c:otherwise>
+		        <img class="comment-like-btn" src="<%= request.getContextPath() %>/img/${userLikeComment ? 'after_like.png' : 'before_like.png'}" 
+		        alt="좋아요 버튼" 
+		        data-context-path="${pageContext.request.contextPath}" 
+		        data-post-id="${postVo.postId}"
+		        data-comment-id="${comment.commentId}">
+		    </c:otherwise> --%>
+		</c:choose>
     </div>
 </c:forEach>

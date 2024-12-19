@@ -50,8 +50,6 @@ public class PostLikeDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            close();
         }
 		
 		return result;
@@ -71,8 +69,6 @@ public class PostLikeDAO {
             System.out.println("게시물 좋아요 데이터 추가 완료");
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-        	close();
         }
     }
 
@@ -90,8 +86,6 @@ public class PostLikeDAO {
             System.out.println("게시물 좋아요 데이터 삭제 완료");
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-        	close();
         }
     }
 
