@@ -104,6 +104,21 @@ public class PostImageDAO {
 		
 		return vo;
 	}
+	
+	public void deleteImageOfPost(int postId) {
+		sb.setLength(0);
+		sb.append("delete from POST_IMAGE where post_id = ?");
+		try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId); 
+            pstmt.executeUpdate();
+            System.out.println("deleting all images of postId " + postId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
 
 	
 	

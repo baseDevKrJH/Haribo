@@ -102,13 +102,22 @@ public class PostDAO {
 		return list;
 	}
 	
-	public ArrayList<PostVO> selectByStyleCategory(int category, int currentPage){
+	public ArrayList<PostVO> selectByStyleCategory(int category, int currentPage, int orderBy){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
 		if(category == 0) {
-			sb.append("select * from POST order by post_id desc limit ?, 6");
+			if(orderBy == 0) {
+				sb.append("select * from POST order by created_at desc limit ?, 6");
+			} else if(orderBy == 1) {
+				sb.append("select * from POST order by like_count desc limit ?, 6");
+			}
 		} else {
-			sb.append("select * from POST where style_category = ? order by post_id desc limit ?, 6");
+			if(orderBy == 0) {
+				sb.append("select * from POST where style_category = ? order by created_at desc limit ?, 6");
+			} else if (orderBy == 1) {
+				sb.append("select * from POST where style_category = ? order by like_count desc limit ?, 6");
+			}
+			
 		}
         
         try {
@@ -186,14 +195,23 @@ public class PostDAO {
 	}
 	
 	
-	public ArrayList<PostVO> getFollowersPosts(int userId){
+	public ArrayList<PostVO> getFollowersPosts(int userId, int orderBy){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
 
-        sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
-        sb.append("ON POST.user_id = FOLLOW.following_id ");
-        sb.append("WHERE FOLLOW.follower_id = ? ");
-        sb.append("order by created_at desc");
+		if(orderBy == 0) {
+			System.out.println("order by recent");
+			sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
+	        sb.append("ON POST.user_id = FOLLOW.following_id ");
+	        sb.append("WHERE FOLLOW.follower_id = ? ");
+	        sb.append("order by created_at desc");
+		} else if (orderBy == 2) {
+			System.out.println("order by like count");
+			sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
+	        sb.append("ON POST.user_id = FOLLOW.following_id ");
+	        sb.append("WHERE FOLLOW.follower_id = ? ");
+	        sb.append("order by like_count desc");
+		}
 
         try {
         	pstmt = conn.prepareStatement(sb.toString());
@@ -428,6 +446,26 @@ public class PostDAO {
             pstmt.setInt(1, postId);
             pstmt.executeUpdate();
             System.out.println("저장 하락 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
+	
+	public void updatePost(int postId, String title, String content, int styleCategory) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set title = ?,  content = ?, style_category = ?, updated_at = NOW() ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());pstmt.setString(1, title);
+        	pstmt.setString(2, content);
+        	pstmt.setInt(3, styleCategory);
+            pstmt.setInt(4, postId);
+            pstmt.executeUpdate();
+            System.out.println("updated post");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

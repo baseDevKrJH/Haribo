@@ -18,6 +18,7 @@
 		isSubmit : false,	
 		pageNum : 1,
 		styleCode : 0,
+		orderBy: 0,
 		getStyleList: function(styleCode, pageNum) {
 			if (_Style.isSubmit) {
 				return;
@@ -39,7 +40,7 @@
 			_Style.isSubimt = true;
 			$.ajax({
 			    type: 'GET',
-			    url: _MainPath + '/jelly?page=styleList&styleCode=' + styleCode + "&pageNum=" + _Style.pageNum,
+			    url: _MainPath + '/jelly?page=styleList&styleCode=' + styleCode + "&pageNum=" + _Style.pageNum + "&orderBy=" + _Style.orderBy,
 			    data: {},
 			    dataType: 'html',
 			    cache: false,
@@ -78,6 +79,12 @@
 		}
 	};
 	
+
+	function orderBy(order) {
+	    _Style.orderBy = order;
+	    _Style.getStyleList(_Style.styleCode, 1);
+	}
+	
 	// init event handlers
 	$(document).ready(function() {
 		_Style.getStyleList(0);
@@ -115,6 +122,8 @@
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" class="${style == 'vintage' ? 'active' : ''}">Vintage</a>
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" class="${style == 'minimal' ? 'active' : ''}">Minimal</a>
 	    <a href="javascript:void(0);" onclick="_Style.getStyleList(6);" class="${style == 'casual' ? 'active' : ''}">Formal</a>
+	    <a href="javascript:void(0);" onclick="orderBy(0);" class="${style == 'casual' ? 'active' : ''}">Most Recent</a>
+	    <a href="javascript:void(0);" onclick="orderBy(1);" class="${style == 'casual' ? 'active' : ''}">Most Likes</a>
 	    
     </div>
     
