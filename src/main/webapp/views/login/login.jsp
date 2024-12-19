@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login.jsp</title>
+<title>Login</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css" />
 </head>
 <body>
@@ -32,7 +32,7 @@
     <c:if test="${not empty error}">
         <div class="error-message">${error}</div>
     </c:if>
-    <form action="<%= request.getContextPath() %>/jelly?page=login" method="post">
+    <form action="<%= request.getContextPath() %>/jelly?page=login" method="post" id="login-form">
         <div class="form-group">
             <label for="email">이메일 주소</label>
             <input type="email" id="email" name="email" required />
