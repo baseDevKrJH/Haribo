@@ -46,6 +46,7 @@ public class CommentController extends HttpServlet{
         	String deleteCommentId = req.getParameter("deleteCommentId");
         	String comment = req.getParameter("comment");
         	
+        	System.out.println(deleteCommentId);
         	
         	
         	if (deleteCommentId != null) {

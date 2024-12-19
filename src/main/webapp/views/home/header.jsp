@@ -61,7 +61,7 @@
         <a href="<%= request.getContextPath() %>/jelly?page=home" class="${currentPage == 'home' ? 'active' : ''}">HOME</a>
         <a href="<%= request.getContextPath() %>/jelly?page=shoes" class="${currentPage == 'shop' ? 'active' : ''}">SHOP</a>
         <a href="<%= request.getContextPath() %>/jelly?page=brand" class="${currentPage == 'brand' ? 'active' : ''}">BRAND</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=styleList" class="${currentPage == 'style' ? 'active' : ''}">STYLE</a>
+        <a href="<%= request.getContextPath() %>/jelly?page=style" class="${currentPage == 'style' ? 'active' : ''}">STYLE</a>
         <a href="<%= request.getContextPath() %>/jelly?page=event1" class="${currentPage == 'event' ? 'active' : ''}">EVENT</a>
       </nav>
       <form class="header-form" action="<%= request.getContextPath() %>/jelly?page=search" method="get">
