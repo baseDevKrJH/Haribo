@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/subHeader.css">
+  <link rel="icon" href="<%= request.getContextPath() %>/img/jelly.ico" type="image/x-icon">
   <title>Jelly</title>
 </head>
 <body>

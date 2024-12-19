@@ -6,7 +6,7 @@ import com.jelly.www.vo.ProductVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.*;
 
 public class ProductDetailAction implements Action {
 
@@ -37,20 +37,36 @@ public class ProductDetailAction implements Action {
         DecimalFormat df = new DecimalFormat("#,###");
         String formattedPrice = df.format(product.getInitialPrice());
 
-        // 사이즈 및 가격 정보 가져오기
-        List<ProductVO> sizePriceList = productDAO.selectSizesAndPricesByProductId(productId);
+        // 고정 사이즈 목록 (210~290)
+        List<String> sizeList = Arrays.asList("210", "220", "230", "240", "250", "260", "270", "280", "290");
+        
+        // 사이즈별 가격을 저장 (사이즈 -> 가격)
+        Map<String, Integer> sizePriceMap = new HashMap<>();
+        for (ProductVO sizePrice : productDAO.selectSizesAndPricesByProductId(productId)) {
+            Integer price = sizePrice.getPrice();
+            if (price == null || price == 0) { 
+                sizePriceMap.put(sizePrice.getSize(), -1); // 가격이 null 또는 0인 경우 -1로 설정
+            } else {
+                sizePriceMap.put(sizePrice.getSize(), price);
+            }
+        }
 
-        // 가격이 0인 경우 -1로 변환
-        for (ProductVO sizePrice : sizePriceList) {
-            if (sizePrice.getPrice() == 0) {
-                sizePrice.setPrice(-1); // 0 대신 -1로 설정
+        // 각 사이즈에 대해 버튼 텍스트 설정 (가격이 없으면 구매 입찰)
+        Map<String, String> sizeButtons = new HashMap<>();
+        for (String size : sizeList) {
+            int price = sizePriceMap.getOrDefault(size, -1); // 가격이 없으면 -1로 설정
+            if (price == -1) {
+                sizeButtons.put(size, "구매 입찰");
+            } else {
+                sizeButtons.put(size, String.format("%,d원", price));
             }
         }
 
         // JSP로 전달할 데이터 설정
-        request.setAttribute("product", product);
-        request.setAttribute("formattedPrice", formattedPrice);
-        request.setAttribute("sizePriceList", sizePriceList);
+        request.setAttribute("product", product); // 상품 정보
+        request.setAttribute("formattedPrice", formattedPrice); // 포맷팅된 가격
+        request.setAttribute("sizeList", sizeList); // 고정 사이즈 리스트
+        request.setAttribute("sizeButtons", sizeButtons); // 각 사이즈별 버튼 텍스트
 
         return "/views/product/productDetail.jsp";
     }

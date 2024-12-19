@@ -146,9 +146,11 @@
   align-items: flex-start;
 }
 
+/* POPULAR 섹션 */
 .main-style-popular-popular-item .name {
-  font-weight: bold;
-  font-size: 1rem;
+  font-weight: bold; 
+  font-size: 14px; 
+  color: #555555;
   margin-bottom: 5px;
 }
 
@@ -159,8 +161,8 @@
 }
 
 .main-style-popular-popular-item .price {
-  color: black;
-  font-weight: bold;
+  font-size: 14px; 
+  color: #222222; 
 }
 
 .main-style-popular-heart-container {

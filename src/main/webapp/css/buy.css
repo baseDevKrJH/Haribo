@@ -1,0 +1,217 @@
+@charset "UTF-8";
+@charset "UTF-8";
+/* ***************************
+   전체 컨테이너 스타일
+*************************** */
+.order-container {
+  display: flex; /* 자식 요소를 flexbox로 배치 */
+  flex-direction: column; /* 세로 방향 배치 */
+  justify-content: center; /* 세로 가운데 정렬 */
+  align-items: center; /* 가로 가운데 정렬 */
+  background-color: #f4f4f4; /* 배경색(연한 회색) */
+  padding-bottom:120px
+}
+
+/* 헤더 스타일 (배송/결제 제목) */
+.order-container h2 {
+  margin-top: 0; /* 위쪽 여백 제거 */
+  background-color: white; /* 배경색(흰색) */
+  width: 100%; /* 화면 전체 너비 */
+  height: 60px; /* 높이 지정 */
+  display: flex; /* 내용물을 flexbox로 배치 */
+  justify-content: center; /* 가로 가운데 정렬 */
+}
+
+/* ***************************
+   주문 섹션 공통 스타일
+*************************** */
+.order-content {
+  width: 600px; /* 섹션의 고정 너비 */
+  padding: 20px 15px; /* 내부 여백 */
+  margin: 20px 0; /* 섹션 간 상하 여백 */
+  background-color: white; /* 섹션 배경색 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+}
+
+/* 섹션 타이틀 스타일 (예: "배송 주소", "결제금액" 등) */
+.order-title {
+  font-size: 16px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  display: flex; /* 내용물을 flexbox로 배치 */
+  justify-content: space-between; /* 양쪽 끝에 배치 */
+  align-items: center; /* 세로 가운데 정렬 */
+}
+
+/* ***************************
+   버튼 스타일
+*************************** */
+/* "주소 변경" 버튼 */
+.modalOpen {
+  border: #f4f4f4 1px solid; /* 연한 회색 테두리 */
+  padding: 5px 8px; /* 내부 여백 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  color: gray; /* 글자 색상 */
+}
+
+/* 계좌 등록 버튼 */
+.account-btn {
+  border: 1px solid #f4f4f4; /* 연한 회색 테두리 */
+  padding: 10px 15px; /* 내부 여백 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  margin: 10px 0; /* 위아래 여백 */
+  background-color: white; /* 배경색 */
+  color: gray; /* 글자 색상 */
+  cursor: pointer; /* 마우스 커서가 포인터로 변경 */
+  font-size: 14px; /* 글자 크기 */
+  width: 100%; /* 버튼의 너비를 부모 요소에 맞춤 */
+  text-align: left; /* 글자 정렬을 왼쪽으로 */
+}
+
+/* 결제 버튼 (예: 신용카드, NPay, KakaoPay) */
+.payment-btn {
+  border: 1px solid #f4f4f4; /* 연한 회색 테두리 */
+  padding: 10px 20px; /* 내부 여백 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  margin-right: 10px; /* 오른쪽 여백 */
+  background-color: white; /* 배경색 */
+  color: gray; /* 글자 색상 */
+  cursor: pointer; /* 마우스 커서가 포인터로 변경 */
+  font-size: 14px; /* 글자 크기 */
+  width: 100%; /* 버튼의 너비를 부모 요소에 맞춤 */
+}
+
+/* ***************************
+   정보 섹션 스타일
+*************************** */
+/* 주문 정보 섹션 */
+.order-info {
+  display: flex; /* 내용을 flexbox로 배치 */
+  align-items: center; /* 세로 가운데 정렬 */
+  margin: 10px 0; /* 위아래 여백 */
+}
+
+/* 주문 세부 정보 (예: 이름, 연락처) */
+.order-subInfo {
+  display: flex; /* 내용을 flexbox로 배치 */
+}
+
+/* 상품 이미지 스타일 */
+.order-info img {
+  width: 70px; /* 고정 너비 */
+  height: 70px; /* 고정 높이 */
+  border-radius: 10px; /* 이미지 모서리를 둥글게 */
+  margin-right: 10px; /* 오른쪽 여백 */
+}
+
+/* 정보 텍스트 스타일 */
+.order-info span {
+  display: inline-block; /* 인라인 블록으로 변환 */
+  padding: 5px; /* 내부 여백 */
+  font-size: 13px; /* 글자 크기 */
+}
+
+/* 회색 텍스트 */
+.fontGray {
+	color: gray; /* 회색 글자 */
+	margin-right: 30px; /* 오른쪽 여백 */
+}
+
+.paymentSubinfo {
+	width: 100%;
+}
+
+.payment-method {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* ***************************
+   결제 금액 섹션 스타일
+*************************** */
+/* 결제 금액 섹션 */
+.order-price {
+  width: 100%; /* 부모 요소에 맞춘 너비 */
+}
+
+/* 결제 금액 상세 내역 */
+.price-detail {
+  width: 100%; /* 부모 요소에 맞춘 너비 */
+  margin: 10px 0; /* 위아래 여백 */
+  font-size: 14px; /* 글자 크기 */
+  color: gray; /* 회색 글자 */
+}
+
+/* 금액 내역 줄 스타일 */
+.price-detail div {
+  display: flex; /* 내용을 flexbox로 배치 */
+  justify-content: space-between; /* 양쪽 끝에 배치 */
+  padding: 5px 0; /* 줄마다 위아래 여백 */
+  width: 100%; /* 부모 요소에 맞춘 너비 */
+}
+
+/* 총 결제 금액 강조 */
+.total-price {
+  font-size: 18px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  display: flex; /* 내용을 flexbox로 배치 */
+  justify-content: space-between; /* 양쪽 끝에 배치 */
+  margin-top: 15px; /* 위쪽 여백 */
+  border-top: 1px solid #f4f4f4; /* 연한 회색 상단 테두리 */
+  padding-top: 10px; /* 상단 여백 */
+  width: 100%; /* 부모 요소에 맞춘 너비 */
+  color: black; /* 글자 색상 */
+}
+.total-price span{
+	font-size:20px;
+	font-weight: bold;
+	
+}
+
+/* ***************************
+   기타 스타일
+*************************** */
+/* 셀렉트 박스 */
+.order-selection {
+  width: 100%; /* 부모 요소에 맞춘 너비 */
+  height: 40px; /* 고정 높이 */
+  border: #f4f4f4 solid 1px; /* 연한 회색 테두리 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  padding-left: 7px; /* 왼쪽 여백 */
+  margin-top: 5px; /* 위쪽 여백 */
+  font-size: 13px; /* 글자 크기 */
+}
+
+/* 결제 푸터 스타일 */
+.payment-footer {
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  height: 100px; /* 푸터 높이 */
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+/* 결제 버튼 스타일 */
+.payment-submit-btn {
+  width: 600px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: rgba(255, 127, 80, 1); /* 코랄 색상 */
+  border-radius: 10px;
+  border: none;
+  color: white;
+  cursor: pointer; /* 클릭 가능 마우스 커서 */
+  transition: background-color 0.3s ease; /* 호버 애니메이션 */
+}
+
+/* 버튼 호버 효과 */
+.payment-submit-btn:hover {
+  background-color: rgba(255, 99, 71, 1); /* 더 진한 코랄 */
+}
+
