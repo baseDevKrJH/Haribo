@@ -1,48 +1,47 @@
 package com.jelly.www.action;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 import com.jelly.www.dao.WishlistDAO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class WishlistToggleAction implements Action {
 
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            // 사용자 ID와 상품 ID를 요청에서 가져옴
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            int productId = Integer.parseInt(request.getParameter("productId"));
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+	    String action = request.getParameter("page");
+	    try {
+	        int userId = Integer.parseInt(request.getParameter("userId"));
+	        int productId = Integer.parseInt(request.getParameter("productId"));
 
-            // userId productId 출력
-            // System.out.println("userId: " + userId + ", productId: " + productId);
+	        WishlistDAO dao = new WishlistDAO();
+	        JsonObject jsonResponse = new JsonObject();
 
-            WishlistDAO dao = new WishlistDAO();
-            boolean isExists = dao.isWishlistExists(userId, productId);
+	        if ("checkWishlist".equals(action)) {
+	            // 관심상품 상태 확인
+	            boolean isWishlist = dao.isWishlistExists(userId, productId);
+	            jsonResponse.addProperty("isWishlist", isWishlist);
+	        } else if ("wishlistToggle".equals(action)) {
+	            // 관심상품 추가/삭제 토글
+	            boolean isExists = dao.isWishlistExists(userId, productId);
+	            if (isExists) {
+	                dao.removeWishlist(userId, productId);
+	                jsonResponse.addProperty("status", "removed");
+	            } else {
+	                dao.addWishlist(userId, productId);
+	                jsonResponse.addProperty("status", "added");
+	            }
+	        }
 
-            JsonObject jsonResponse = new JsonObject();
+	        response.setContentType("application/json");
+	        response.getWriter().write(jsonResponse.toString());
 
-            // 관심상품이 이미 존재하면 삭제, 존재하지 않으면 추가
-            if (isExists) {
-                // 관심상품 삭제
-                dao.removeWishlist(userId, productId);
-                // System.out.println("Wishlist userId: " + userId + ", productId: " + productId);
-                jsonResponse.addProperty("status", "removed");
-            } else {
-                // 관심상품 추가
-                dao.addWishlist(userId, productId);
-                // System.out.println("Wishlist userId: " + userId + ", productId: " + productId);
-                jsonResponse.addProperty("status", "added"); 
-            }
-
-            // 응답을 JSON 형식으로 반환
-            response.setContentType("application/json");
-            response.getWriter().write(jsonResponse.toString());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
 }

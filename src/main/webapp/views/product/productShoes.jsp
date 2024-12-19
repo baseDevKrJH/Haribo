@@ -149,7 +149,6 @@ $(document).ready(function () {
             data: { page: "shoes", pageNo: currentPage },
             success: function (data) {
                 if ($.trim(data) === "") {
-                    console.log("No more data to load.");
                 } else {
                     setTimeout(function () {
                         $productContainer.append(data); // 상품 리스트 HTML 추가
@@ -157,7 +156,6 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error("Error loading products:", error);
             },
             complete: function () {
                 setTimeout(function () {

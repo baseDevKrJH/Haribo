@@ -28,7 +28,7 @@ public class JellyController extends HttpServlet {
         // 요청 처리
         if (query != null && !query.trim().isEmpty()) {
             action = new SearchAction(); // 검색 요청 처리
-        } else if (page == null || page.equals("home")) {
+        } else if (page == null || page.equals("home")) {	
             action = new HomeAction(); // 홈 화면 처리
         } else if (page.equals("login")) {
             url = "/views/login/login.jsp"; // 로그인 페이지 처리
@@ -44,6 +44,8 @@ public class JellyController extends HttpServlet {
             }
         } else if (page.equals("notice")) {
             action = new NoticeAction(); // 고객센터 페이지 처리
+        } else if ("checkWishlist".equals(page)) {
+                action = new CheckWishlistAction();  // 관심상품 상태를 확인하는 액션
         } else if (page.equals("bottoms")) {
             action = new BottomsAction(); // 하의 페이지 처리
         } else if (page.equals("brand")) {
@@ -133,6 +135,8 @@ public class JellyController extends HttpServlet {
             return; // FilterController에서 응답을 직접 처ㄹ
         } else if ("wishlistToggle".equals(page)) {
             action = new WishlistToggleAction(); // 관심상품 토글 처리
+        }else if ("checkWishlist".equals(page)) {
+                action = new CheckWishlistAction(); // 관심상품 상태 확인 액션
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "요청 처리 대상이 없습니다.");
             return;

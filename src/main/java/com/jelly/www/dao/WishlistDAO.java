@@ -1,6 +1,8 @@
 package com.jelly.www.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WishlistDAO {
     private String driver = "com.mysql.cj.jdbc.Driver";
@@ -15,14 +17,14 @@ public class WishlistDAO {
             return DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            throw new SQLException("MySQL연결실ㅍ₩");
+            throw new SQLException("MySQL 연결 실패");
         }
     }
 
     // 관심상품 상태 확인
     public boolean isWishlistExists(int userId, int productId) {
         String sql = "SELECT 1 FROM WISHLIST WHERE user_id = ? AND product_id = ?";
-        try (Connection conn = getConnection(); 
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
             pstmt.setInt(2, productId);
@@ -38,7 +40,7 @@ public class WishlistDAO {
     // 관심상품 추가
     public void addWishlist(int userId, int productId) {
         String sql = "INSERT INTO WISHLIST (user_id, product_id) VALUES (?, ?)";
-        try (Connection conn = getConnection(); 
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
             pstmt.setInt(2, productId);
@@ -51,7 +53,7 @@ public class WishlistDAO {
     // 관심상품 삭제
     public void removeWishlist(int userId, int productId) {
         String sql = "DELETE FROM WISHLIST WHERE user_id = ? AND product_id = ?";
-        try (Connection conn = getConnection(); 
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
             pstmt.setInt(2, productId);
@@ -59,5 +61,23 @@ public class WishlistDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // 사용자의 관심상품 목록 조회
+    public List<Integer> getWishlistByUserId(int userId) {
+        List<Integer> productIds = new ArrayList<>();
+        String sql = "SELECT product_id FROM WISHLIST WHERE user_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    productIds.add(rs.getInt("product_id"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productIds;
     }
 }
