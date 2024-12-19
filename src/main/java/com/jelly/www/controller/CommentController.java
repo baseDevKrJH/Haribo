@@ -30,6 +30,9 @@ public class CommentController extends HttpServlet{
 		System.out.println("in controller comment");
 		JSONObject jsonResponse = new JSONObject();
 		String url = "";
+		PostDAO postDAO = new PostDAO();
+		CommentDAO commentDAO = new CommentDAO();
+		UserDAO userDAO = new UserDAO();
     	
     	HttpSession session = req.getSession();
         UserVO user = (UserVO) session.getAttribute("user");
@@ -39,8 +42,6 @@ public class CommentController extends HttpServlet{
         } else {
         	// get parameters
         	int userId = user.getUserId();
-    		PostDAO postDAO = new PostDAO();
-    		CommentDAO commentDAO = new CommentDAO();
         	int postId = Integer.parseInt(req.getParameter("postId"));
         	String deleteCommentId = req.getParameter("deleteCommentId");
         	String comment = req.getParameter("comment");
@@ -63,11 +64,10 @@ public class CommentController extends HttpServlet{
     		}
     		
     		
-    		UserDAO userDAO = new UserDAO();
+    		
     		// creating return values
     		ArrayList<CommentVO> list = commentDAO.getCommentOfPost(postId);
     		ArrayList<StyleCommentVO> styleCommentInfo = new ArrayList<>();
-    		
     		PostVO postVO = postDAO.selectOne(postId);
 
     		// loop through comment list to create returning value object
@@ -90,6 +90,12 @@ public class CommentController extends HttpServlet{
     			req.setAttribute("commentList", styleCommentInfo);
     			req.setAttribute("user", user);
     		}	
+    		
+    		postDAO.close();
+    		commentDAO.close();
+    		userDAO.close();
+    		
+    		
     		url = "/views/style/singleComment.jsp";
     		// forward or redirect
             if (url != null && url.startsWith("redirect:")) {

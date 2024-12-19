@@ -114,10 +114,11 @@
             <label for="styleCategoryInput">Style Category:</label>
             <select name="styleCategory" id="styleCategoryInput">
                 <option value="1" selected>Casual</option>
-                <option value="2">Formal</option>
-                <option value="3">Athletic</option>
+                <option value="2">Street</option>
+                <option value="3">Modern</option>
                 <option value="4">Vintage</option>
-                <option value="5">Street</option>
+                <option value="5">Minimal</option>
+                <option value="6">Formal</option>
             </select>
             
             <input type="submit" id="submitButton" value="Post">

@@ -115,6 +115,7 @@ public class UploadImageController extends HttpServlet {
         int seq = 1;
     	// create new post first 
     	PostDAO dao = new PostDAO();
+    	PostImageDAO imageDAO = new PostImageDAO();
     	PostVO vo = new PostVO();
     	vo.setUserId(user.getUserId());
     	vo.setTitle(request.getParameter("title"));
@@ -159,7 +160,7 @@ public class UploadImageController extends HttpServlet {
                 		}
              
                     	// save image to post_img table
-                    	PostImageDAO imageDAO = new PostImageDAO();
+                    	
                     	PostImageVO imageVO = new PostImageVO();
                     	imageVO.setPostId(postId);
                     	imageVO.setPostImageOrder(seq);
@@ -177,6 +178,10 @@ public class UploadImageController extends HttpServlet {
             		seq++;
             	}
             }
+            dao.close();
+            imageDAO.close();
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().println("Error uploading file.");

@@ -26,6 +26,7 @@ public class FollowerAction implements Action {
 				UserDAO userDao = new UserDAO();
 				followerUserList.add(userDao.selectOne(followerId));
 			}
+			followDao.close();
 			
 			request.setAttribute("followerUserList", followerUserList);
 			

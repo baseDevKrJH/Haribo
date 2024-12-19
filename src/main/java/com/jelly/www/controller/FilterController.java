@@ -50,7 +50,7 @@ public class FilterController {
             List<ProductVO> filteredProducts = dao.filterByBrandsCategoriesAndPrice(brands, categories, priceRange);
             // debug: DAO 호출 후 결과 확인
 //            System.out.println("[FilterController] 필터링된 상품 개수: " + filteredProducts.size());
-
+            dao.close();
             // JSON 응답 반환
             String jsonResponse = gson.toJson(filteredProducts);
             resp.setContentType("application/json;charset=UTF-8");

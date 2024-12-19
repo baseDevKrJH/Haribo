@@ -74,6 +74,9 @@ public class StyleDetailAction implements Action {
 				isFollow = followDao.checkFollow(user.getUserId(), postVo.getUserId());
 			}
 			
+			postDao.close();
+			postImageDao.close();
+			userDao.close();
 			request.setAttribute("postVo", postVo);
 			request.setAttribute("postImageList", postImageList);
 			request.setAttribute("userVo", userVo);

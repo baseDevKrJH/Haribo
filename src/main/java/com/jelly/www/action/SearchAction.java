@@ -33,7 +33,7 @@ public class SearchAction implements Action {
             // 검색 결과 Request에 저장
             request.setAttribute("searchResults", searchResults);
             request.setAttribute("query", query); // 검색어도 뷰에 전달
-
+            productDAO.close();
             // 검색 결과 JSP 경로 반환
             return "/views/product/searchResults.jsp";
 

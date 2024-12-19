@@ -60,6 +60,9 @@ public class SavePostController extends HttpServlet {
 	        // JSON 응답 생성
 	    	jsonResponse.put("saveCount", postVo.getSaveCount());
 	    	jsonResponse.put("isSave", isSave);
+	    	
+	    	postDao.close();
+	    	postSaveDao.close();
 	
 	        // 응답
 	        response.setContentType("application/json;charset=UTF-8");

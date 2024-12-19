@@ -13,6 +13,7 @@ public class BottomsAction implements Action {
         // 하의 카테고리 상품 조회
         ProductDAO productDAO = new ProductDAO();
         List<ProductVO> productList = productDAO.selectByCategory("하의");
+        productDAO.close();
 
         // 상품 리스트를 request 속성에 저장
         request.setAttribute("productList", productList);

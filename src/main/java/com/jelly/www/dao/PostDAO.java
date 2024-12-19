@@ -185,6 +185,49 @@ public class PostDAO {
 		return list;
 	}
 	
+	
+	public ArrayList<PostVO> getFollowersPosts(int userId){
+		ArrayList<PostVO> list = new ArrayList<PostVO>();
+		sb.setLength(0);
+
+        sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
+        sb.append("ON POST.user_id = FOLLOW.following_id ");
+        sb.append("WHERE FOLLOW.follower_id = ? ");
+        sb.append("order by created_at desc");
+
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+            	PostVO vo = new PostVO(
+            			rs.getInt("post_id"), 
+    					rs.getInt("user_id"), 
+    					rs.getInt("style_category"),
+    					rs.getString("title"), 
+    					rs.getString("content"), 
+    					rs.getString("thumbnail_image_url"), 
+    					rs.getInt("like_count"),
+    					rs.getInt("comment_count"), 
+    					rs.getInt("view_count"), 
+    					rs.getInt("save_count"),
+    					rs.getTimestamp("created_at"),
+    					rs.getTimestamp("updated_at")
+                );
+                list.add(vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+		
+		return list;
+	}
+	
+	
+	
 	// 조회수 증가 메서드
 	public void plusView(int postId) {
 		sb.setLength(0);

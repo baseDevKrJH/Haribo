@@ -31,40 +31,47 @@ public class StyleListAction implements Action{
 		}
 		int code = Integer.parseInt(styleCode);
 		int pageNum = Integer.parseInt(currentPage);
-		PostDAO dao = new PostDAO();
-		ArrayList<PostVO> list = dao.selectByStyleCategory(code, pageNum);
 		ArrayList<StylePostInfoVO> styleListInfo = new ArrayList<>();
-		for(PostVO vo: list) {
-			// get first image associated with post id
-			boolean isLike = false;
-			HttpSession session = request.getSession();
-	        UserVO user = (UserVO) session.getAttribute("user");
-	        
-			if(user != null) {
-				PostLikeDAO postLikeDao = new PostLikeDAO();
-				isLike = postLikeDao.checkLike(vo.getPostId(), user.getUserId());
+		PostDAO dao = new PostDAO();
+		UserDAO userDAO = new UserDAO();
+		
+		HttpSession session = request.getSession();
+        UserVO user = (UserVO) session.getAttribute("user");
+        
+		if(code == 99 && user == null) {
+			return "/views/login/login.jsp";
+		} else {
+			ArrayList<PostVO> list = null;
+			if (code == 99) {
+				list = dao.getFollowersPosts(user.getUserId());	
+			} else {
+				list = dao.selectByStyleCategory(code, pageNum);
 			}
-			
-			String postImageUrl = vo.getThumbnailImageUrl();
-			if(postImageUrl == null) {
-				postImageUrl = "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+			for(PostVO vo: list) {
+				// get first image associated with post id
+				boolean isLike = false;
+				if(user != null) {
+					PostLikeDAO postLikeDao = new PostLikeDAO();
+					isLike = postLikeDao.checkLike(vo.getPostId(), user.getUserId());
+				}
+				
+				String postImageUrl = vo.getThumbnailImageUrl();
+				if(postImageUrl == null) {
+					postImageUrl = "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+				}
+				
+				// get user information
+				UserVO userVO = userDAO.selectOne(vo.getUserId());
+				String nickname = userVO.getNickname();
+				String profileImageUrl = userVO.getProfileImage();
+				
+				StylePostInfoVO obj = new StylePostInfoVO(vo.getPostId(), vo.getUserId(), nickname, vo.getTitle(), postImageUrl, profileImageUrl, vo.getLikeCount(), isLike);
+				styleListInfo.add(obj);
 			}
-			
-			// get user information
-			UserDAO userDAO = new UserDAO();
-			UserVO userVO = userDAO.selectOne(vo.getUserId());
-			String nickname = userVO.getNickname();
-			String profileImageUrl = userVO.getProfileImage();
-			
-			StylePostInfoVO obj = new StylePostInfoVO(vo.getPostId(), vo.getUserId(), nickname, vo.getTitle(), postImageUrl, profileImageUrl, vo.getLikeCount(), isLike);
-			styleListInfo.add(obj);
 		}
-		
-		
-		
+		userDAO.close();
+		dao.close();
 		request.setAttribute("postList", styleListInfo);
-		
-		
 		return "/views/style/stylePostList.jsp";
 	}
 }

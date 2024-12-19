@@ -68,6 +68,9 @@ public class FollowController extends HttpServlet {
 	    	jsonResponse.put("followerCount", followerCount);
 	    	jsonResponse.put("followingCount", followingCount);
 	
+	    	followDao.close();
+	    	userDao.close();
+	    	userDao1.close();
 	        // 응답
 	        response.setContentType("application/json;charset=UTF-8");
 	        response.getWriter().write(jsonResponse.toJSONString());

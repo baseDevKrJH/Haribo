@@ -23,7 +23,7 @@ public class StyleModifyAction implements Action {
 			
 			
 			
-			
+			postDao.close();
 			// 요청 파라미터 설정
 			request.setAttribute("postVo", postVo);
 		}

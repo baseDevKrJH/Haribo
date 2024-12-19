@@ -22,13 +22,14 @@ public class FollowingAction implements Action {
 			FollowDAO followDao = new FollowDAO();
 			ArrayList<Integer> followingList = followDao.getFollowingIdList(userId);
 			ArrayList<UserVO> followingUserList = new ArrayList<UserVO>();
+			UserDAO userDao = new UserDAO();
 			for(Integer followingId : followingList) {
-				UserDAO userDao = new UserDAO();
 				followingUserList.add(userDao.selectOne(followingId));
 			}
 			
 			request.setAttribute("followingUserList", followingUserList);
-			
+			userDao.close();
+			followDao.close();
 		}
 
 		return "/views/style/following.jsp";

@@ -63,6 +63,8 @@ public class LikePostController extends HttpServlet {
 	    	
 	    	PostVO postVo = postDao.selectOne(postId);
 	
+	    	postDao.close();
+	    	postLikeDao.close();
 	        // JSON 응답 생성
 	    	jsonResponse.put("likeCount", postVo.getLikeCount());
 	    	jsonResponse.put("isLike", isLike);

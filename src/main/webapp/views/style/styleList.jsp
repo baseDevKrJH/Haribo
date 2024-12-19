@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/views/style/styleHeader.jsp" %>
+<%@ include file="/views/home/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,15 +99,15 @@
 	<div class="filter">
 		<!-- setAttribute("style", "street") to determine active page -->
 		<!-- javascript:void(0) to not go back to top of page -->
-		<a href="javascript:void(0);" onclick="_Style.getStyleList(0);" class="${style == 'classic' ? 'active' : ''}">all</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(1);" class="${style == 'classic' ? 'active' : ''}">classic</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(2);" class="${style == 'street' ? 'active' : ''}">street</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(3);" class="${style == 'modern' ? 'active' : ''}">modern</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" class="${style == 'vintage' ? 'active' : ''}">vintage</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" class="${style == 'minimal' ? 'active' : ''}">minimal</a>
-	    <span class="buttons">
-	    	<a href="${pageContext.request.contextPath}/upload?uploadType=stylePost">+new</a>
-    	</span>
+		<a href="javascript:void(0);" onclick="_Style.getStyleList(0);" class="${style == 'classic' ? 'active' : ''}">All</a>
+		<a href="javascript:void(0);" onclick="_Style.getStyleList(99);" class="${style == 'classic' ? 'active' : ''}">Following</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(1);" class="${style == 'classic' ? 'active' : ''}">Casual</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(2);" class="${style == 'street' ? 'active' : ''}">Street</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(3);" class="${style == 'modern' ? 'active' : ''}">Modern</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" class="${style == 'vintage' ? 'active' : ''}">Vintage</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" class="${style == 'minimal' ? 'active' : ''}">Minimal</a>
+	    <a href="javascript:void(0);" onclick="_Style.getStyleList(6);" class="${style == 'casual' ? 'active' : ''}">Formal</a>
+	    
     </div>
     
     

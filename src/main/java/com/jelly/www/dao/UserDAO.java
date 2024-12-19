@@ -304,7 +304,7 @@ public class UserDAO {
 	}
     
     // 자원 해제
-    private void close() {
+    public void close() {
         try {
             if (rs != null) rs.close();
             if (pstmt != null) pstmt.close();

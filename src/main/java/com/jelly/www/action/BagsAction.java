@@ -13,6 +13,7 @@ public class BagsAction implements Action {
         // 가방 카테고리 상품 조회
         ProductDAO productDAO = new ProductDAO();
         List<ProductVO> productList = productDAO.selectByCategory("가방");
+        productDAO.close();
 
         // 상품 리스트를 request 속성에 저장
         request.setAttribute("productList", productList);
