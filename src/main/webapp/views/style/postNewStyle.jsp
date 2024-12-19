@@ -6,91 +6,106 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
   	<style>
-  		/* Basic reset for the page */
-		* {
-		    margin: 0;
-		    padding: 0;
-		    box-sizing: border-box;
-		}
-		
-		body {
-		    font-family: Arial, sans-serif;
-		    background-color: #f4f4f4;
-		    color: #333;
-		    line-height: 1.6;
-		}
-		
 		#formContainer {
-		    width: 60%;
-		    margin: 30px auto;
-		    background-color: #fff;
+		    max-width: 600px;
+		    margin: 50px auto;
 		    padding: 20px;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		    border: 1px solid #000; /* Black border for definition */
+		    border-radius: 10px;
+		    background-color: #fff; /* White background */
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+		    color: #000; /* Black text for contrast */
 		}
 		
-		form {
-		    display: flex;
-		    flex-direction: column;
-		}
-		
-		label {
-		    font-size: 16px;
-		    margin-bottom: 8px;
+		/* Form Labels */
+		#formContainer label {
+		    display: block;
+		    margin-top: 15px;
 		    font-weight: bold;
+		    color: #000; /* Black labels */
 		}
 		
-		input[type="text"],
-		textarea,
-		select {
-		    width: 100%;
+		/* Input Fields, Textarea, Select, and File Upload */
+		#formContainer input[type="text"],
+		#formContainer textarea,
+		#formContainer select,
+		#formContainer input[type="file"] {
+		    width: calc(100% - 20px);
+		    margin-top: 5px;
 		    padding: 10px;
-		    margin-bottom: 15px;
-		    border: 1px solid #ddd;
-		    border-radius: 4px;
+		    border: 1px solid #000; /* Black borders */
+		    border-radius: 5px;
+		    font-size: 14px;
+		    box-sizing: border-box;
+		    background-color: #fff; /* White input background */
+		    color: #000; /* Black text */
+		    outline: none;
 		}
 		
-		input[type="file"] {
-		    margin-bottom: 15px;
+		#formContainer input[type="text"]:focus,
+		#formContainer textarea:focus,
+		#formContainer select:focus,
+		#formContainer input[type="file"]:focus {
+		    border-color: #000; /* Black border on focus */
+		    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Subtle black glow */
 		}
 		
-		input[type="submit"] {
-		    padding: 10px 15px;
-		    background-color: #333;
-		    color: #fff;
+		/* Textarea Specific */
+		#formContainer textarea {
+		    height: 80px;
+		    resize: vertical; /* Allow vertical resizing */
+		}
+		
+		/* Submit Button */
+		#formContainer input[type="submit"] {
+		    display: block;
+		    width: 100%;
+		    margin-top: 20px;
+		    padding: 10px;
+		    background-color: #000; /* Black button */
+		    color: #fff; /* White text */
+		    font-weight: bold;
 		    border: none;
-		    border-radius: 4px;
+		    border-radius: 5px;
 		    cursor: pointer;
-		    transition: background-color 0.3s;
+		    font-size: 16px;
+		    text-transform: uppercase;
 		}
 		
-		input[type="submit"]:hover {
-		    background-color: #555;
+		#formContainer input[type="submit"]:hover {
+		    background-color: #333; /* Slightly lighter black on hover */
 		}
 		
-		#imagePreview {
+		/* Image Preview Section */
+		#formContainer #imagePreview {
 		    display: flex;
 		    flex-wrap: wrap;
 		    gap: 10px;
+		    margin-top: 15px;
 		}
 		
-		#imagePreview img {
+		#formContainer #imagePreview img {
 		    max-width: 100px;
 		    max-height: 100px;
-		    border-radius: 4px;
 		    object-fit: cover;
+		    border: 1px solid #000; /* Black border for preview images */
+		    border-radius: 5px;
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 		}
 		
-		textarea {
-		    resize: vertical;
-		    min-height: 100px;
-		}
+		/* Mobile Responsiveness */
+		@media (max-width: 768px) {
+		    #formContainer {
+		        padding: 15px;
+		    }
 		
-		select {
-		    padding: 10px;
+		    #formContainer input[type="text"],
+		    #formContainer textarea,
+		    #formContainer select,
+		    #formContainer input[type="file"] {
+		        width: calc(100% - 10px);
+		    }
 		}
-		  		
-  	
   	</style>
 </head>
 <body id="body">

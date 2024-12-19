@@ -100,7 +100,7 @@ public class UploadImageController extends HttpServlet {
 		//set these values to where you want to save in the if statements
 		String upload_directory = null;
 		String uploadPath = null;
-        if ("stylePost".equals(uploadType)) {
+        if ("stylePost".equals(uploadType) || uploadType.equals("styleModify")) {
         	upload_directory = "postImages";
         	uploadPath = request.getServletContext().getRealPath("") + upload_directory;
         } else {
@@ -113,22 +113,37 @@ public class UploadImageController extends HttpServlet {
 			uploadDir.mkdir();
 		}
         int seq = 1;
-    	// create new post first 
     	PostDAO dao = new PostDAO();
     	PostImageDAO imageDAO = new PostImageDAO();
     	PostVO vo = new PostVO();
-    	vo.setUserId(user.getUserId());
-    	vo.setTitle(request.getParameter("title"));
-    	vo.setContent(request.getParameter("content"));
-    	vo.setStyleCategory(Integer.parseInt(request.getParameter("styleCategory")));
-    	dao.createNewPost(vo);
-        
+    	
+    	String title = request.getParameter("title");
+    	String content = request.getParameter("content");
+    	int styleCategory = Integer.parseInt(request.getParameter("styleCategory"));
+    	int postId = -1;
+    	
         try {
-
-        	// get post number  
-        	PostVO newVO = dao.getUsersNewPost(user.getUserId());
-        	int postId = newVO.getPostId();
-        	System.out.println("postId: " + postId);
+        	if(uploadType.equals("styleModify")) {
+        		postId = Integer.parseInt(request.getParameter("modifyingPostId"));
+        		System.out.println("postId of post that will be modified: " + postId);
+        		imageDAO.deleteImageOfPost(postId);
+        		dao.updatePost(postId, title, content, styleCategory);
+        		
+        		
+        	} else if (uploadType.equals("stylePost")) {
+        		// create new post
+        		vo.setUserId(user.getUserId());
+            	vo.setTitle(title);
+            	vo.setContent(content);
+            	vo.setStyleCategory(styleCategory);
+            	dao.createNewPost(vo);
+            	
+            	// get post number
+            	PostVO newVO = dao.getUsersNewPost(user.getUserId());
+            	postId = newVO.getPostId();
+            	System.out.println("postId: " + postId);
+        	}
+        	
         	
         	
         	
@@ -153,21 +168,20 @@ public class UploadImageController extends HttpServlet {
                     System.out.println("File URL: " + fileURL);
                     
                     // save to database
-                    if(uploadType.equals("stylePost")) {
+                    if(uploadType.equals("stylePost") || uploadType.equals("styleModify")) {
                     	if(seq == 1) {
                     		System.out.println("seq == 1 loop running true");
                 			dao.setThumbNailImageURL(postId, fileURL);
                 		}
              
                     	// save image to post_img table
-                    	
                     	PostImageVO imageVO = new PostImageVO();
                     	imageVO.setPostId(postId);
                     	imageVO.setPostImageOrder(seq);
                     	imageVO.setPostImageUrl(fileURL);
                     	imageDAO.insertOne(imageVO);
-                    	
                     	url = "/views/style/styleList.jsp";
+                    	
                     }
 
                     part.write(filePath);

@@ -102,22 +102,31 @@ public class PostDAO {
 		return list;
 	}
 	
-	public ArrayList<PostVO> selectByStyleCategory(int category, int currentPage){
+	public ArrayList<PostVO> selectByStyleCategory(int category, int currentPage, int orderBy){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
 		if(category == 0) {
-			sb.append("select * from POST order by post_id desc limit ?, 6");
+			if(orderBy == 0) {
+				sb.append("select * from POST order by created_at desc limit ?, 12");
+			} else if(orderBy == 1) {
+				sb.append("select * from POST order by like_count desc limit ?, 12");
+			}
 		} else {
-			sb.append("select * from POST where style_category = ? order by post_id desc limit ?, 6");
+			if(orderBy == 0) {
+				sb.append("select * from POST where style_category = ? order by created_at desc limit ?, 12");
+			} else if (orderBy == 1) {
+				sb.append("select * from POST where style_category = ? order by like_count desc limit ?, 12");
+			}
+			
 		}
         
         try {
         	pstmt = conn.prepareStatement(sb.toString());
         	if(category == 0) {
-        		pstmt.setInt(1, (currentPage-1)*6);
+        		pstmt.setInt(1, (currentPage-1)*12);
         	} else {
         		pstmt.setInt(1, category);
-        		pstmt.setInt(2, (currentPage-1)*6);
+        		pstmt.setInt(2, (currentPage-1)*12);
         	}
         	rs = pstmt.executeQuery();
 
@@ -186,14 +195,23 @@ public class PostDAO {
 	}
 	
 	
-	public ArrayList<PostVO> getFollowersPosts(int userId){
+	public ArrayList<PostVO> getFollowersPosts(int userId, int orderBy){
 		ArrayList<PostVO> list = new ArrayList<PostVO>();
 		sb.setLength(0);
 
-        sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
-        sb.append("ON POST.user_id = FOLLOW.following_id ");
-        sb.append("WHERE FOLLOW.follower_id = ? ");
-        sb.append("order by created_at desc");
+		if(orderBy == 0) {
+			System.out.println("order by recent");
+			sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
+	        sb.append("ON POST.user_id = FOLLOW.following_id ");
+	        sb.append("WHERE FOLLOW.follower_id = ? ");
+	        sb.append("order by created_at desc");
+		} else if (orderBy == 2) {
+			System.out.println("order by like count");
+			sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
+	        sb.append("ON POST.user_id = FOLLOW.following_id ");
+	        sb.append("WHERE FOLLOW.follower_id = ? ");
+	        sb.append("order by like_count desc");
+		}
 
         try {
         	pstmt = conn.prepareStatement(sb.toString());
@@ -434,6 +452,43 @@ public class PostDAO {
             close();
         }
 	}
+	
+	public void updatePost(int postId, String title, String content, int styleCategory) {
+		sb.setLength(0);
+        sb.append("update POST ");
+        sb.append("set title = ?,  content = ?, style_category = ?, updated_at = NOW() ");
+        sb.append("where post_id = ?");
+        
+        try {
+        	pstmt = conn.prepareStatement(sb.toString());pstmt.setString(1, title);
+        	pstmt.setString(2, content);
+        	pstmt.setInt(3, styleCategory);
+            pstmt.setInt(4, postId);
+            pstmt.executeUpdate();
+            System.out.println("updated post");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+	}
+	
+    // 4. 데이터 삭제
+    public void deleteOne(int postId) {
+        sb.setLength(0);
+        sb.append("DELETE FROM POST WHERE post_id = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("post 삭제 완료: ID = " + postId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	close();
+        }
+    }
 
 	// 자원 해제 메서드
 	public void close() {
