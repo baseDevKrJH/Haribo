@@ -51,6 +51,14 @@
 		                console.log("No more content to load.");
 		                return;
 		            }
+		            console.log(html.includes('<title>Login</title>'));
+		            
+		         	// Check if the response is the login page
+		            if (html.includes('<title>Login</title>') || html.includes('id="login-form"')) {
+		                console.log("Login page detected. Redirecting...");
+		                window.location.href = _MainPath + '/views/login/login.jsp'; // 로그인 페이지로 이동
+		                return;
+		            }
 
 		            if ($("#divStyleList").html().includes(html.trim())) {
 		                console.log("Duplicate content, not appending.");

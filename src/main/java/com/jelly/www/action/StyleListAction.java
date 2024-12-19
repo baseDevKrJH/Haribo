@@ -1,5 +1,6 @@
 package com.jelly.www.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.jelly.www.dao.FollowDAO;
@@ -13,6 +14,8 @@ import com.jelly.www.vo.PostVO;
 import com.jelly.www.vo.StylePostInfoVO;
 import com.jelly.www.vo.UserVO;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -23,8 +26,6 @@ public class StyleListAction implements Action{
 		// set attribute of all posts
 		String styleCode = request.getParameter("styleCode");
 		String currentPage = request.getParameter("pageNum");
-		System.out.println(styleCode);
-		System.out.println(currentPage);
 		if (styleCode == null) {
 			// 껍데기를 출력하는 요청이
 			return "/views/style/styleList.jsp";
@@ -39,7 +40,8 @@ public class StyleListAction implements Action{
         UserVO user = (UserVO) session.getAttribute("user");
         
 		if(code == 99 && user == null) {
-			return "/views/login/login.jsp";
+			// 리다이렉션 처리
+            return "/views/login/login.jsp";
 		} else {
 			ArrayList<PostVO> list = null;
 			if (code == 99) {
