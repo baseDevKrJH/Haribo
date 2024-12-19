@@ -108,6 +108,31 @@
 		        width: calc(100% - 10px);
 		    }
 		}
+		
+		/* Delete Button Styling */
+		#formContainer #deleteButton {
+		    display: block;
+		    width: 100%;
+		    margin-top: 10px;
+		    padding: 10px;
+		    background-color: #ff4d4d; /* Bright red for delete */
+		    color: #fff; /* White text for contrast */
+		    font-weight: bold;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    font-size: 16px;
+		    text-transform: uppercase;
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+		    text-align: center; /* Center align text */
+		}
+		
+		/* Delete Button Hover Effect */
+		#formContainer #deleteButton:hover {
+		    background-color: #cc0000; /* Darker red on hover */
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+		}
+		
   	
 		
   	</style>
@@ -120,7 +145,7 @@
 
         <!-- Title Input -->
         <label for="titleInput">Title:</label>
-        <input type="text" name="title" id="titleInput" 
+        <input type="text" name="title" id="titleInput" required
                value="<c:out value='${postVo.title}' />">
 
         <!-- Caption (Content) -->
@@ -129,7 +154,7 @@
 
         <!-- Image Input -->
         <label for="imageInput">Select Image:</label>
-        <input type="file" name="postImages" id="imageInput" multiple="multiple" onchange="previewImages()">
+        <input type="file" name="postImages" id="imageInput" multiple="multiple" onchange="previewImages()" required>
         
         <!-- Image Preview Section -->
         <div id="imagePreview"></div>
@@ -148,6 +173,15 @@
 
         <!-- Submit Button -->
         <input type="submit" id="submitButton" value="Update">
+    </form>
+    
+    
+     <!-- Delete Form -->
+    <form action="<%= request.getContextPath() %>/jelly?page=delete" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');">
+        <input type="hidden" name="postId" value="${postVo.postId }" />
+        <button type="submit" id="deleteButton" style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+            Delete
+        </button>
     </form>
 </div>
     

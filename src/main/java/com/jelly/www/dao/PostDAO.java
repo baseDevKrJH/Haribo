@@ -107,15 +107,15 @@ public class PostDAO {
 		sb.setLength(0);
 		if(category == 0) {
 			if(orderBy == 0) {
-				sb.append("select * from POST order by created_at desc limit ?, 6");
+				sb.append("select * from POST order by created_at desc limit ?, 12");
 			} else if(orderBy == 1) {
-				sb.append("select * from POST order by like_count desc limit ?, 6");
+				sb.append("select * from POST order by like_count desc limit ?, 12");
 			}
 		} else {
 			if(orderBy == 0) {
-				sb.append("select * from POST where style_category = ? order by created_at desc limit ?, 6");
+				sb.append("select * from POST where style_category = ? order by created_at desc limit ?, 12");
 			} else if (orderBy == 1) {
-				sb.append("select * from POST where style_category = ? order by like_count desc limit ?, 6");
+				sb.append("select * from POST where style_category = ? order by like_count desc limit ?, 12");
 			}
 			
 		}
@@ -123,10 +123,10 @@ public class PostDAO {
         try {
         	pstmt = conn.prepareStatement(sb.toString());
         	if(category == 0) {
-        		pstmt.setInt(1, (currentPage-1)*6);
+        		pstmt.setInt(1, (currentPage-1)*12);
         	} else {
         		pstmt.setInt(1, category);
-        		pstmt.setInt(2, (currentPage-1)*6);
+        		pstmt.setInt(2, (currentPage-1)*12);
         	}
         	rs = pstmt.executeQuery();
 
@@ -472,6 +472,23 @@ public class PostDAO {
             close();
         }
 	}
+	
+    // 4. 데이터 삭제
+    public void deleteOne(int postId) {
+        sb.setLength(0);
+        sb.append("DELETE FROM POST WHERE post_id = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+            System.out.println("post 삭제 완료: ID = " + postId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	close();
+        }
+    }
 
 	// 자원 해제 메서드
 	public void close() {

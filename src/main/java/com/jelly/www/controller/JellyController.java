@@ -137,6 +137,9 @@ public class JellyController extends HttpServlet {
             action = new LoginAction(); // 로그인 요청 처리
         } else if ("joinOk".equals(page)) {
             action = new JoinOkAction(); // 회원가입 요청 처리
+        } else if ("delete".equals(page)) {
+        	action = new DeleteStyleAction();
+            System.out.println("deleting");
         } else if ("filter".equals(page)) {
             FilterController filterController = new FilterController();
             filterController.handleRequest(req, resp);
@@ -153,6 +156,11 @@ public class JellyController extends HttpServlet {
             // 리다이렉션 처리
             if (url != null && url.startsWith("redirect:")) {
                 resp.sendRedirect(url.substring("redirect:".length()));
+            }
+            // 페이지 이동
+            if (url != null && !resp.isCommitted()) {
+            	RequestDispatcher rd = req.getRequestDispatcher(url);
+            	rd.forward(req, resp);
             }
         }
     }
