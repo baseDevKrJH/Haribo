@@ -520,6 +520,45 @@ public class ProductDAO {
         return productList;
     }
 
+    // 모델 번호 포맷팅 메서드
+    public String getFormattedModelNumber(int productId) {
+        String modelNumber = null;
+        sb.setLength(0);
+        sb.append("SELECT MODEL_NUMBER FROM PRODUCT WHERE PRODUCT_ID = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, productId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                modelNumber = rs.getString("MODEL_NUMBER");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        // 모델 번호 포맷팅
+        if (modelNumber != null) {
+            modelNumber = formatModelNumber(modelNumber);
+        }
+        return modelNumber;
+    }
+
+    // 모델 번호를 8자리마다 줄바꿈 처리
+    private String formatModelNumber(String modelNumber) {
+        StringBuilder formatted = new StringBuilder();
+        for (int i = 0; i < modelNumber.length(); i++) {
+            formatted.append(modelNumber.charAt(i));
+            if ((i + 1) % 8 == 0 && i != modelNumber.length() - 1) {
+                formatted.append("<br>");
+            }
+        }
+        return formatted.toString();
+    }
+    
     // 자원 해제 메서드
     public void close() {
         try {

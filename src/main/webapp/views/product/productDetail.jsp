@@ -7,61 +7,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>상품 상세 정보</title>
-  <!-- productDetail.css -->
+  <!-- CSS -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productDetail.css">
-  <!-- Stickey bar css -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productStickey.css" />
-  <!-- Modal.css -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productModal.css" />
-  <!-- upbutton.css -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/upbutton.css" />
-  <!-- jQuery 추가 -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productStickey.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productModal.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/upbutton.css">
+  <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
-<%-- 로그인 여부를 자바스크립트 변수에 true/false로 전달 --%>
 <c:set var="loggedIn" value="${not empty user}" />
 <script>
-  // EL -> JS로 로그인 여부 전달
   var loggedIn = ${loggedIn ? 'true' : 'false'};
   var contextPath = "${pageContext.request.contextPath}";
 </script>
 
 <%@ include file="/views/product/productStickeybar.jsp" %>
-<!-- productStickey.js -->
 <script src="<%= request.getContextPath() %>/js/productStickey.js"></script>
-
-<!-- 맨 위로 이동 버튼 -->
 <button class="btn_top" id="btnTop" title="맨 위로 가기"></button>
 
 <div class="product-detail-container">
-  <!-- 왼쪽: 상품 이미지 -->
+  <!-- 상품 이미지 -->
   <div class="product-image-section">
     <div class="product-image">
-      <!-- 상품 이미지 -->
       <img src="${product.imageUrl}" alt="${product.productName}">
     </div>
   </div>
 
-  <!-- 가운데 구분선 -->
-  <div class="divider"></div>
-
-  <!-- 오른쪽: 상품 정보 -->
+  <!-- 상품 정보 -->
   <div class="product-info-section">
-    <!-- 즉시 구매가 -->
     <div class="instant-buy">
       <p class="instant-buy-label">즉시 구매가</p>
-      <p class="instant-buy-price">${formattedPrice}원</p>
+      <p class="instant-buy-price">
+        <c:choose>
+          <c:when test="${not empty lowestPriceMap[product.productId]}">
+            ${lowestPriceMap[product.productId]}원
+          </c:when>
+          <c:otherwise>
+            가격 정보 없음
+          </c:otherwise>
+        </c:choose>
+      </p>
     </div>
 
-    <!-- 상품명 및 상세설명 -->
     <div class="product-name">${product.productName}</div>
     <div class="product-description">${product.description}</div>
     
     <!-- 사이즈 버튼 -->
     <div class="size-selector">
-      <!-- 모든 사이즈 모달 오픈 버튼 -->
       <button class="size-dropdown" id="size-dropdown">
         <span>모든 사이즈</span>
         <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -74,7 +68,7 @@
     <dl class="product-details">
       <div class="detail">
         <div class="text">모델번호</div>
-        <span>${product.modelNumber}</span>
+        <span>${formattedModelNumber}</span>
       </div>
       <div class="detail">
         <div class="text">출시일</div>
@@ -92,7 +86,7 @@
       <button class="buy-button" id="buy-btn">
         <div class="buy-text">구매</div>
         <div class="buy-info">
-          <span class="price">${formattedPrice}원</span>
+          <span class="price">${formmated.price }</span>
           <span class="subtext">즉시 구매가</span>
         </div>
       </button>

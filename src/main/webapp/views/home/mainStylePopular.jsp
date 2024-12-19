@@ -17,6 +17,9 @@
 </head>
 <body class="main-style-popular-body">
   <div class="main-style-popular-container">
+  
+  
+  
     <!-- STYLE 섹션 -->
     <div class="main-style-popular-section">
       <h2>

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FilterController {
 
-    // 필터링 요청 처리 메서드
+    // (이거 그 필터아님 카테고리 필터임) 필터링 요청 처리 메서드
     public void handleRequest(HttpServletRequest req, HttpServletResponse resp) {
         try {
 //            System.out.println("[FilterController] handleRequest 호출됨");

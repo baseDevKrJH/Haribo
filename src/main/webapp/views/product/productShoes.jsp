@@ -42,7 +42,7 @@
           </div>
           <div class="brand">${product.brand}</div>
           <div class="product-name">${product.productName}</div>
-          <div class="price">${product.initialPrice}원</div>
+          <div class="price">${lowestPriceMap[product.productId]}원</div>
         </a>
       </c:forEach>
     </div>

@@ -3,9 +3,12 @@ package com.jelly.www.action;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.jelly.www.dao.ProductDAO;
+import com.jelly.www.dao.ProductSellerDAO;
 import com.jelly.www.vo.ProductVO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShoesAction implements Action {
 
@@ -29,8 +32,17 @@ public class ShoesAction implements Action {
         ProductDAO productDAO = new ProductDAO();
         List<ProductVO> productList = productDAO.selectByCategoryAndPage("신발", pageNo, limit);
 
-        // 상품 리스트를 request에 저장
+        // 각 상품의 최저 가격 조회
+        ProductSellerDAO productSellerDAO = new ProductSellerDAO();
+        Map<Integer, Integer> lowestPriceMap = new HashMap<>();
+        for (ProductVO product : productList) {
+            int lowestPrice = productSellerDAO.getLowestPrice(product.getProductId());
+            lowestPriceMap.put(product.getProductId(), lowestPrice);
+        }
+
+        // 상품 리스트와 최저 가격 정보를 request에 저장
         request.setAttribute("productList", productList);
+        request.setAttribute("lowestPriceMap", lowestPriceMap);
 
         // AJAX 요청인지 일반 페이지 요청인지 확인
         if (request.getParameter("pageNo") != null) {
