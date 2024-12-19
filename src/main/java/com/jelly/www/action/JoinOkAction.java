@@ -34,6 +34,7 @@ public class JoinOkAction implements Action {
 
         // 중복이 없을 경우 사용자 데이터 삽입
         int result = dao.insertOne(user);
+        dao.close();
 
         // 결과에 따라 적절한 페이지로 이동
         if (result > 0) {

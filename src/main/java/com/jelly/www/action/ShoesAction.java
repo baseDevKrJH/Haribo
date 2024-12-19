@@ -17,7 +17,7 @@ public class ShoesAction implements Action {
         // 상품 리스트를 request 속성에 저장
         request.setAttribute("productList", productList);
         request.setAttribute("currentCategory", "신발");
-
+        productDAO.close();
         // 이동할 JSP 경로 반환
         return "/views/product/productShoes.jsp";
     }

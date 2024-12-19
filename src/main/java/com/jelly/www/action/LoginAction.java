@@ -15,6 +15,7 @@ public class LoginAction implements Action {
 
         UserDAO dao = new UserDAO();
         UserVO vo = dao.findOneByEmailAndPw(email, password);
+        dao.close();
 
         if (vo != null) {
             // 로그인 성공

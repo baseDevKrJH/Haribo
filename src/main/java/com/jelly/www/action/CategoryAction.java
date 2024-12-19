@@ -19,6 +19,7 @@ public class CategoryAction implements Action {
         // DAO를 사용해 카테고리별 상품 조회
         ProductDAO productDAO = new ProductDAO();
         List<ProductVO> productList = productDAO.selectByCategory(category);
+        productDAO.close();
 
         // 상품 리스트를 request 속성에 저장
         request.setAttribute("productList", productList);

@@ -75,8 +75,8 @@ public class StyleProfileAction implements Action {
 			
 			// 태그 상품 리스트 가져오기
 			HashSet<ProductVO> productSet = new HashSet<ProductVO>();
+			PostTagDAO postTagDao = new PostTagDAO();
 			for(PostVO post : postList) {
-				PostTagDAO postTagDao = new PostTagDAO();
 				ArrayList<PostTagVO> postTagList = postTagDao.getByPostId(post.getPostId());
 				for(PostTagVO postTag : postTagList) {
 					ProductDAO productDao = new ProductDAO();
@@ -93,6 +93,11 @@ public class StyleProfileAction implements Action {
 				savedPostList.add(postDao1.selectOne(postSave.getPostId()));
 			}
 			
+			userDao.close();
+			postDao.close();
+			postLikeDAO.close();
+			postTagDao.close();
+			postSaveDao.close();
 			// 요청 파라미터 설정
 			request.setAttribute("userVo", userVo);
 			request.setAttribute("isFollow", isFollow);

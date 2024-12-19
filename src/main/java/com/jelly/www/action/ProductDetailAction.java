@@ -46,7 +46,7 @@ public class ProductDetailAction implements Action {
                 sizePrice.setPrice(-1); // 0 대신 -1로 설정
             }
         }
-
+        productDAO.close();
         // JSP로 전달할 데이터 설정
         request.setAttribute("product", product);
         request.setAttribute("formattedPrice", formattedPrice);

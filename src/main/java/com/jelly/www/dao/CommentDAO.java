@@ -101,4 +101,15 @@ public class CommentDAO {
 	        }
 	    	return list;
 	    }
+		// 자원 해제 메서드
+		public void close() {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 }

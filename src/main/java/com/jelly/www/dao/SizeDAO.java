@@ -57,7 +57,7 @@ public class SizeDAO {
     }
 
     // 자원 해제 메서드
-    private void close() {
+    public void close() {
         try {
             if (rs != null) rs.close();
             if (pstmt != null) pstmt.close();
