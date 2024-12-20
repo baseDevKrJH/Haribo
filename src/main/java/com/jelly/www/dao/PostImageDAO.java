@@ -1,13 +1,9 @@
 package com.jelly.www.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
 import com.jelly.www.vo.PostImageVO;
-import com.jelly.www.vo.ProductVO;
 
 public class PostImageDAO {
 	// DB 연결 정보

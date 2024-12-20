@@ -3,7 +3,6 @@ package com.jelly.www.dao;
 import java.sql.*;
 import java.util.ArrayList;
 
-import com.jelly.www.vo.PostImageVO;
 import com.jelly.www.vo.PostVO;
 
 public class PostDAO {

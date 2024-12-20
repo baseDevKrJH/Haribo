@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.jelly.www.vo.CommentVO;
-import com.jelly.www.vo.FollowVO;
-import com.jelly.www.vo.PostSaveVO;
 
 public class CommentDAO {
 	// DB 연결 정보
