@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jelly.www.vo.AddressVO;
+import com.jelly.www.vo.ProductSellerVO;
 import com.jelly.www.vo.TradeVO;
 
 public class TradeDAO {
@@ -138,26 +140,26 @@ public class TradeDAO {
 	}
 
 	// 구매한 상품 insert
-	public int insertBuyOne(TradeVO trade) {
+	public int insertBuyOne(TradeVO trade, int productId, int size) {
+		// productId로 productSellerId 가져오기 return 타입은 VO	
+		ProductSellerVO productSeller = selectProductSellerByProductId(productId);
+		int productSellerId = productSeller.getProductSellerId();
+		// 구매한 상품 넣기 위한 insert 
 		sb.setLength(0);
 		sb.append(
-				"INSERT INTO USER (trade_id, product_seller_id, buyer_id, address_id, coupon_id, total_price, trade_status, trade_date, complete_at, created_at, updated_at) ");
-		sb.append("VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW()+ INTERVAL 7 DAY, NOW(), NOW()");
-
+				"INSERT INTO TRADE VALUES (?, ?, ?, ?, ?, ?, ?,  NOW(), NOw(), NOW(), NOW())");
 		int result = 0;
+
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, trade.getTradeId());
-			pstmt.setInt(2, trade.getProductSellerId());
+			pstmt.setInt(2, productSellerId);
 			pstmt.setInt(3, trade.getBuyerId());
 			pstmt.setInt(4, trade.getAddressId());
 			pstmt.setInt(5, trade.getCouponId());
 			pstmt.setInt(6, trade.getTotalPrice());
 			pstmt.setInt(7, trade.getTradeStatus());
-			pstmt.setTimestamp(8, trade.getTradeDate());
-			pstmt.setTimestamp(9, trade.getCompletedAt());
-			pstmt.setTimestamp(10, trade.getCreatedAt());
-			pstmt.setTimestamp(11, trade.getUpdatedAt());
+
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -167,6 +169,36 @@ public class TradeDAO {
 
 		return result;
 	}
+	
+	
+	
+	// 상품 아이디로 ProductSeller 한건 조회
+		public ProductSellerVO selectProductSellerByProductId(int productId) {
+			ProductSellerVO productSellers = null;
+			sb.setLength(0);
+			sb.append("SELECT product_seller_id, product_id, seller_id, size_id, price, stock, created_at, updated_at FROM PRODUCT_SELLER WHERE product_id = ? ORDER BY created_at DESC, price ASC limit 1");
+			System.out.println("sql : " + sb.toString());
+			try {
+				pstmt = conn.prepareStatement(sb.toString());
+				pstmt.setInt(1, productId);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					productSellers = new ProductSellerVO(
+							rs.getInt("product_seller_id"), 
+							rs.getInt("product_id"),
+							rs.getInt("seller_id"), 
+							rs.getInt("size_id"), 
+							rs.getInt("price"), 
+							rs.getInt("stock"),
+							rs.getTimestamp("created_at"), 
+							rs.getTimestamp("updated_at")
+					);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return productSellers;
+		}
 
 	// 판매한 상품 insert
 //	public int insertSellOne(TradeVO trade) {
@@ -198,10 +230,9 @@ public class TradeDAO {
 //
 //		return result;
 //	}
-	
+
 	// 구매자와 판매자 매칭
 	// 거래상태 변경
-	
 
 	// 자원 해제
 	private void close() {

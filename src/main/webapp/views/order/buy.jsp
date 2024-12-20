@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/views/home/subHeader.jsp" />
 <!DOCTYPE html>
@@ -9,42 +10,49 @@
 <title>buyModify.html</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/buy.css">
 <script src="https://cdn.portone.io/v2/browser-sdk.js" async defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-$(()=>{
-	$(".payment-btn").on("click", async function requestPayment(){
-/* 		const now = new Date(); */
- 		const rnd = Math.floor(Math.random*100000);
-		const response = PortOne.requestPayment({
+$(()=> {
+	$(".payment-submit-btn").on("click", async function requestPayment(){
+ 		const now = new Date(); 
+ 		const year = now.getFullYear() % 100;
+ 		const month = ("0" + (now.getMonth() + 1)).slice(-2); // 월 앞자리에 0을 추가 (예: 01, 02)
+ 		const date = ("0" + now.getDate()).slice(-2); // 일 앞자리에 0을 추가 (예: 01, 02)
+ 		const rnd = Math.floor(Math.random()*100);
+ 		const response = await PortOne.requestPayment({
 			// 상점 ID
 			storeId : "store-95142755-e5cd-4125-b376-f7a90f93248b",
 			// 채널 key
 			channelKey : "channel-key-6b669b9c-926d-448b-bc47-4c8cdce14767",
 			// 결제 승인 ID = 주문 번호
-			paymentId : "Jelly" + rnd,
-			orderName :"곰인형",
-			totalAmount : 100,
+			paymentId : year + month + date + rnd + "0",
+			orderName : "${formattedPrice}",
+			totalAmount : ${product.initialPrice},
 			currency : "CURRENCY_KRW",
 			payMethod : "CARD"
-		});
-		
+			});
+		console.log(response.paymentId);
 		$.ajax({
-			url : "/haribo/buyCofirm", // 결제 완료 페이지로 이동
-			method : "post",
-			data :{
-				paymentId : response.paymentId,
-				txId : response.txId,
-				orderName : "곰인",
-				totalAmount : 100
-/* 				orderName : ${product.productName},
-				totalAmount : ${formattedPrice} */
-			},
-			success : function(response){
-				Systemt.out.println("결제 성공");
-				resp.sendRedirect("/views/order/buyConfirm.jsp");
-
-			}
-			
+		    url: '/haribo/buyConfirm', // 결제 정보를 dao에 넣는 서블릿으로 이
+		    method: "get",
+		    data: {
+		        paymentId: response.paymentId,
+		        txId: response.txId,
+		        orderName: "${product.productName}",
+		        totalAmount: ${product.initialPrice},
+		       	productId : ${product.productId},
+		       	size : ${size}
+		    },
+		    success: function(response) {
+		        console.log("결제 성공");
+		        window.location.href = "${pageContext.request.contextPath}/jelly?page=buyConfirm&productId=${product.productId}";  // 결제 완료 페이지로 이동
+		    },
+		    error: function(xhr, status, error) { // 함수 형태로 수정
+		        console.log("결제 실패:", error);
+		        console.log("응답 상태:", status);
+		        console.log("서버 응답:", xhr.responseText);
+		    }
 		});
 	});
 })
@@ -86,7 +94,7 @@ $(()=>{
 				<span>주문 상품</span> <span>총 1건</span>
 			</div>
 			<div class="order-info">
-				<img src="../img/productimg.png" alt="" />
+				<img src="${product.imageUrl }" alt="" />
 				<div class="order-subInfo">
 					<div class="productSubInfo">
 						<span>${product.productName }</span>
@@ -151,7 +159,7 @@ $(()=>{
 						</div>
 					</div>
 					<div class="total-price">
-						<span>총 결제금액</span> <span>${formattedPrice + 5000 }원</span>
+						<span>총 결제금액</span> <span>${formattedPrice }원</span>
 					</div>
 				</div>
 			</div>
@@ -159,7 +167,7 @@ $(()=>{
 	</div>
 	<!-- 결제 푸터 -->
 	<div class="payment-footer">
-		<input type="submit" value="${formattedPrice + 5000 }원 결제하기"
+		<input type="submit" value="${formattedPrice }원 결제하기"
 			class="payment-submit-btn" />
 	</div>
 	<jsp:include page="/views/home/footer.jsp" />

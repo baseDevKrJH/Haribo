@@ -263,7 +263,7 @@ $(document).ready(function () {
     <div class="size-grid">
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
-          <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
+          <a href="${pageContext.request.contextPath}/jelly?page=buy" class="size-button">
             <span>${size}</span>
             <c:choose>
               <c:when test="${sizeButtons[size] == '구매 입찰'}">
@@ -288,7 +288,7 @@ $(document).ready(function () {
     <div class="size-grid">
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
-          <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
+          <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId}&userId=${user.userId }&size=${size}" class="size-button">
             <span>${size}</span>
             <c:choose>
               <c:when test="${sizeButtons[size] == '구매 입찰'}">

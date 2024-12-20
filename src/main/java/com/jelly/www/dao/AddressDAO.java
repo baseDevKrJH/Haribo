@@ -36,7 +36,7 @@ public class AddressDAO {
 
 	}
 
-	// 주소 한건 조회
+	// userId로 주소 한건 조회
 	public AddressVO selectOne(int userId) {
 		AddressVO vo = null;
 		sb.setLength(0);
