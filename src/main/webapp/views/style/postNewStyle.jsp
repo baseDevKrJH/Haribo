@@ -117,13 +117,13 @@
             <input type="hidden" name="uploadType" value="stylePost" />
             
             <label for="titleInput">제목</label>
-            <input type="text" name="title" id="titleInput">
+            <input type="text" name="title" id="titleInput" required>
 
             <label for="contentInput">내용</label>
-            <textarea name="content" id="contentInput"></textarea>
+            <textarea name="content" id="contentInput" required></textarea>
 
             <label for="imageInput">이미지 선택</label>
-            <input type="file" name="postImages" id="imageInput" multiple="multiple" onchange="previewImages()">
+            <input type="file" name="postImages" id="imageInput" multiple="multiple" onchange="previewImages()" required>
             
             <!-- Image preview section -->
             <div id="imagePreview"></div>
