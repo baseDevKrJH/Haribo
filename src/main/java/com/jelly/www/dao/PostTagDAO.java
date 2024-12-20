@@ -3,6 +3,7 @@ package com.jelly.www.dao;
 import java.sql.*;
 import java.util.ArrayList;
 
+import com.jelly.www.vo.PostLikeVO;
 import com.jelly.www.vo.PostTagVO;
 
 public class PostTagDAO {
@@ -30,6 +31,24 @@ public class PostTagDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	 // 게시물 좋아요 데이터 추가
+    public void insertOne(int postId, int productId) {
+        sb.setLength(0);
+        sb.append("insert into POST_TAG (post_id, productId) ");
+        sb.append("values (?, ?)");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId);
+            pstmt.setInt(2, productId);
+            pstmt.executeUpdate();
+            System.out.println("post tag 데이터 추가 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
 	
 	public ArrayList<PostTagVO> getByPostId(int postId) {
 		ArrayList<PostTagVO> list = new ArrayList<PostTagVO>();
@@ -60,6 +79,9 @@ public class PostTagDAO {
 		
 		return list;
 	}
+	
+	
+	
 
 	// 자원 해제 메서드
 	public void close() {

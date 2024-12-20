@@ -6,8 +6,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Style and Popular</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mainstylepopular.css">
+  <script src="<%= request.getContextPath() %>/js/listStyleLike.js"></script>
 </head>
 <body class="main-style-popular-body">
   <div class="main-style-popular-container">
