@@ -80,24 +80,30 @@
       </div>
     </dl>
 
-    <!-- 구매/판매 버튼 -->
-    <div class="button-group">
-      <!-- a태그를 button으로 변경 -->
-      <button class="buy-button" id="buy-btn">
-        <div class="buy-text">구매</div>
-        <div class="buy-info">
-          <span class="price">${formmated.price }</span>
-          <span class="subtext">즉시 구매가</span>
-        </div>
-      </button>
-      <button class="sell-button" id="sell-btn">
-        <div class="sell-text">판매</div>
-        <div class="sell-info">
-          <span class="price">250,000원</span>
-          <span class="subtext">즉시 판매가</span>
-        </div>
-      </button>
+<!-- 구매/판매 버튼 -->
+<div class="button-group">
+  <!-- a태그를 button으로 변경 -->
+  <button class="buy-button" id="buy-btn">
+    <div class="buy-text">구매</div>
+    <div class="buy-info">
+      <!-- 구매가 평균가 출력, 없으면 발매가 출력 -->
+      <span class="price">
+        ${formattedAveragePurchasePrice != "가격 정보 없음" ? formattedAveragePurchasePrice : formattedPrice}
+      </span>
+      <span class="subtext">즉시 구매가</span>
     </div>
+  </button>
+  <button class="sell-button" id="sell-btn">
+    <div class="sell-text">판매</div>
+    <div class="sell-info">
+      <!-- 판매가 평균가 출력, 없으면 발매가 출력 -->
+      <span class="price">
+        ${formattedAverageSellPrice != "가격 정보 없음" ? formattedAverageSellPrice : formattedPrice}
+      </span>
+      <span class="subtext">즉시 판매가</span>
+    </div>
+  </button>
+</div>
     
     <script src="<%= request.getContextPath() %>/js/productWishButton.js"></script>
     <c:choose>
@@ -222,56 +228,55 @@
 
 
     <script src="<%= request.getContextPath() %>/js/productModal.js"></script>
-    <!-- 모든 사이즈 모달 -->
-    <div class="modal-overlay" id="size-modal">
-      <div class="modal-content">
-        <button class="modal-close" id="modal-close">&times;</button>
-        <h3 class="modal-title">사이즈</h3>
-        <div class="size-grid">
-          <c:forEach var="size" items="${sizeList}">
-            <div class="size-item">
-              <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
-                <span>${size}</span>
-                <c:choose>
-                  <c:when test="${sizeButtons[size] == '구매 입찰'}">
-                    <span class="price bid-label">구매 입찰</span>
-                  </c:when>
-                  <c:otherwise>
-                    <span class="price">${sizeButtons[size]}</span>
-                  </c:otherwise>
-                </c:choose>
-              </a>
-            </div>
-          </c:forEach>
+<!-- 모든 사이즈 모달 -->
+<div class="modal-overlay" id="size-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <h3 class="modal-title">사이즈</h3>
+    <div class="size-grid">
+      <c:forEach var="size" items="${sizeList}">
+        <div class="size-item">
+          <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
+            <span>${size}</span>
+            <c:choose>
+              <c:when test="${sizeButtons[size] == '구매 입찰'}">
+                <span class="price bid-label">구매 입찰</span>
+              </c:when>
+              <c:otherwise>
+                <span class="price">${sizeButtons[size]}</span>
+              </c:otherwise>
+            </c:choose>
+          </a>
         </div>
-      </div>
+      </c:forEach>
     </div>
+  </div>
+</div>
 
-    <!-- 구매 모달 -->
-    <div class="modal-overlay" id="buy-modal">
-      <div class="modal-content">
-        <button class="modal-close" id="buy-modal-close">&times;</button>
-        <h3 class="modal-title">구매 사이즈 선택</h3>
-        <div class="size-grid">
-          <c:forEach var="size" items="${sizeList}">
-            <div class="size-item">
-              <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
-                <span>${size}</span>
-                <c:choose>
-                  <c:when test="${sizeButtons[size] == '구매 입찰'}">
-                    <span class="price bid-label">구매 입찰</span>
-                  </c:when>
-                  <c:otherwise>
-                    <span class="price">${sizeButtons[size]}</span>
-                  </c:otherwise>
-                </c:choose>
-              </a>
-            </div>
-          </c:forEach>
+<!-- 구매 모달 -->
+<div class="modal-overlay" id="buy-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="buy-modal-close">&times;</button>
+    <h3 class="modal-title">구매 사이즈 선택</h3>
+    <div class="size-grid">
+      <c:forEach var="size" items="${sizeList}">
+        <div class="size-item">
+          <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
+            <span>${size}</span>
+            <c:choose>
+              <c:when test="${sizeButtons[size] == '구매 입찰'}">
+                <span class="price bid-label">구매 입찰</span>
+              </c:when>
+              <c:otherwise>
+                <span class="price">${sizeButtons[size]}</span>
+              </c:otherwise>
+            </c:choose>
+          </a>
         </div>
-      </div>
+      </c:forEach>
     </div>
-
+  </div>
+</div>
     <!-- 판매 모달 -->
     <div class="modal-overlay" id="sell-modal">
       <div class="modal-content">

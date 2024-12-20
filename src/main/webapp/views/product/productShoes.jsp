@@ -33,19 +33,30 @@
       </div>
     </div>
 
-    <!-- 상품 리스트 -->
-    <div class="products" id="product-container">
-      <c:forEach var="product" items="${productList}">
-        <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product-card">
-          <div class="image-wrapper">
-            <img src="${product.imageUrl}" alt="${product.productName}">
-          </div>
-          <div class="brand">${product.brand}</div>
-          <div class="product-name">${product.productName}</div>
-          <div class="price">${lowestPriceMap[product.productId]}원</div>
-        </a>
-      </c:forEach>
-    </div>
+<!-- 상품 리스트 -->
+<div class="products" id="product-container">
+  <c:forEach var="product" items="${productList}">
+    <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product-card">
+      <div class="image-wrapper">
+        <img src="${product.imageUrl}" alt="${product.productName}">
+      </div>
+      <div class="brand">${product.brand}</div>
+      <div class="product-name">${product.productName}</div>
+      
+      <!-- 구매 평균가 또는 발매가 표시 -->
+      <div class="price">
+        <c:choose>
+          <c:when test="${averagePurchasePriceMap[product.productId] == 0}">
+            ${product.initialPrice}원  <!-- 평균가가 0이면 발매가 표시 -->
+          </c:when>
+          <c:otherwise>
+            ${averagePurchasePriceMap[product.productId]}원  <!-- 평균가 표시 -->
+          </c:otherwise>
+        </c:choose>
+      </div>
+    </a>
+  </c:forEach>
+</div>
 
     <!-- 로딩 중 -->
 	<div id="loading">

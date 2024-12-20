@@ -9,6 +9,17 @@
     </div>
     <div class="brand">${product.brand}</div>
     <div class="product-name">${product.productName}</div>
-    <div class="price"> ${lowestPriceMap[product.productId]}원</div>
+    
+    <!-- 가격 처리: 평균가가 0일 경우 발매가 표시 -->
+    <div class="price">
+      <c:choose>
+        <c:when test="${averagePurchasePriceMap[product.productId] == 0}">
+          ${product.initialPrice}원  <!-- 평균가가 0이면 발매가 표시 -->
+        </c:when>
+        <c:otherwise>
+          ${averagePurchasePriceMap[product.productId]}원  <!-- 평균가 표시 -->
+        </c:otherwise>
+      </c:choose>
+    </div>
   </a>
 </c:forEach>

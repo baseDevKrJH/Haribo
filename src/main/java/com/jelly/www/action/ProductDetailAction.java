@@ -37,29 +37,37 @@ public class ProductDetailAction implements Action {
             return "/views/error/404.jsp";
         }
 
-        // ProductSellerDAO의 메서드를 통해 최저가 조회
-        int lowestPrice = productSellerDAO.getLowestPrice(productId);
-
         // 모델 번호 포맷팅
         String formattedModelNumber = productDAO.getFormattedModelNumber(productId);
         request.setAttribute("formattedModelNumber", formattedModelNumber);
-        
+
         // 가격 포맷팅 처리
         DecimalFormat df = new DecimalFormat("#,###");
         String formattedPrice = df.format(product.getInitialPrice()); // 발매가
-        String formattedLowestPrice = lowestPrice > 0 ? df.format(lowestPrice) : "가격 정보 없음";
+
+        // 구매가와 판매가 평균 가격 조회
+        int averagePurchasePrice = productSellerDAO.getAveragePurchasePrice(productId);
+        int averageSellPrice = productSellerDAO.getAverageSellPrice(productId);
+        int lowestPrice = productSellerDAO.getLowestPrice(productId);
+
+        // 구매가 평균 가격이 없으면 발매가로 대체
+        String formattedAveragePurchasePrice = averagePurchasePrice > 0 ? df.format(averagePurchasePrice) : formattedPrice;
+        // 판매가 평균 가격이 없으면 발매가로 대체
+        String formattedAverageSellPrice = averageSellPrice > 0 ? df.format(averageSellPrice) : formattedPrice;
+        // 최저가가 없으면 발매가로 대체
+        String formattedLowestPrice = lowestPrice > 0 ? df.format(lowestPrice) : formattedPrice;
 
         // 고정 사이즈 목록 (210~290)
         List<String> sizeList = Arrays.asList("210", "220", "230", "240", "250", "260", "270", "280", "290");
 
-        // ProductDAO의 메서드를 통해 사이즈별 가격 조회
+        // 사이즈별 가격 조회
         Map<String, Integer> sizePriceMap = new HashMap<>();
         for (ProductVO sizePrice : productDAO.selectSizesAndPricesByProductId(productId)) {
             Integer price = sizePrice.getPrice();
             if (price == null || price == 0) {
                 sizePriceMap.put(sizePrice.getSize(), -1); // 가격이 없으면 -1로 설정
             } else {
-                sizePriceMap.put(sizePrice.getSize(), price); // 실제 가격 
+                sizePriceMap.put(sizePrice.getSize(), price); // 실제 가격
             }
         }
 
@@ -77,6 +85,8 @@ public class ProductDetailAction implements Action {
         // JSP로 전달할 데이터 설정
         request.setAttribute("product", product); // 상품 정보
         request.setAttribute("formattedPrice", formattedPrice); // 발매가
+        request.setAttribute("formattedAveragePurchasePrice", formattedAveragePurchasePrice); // 구매가 평균
+        request.setAttribute("formattedAverageSellPrice", formattedAverageSellPrice); // 판매가 평균
         request.setAttribute("formattedLowestPrice", formattedLowestPrice); // 최저가
         request.setAttribute("sizeList", sizeList); // 고정 사이즈 리스트
         request.setAttribute("sizeButtons", sizeButtons); // 사이즈별 버튼 텍스트

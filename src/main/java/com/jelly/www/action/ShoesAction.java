@@ -32,17 +32,23 @@ public class ShoesAction implements Action {
         ProductDAO productDAO = new ProductDAO();
         List<ProductVO> productList = productDAO.selectByCategoryAndPage("신발", pageNo, limit);
 
-        // 각 상품의 최저 가격 조회
+        // 구매 평균가 조회
         ProductSellerDAO productSellerDAO = new ProductSellerDAO();
-        Map<Integer, Integer> lowestPriceMap = new HashMap<>();
+        Map<Integer, Integer> averagePurchasePriceMap = new HashMap<>();
         for (ProductVO product : productList) {
-            int lowestPrice = productSellerDAO.getLowestPrice(product.getProductId());
-            lowestPriceMap.put(product.getProductId(), lowestPrice);
+            int averagePurchasePrice = productSellerDAO.getAveragePurchasePrice(product.getProductId());
+
+            // 구매 평균가가 0이라면 발매가를 사용
+            if (averagePurchasePrice == 0) {
+                averagePurchasePrice = product.getInitialPrice();  // 발매가 사용
+            }
+
+            averagePurchasePriceMap.put(product.getProductId(), averagePurchasePrice);
         }
 
-        // 상품 리스트와 최저 가격 정보를 request에 저장
+        // 상품 리스트와 평균 구매 가격 정보를 request에 저장
         request.setAttribute("productList", productList);
-        request.setAttribute("lowestPriceMap", lowestPriceMap);
+        request.setAttribute("averagePurchasePriceMap", averagePurchasePriceMap);
 
         // AJAX 요청인지 일반 페이지 요청인지 확인
         if (request.getParameter("pageNo") != null) {
