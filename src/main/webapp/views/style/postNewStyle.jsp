@@ -113,7 +113,7 @@
 </head>
 <body id="body">
     <div id="formContainer">
-        <form action="<%= request.getContextPath() %>/upload" method="post" enctype="multipart/form-data" onsubmit="prepareFormData(); alert('posted')">
+        <form action="<%= request.getContextPath() %>/upload" method="post" enctype="multipart/form-data" onsubmit="alert('업로드 완료')">
             <input type="hidden" name="uploadType" value="stylePost" />
             
             <label for="titleInput">제목</label>
@@ -131,8 +131,8 @@
 
             <label for="styleCategoryInput">카테고리</label>
             <select name="styleCategory" id="styleCategoryInput">
-                <option value="1" selected>Casual</option>
-                <option value="2">스트릿<option>
+                <option value="1" selected>캐주얼</option>
+                <option value="2">스트릿</option>
                 <option value="3">모던</option>
                 <option value="4">빈티지</option>
                 <option value="5">미니멀</option>

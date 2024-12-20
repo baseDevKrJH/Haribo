@@ -75,17 +75,15 @@ $(document).ready(function() {
 	        $('#tag-products').append(`<img src="${product.imageUrl}" alt="${product.productId}">`);
 	    }
 		$('.modal-overlay').css('display', 'none');
+		
+		// 선택된 productId를 콤마로 구분된 문자열로 변환
+	    const productIds = selectedProducts.map(product => product.productId).join(',');
+	    // 숨겨진 필드에 값 설정
+	    $('#product-ids').val(productIds);
     });
 	
 	// 검색시 x버튼 클릭 시 검색결과 초기화
 	$('.search-reset').on('click', function() {
 	    $('#product-results').empty();
 	});
-
-	function prepareFormData() {
-	    // 선택된 productId를 콤마로 구분된 문자열로 변환
-	    const productIds = selectedProducts.map(product => product.productId).join(',');
-	    // 숨겨진 필드에 값 설정
-	    $('#product-ids').val(productIds);
-	}
 })

@@ -19,6 +19,7 @@ import com.jelly.www.action.SearchAction;
 import com.jelly.www.action.WishAction;
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostImageDAO;
+import com.jelly.www.dao.PostTagDAO;
 import com.jelly.www.vo.PostImageVO;
 import com.jelly.www.vo.PostVO;
 import com.jelly.www.vo.UserVO;
@@ -142,6 +143,14 @@ public class UploadImageController extends HttpServlet {
             	PostVO newVO = dao.getUsersNewPost(user.getUserId());
             	postId = newVO.getPostId();
             	System.out.println("postId: " + postId);
+            	
+            	String productIds = request.getParameter("productIds");
+            	String[] productIdArray = productIds.split(","); // 콤마를 기준으로 문자열 나누기
+
+            	PostTagDAO postTagDao = new PostTagDAO();
+            	for (String id : productIdArray) {
+            	    postTagDao.insertOne(postId, Integer.parseInt(id));
+            	}
         	}
         	
         	

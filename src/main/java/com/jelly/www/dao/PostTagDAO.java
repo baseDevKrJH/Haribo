@@ -32,10 +32,10 @@ public class PostTagDAO {
 		}
 	}
 	
-	 // 게시물 좋아요 데이터 추가
+	 // 게시물 태그 데이터 추가
     public void insertOne(int postId, int productId) {
         sb.setLength(0);
-        sb.append("insert into POST_TAG (post_id, productId) ");
+        sb.append("insert into POST_TAG (post_id, product_id) ");
         sb.append("values (?, ?)");
 
         try {
@@ -62,7 +62,7 @@ public class PostTagDAO {
             pstmt.setInt(1, postId);
             rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 PostTagVO vo = new PostTagVO(
                     rs.getInt("post_tag_id"),
                     rs.getInt("post_id"),
