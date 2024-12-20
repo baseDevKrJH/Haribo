@@ -13,9 +13,9 @@
   <div class="main-style-popular-container">
     <!-- STYLE 섹션 -->
     <div class="main-style-popular-section">
-      <h2>
-        STYLE<a href="<%= request.getContextPath() %>/jelly?page=styleList">&gt;</a>
-      </h2>
+        <h2>
+          STYLE<a href="<%= request.getContextPath() %>/jelly?page=styleList">&gt;</a>
+        </h2>
       <div class="main-style-popular-style-items">
 	      <c:forEach var="post" items="${postList}">
 	      	<div class="main-style-popular-style-item">
