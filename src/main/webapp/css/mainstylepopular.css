@@ -67,48 +67,62 @@
   align-items: center;
 }
 
-.main-style-popular-style-item .image-link {
+.main-style-popular-style-item .imageWrapper {
   display: block;
   width: 233px;
   height: 263px;
   border: 1px dashed rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  overflow: hidden;	
   box-sizing: border-box;
 }
 
-.main-style-popular-style-item .image-link img {
+.main-style-popular-style-item .imageWrapper img {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
   object-fit: cover;
 }
 
-.main-style-popular-style-item .info {
+.main-style-popular-style-item .underPost {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
   width: 100%;
   max-width: 233px;
+  gap: 10px;
 }
 
-.main-style-popular-style-item .profile {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.main-style-popular-style-item .profile img {
+.main-style-popular-style-item .underPost .profilePic {
   width: 24px;
   height: 24px;
   border-radius: 50%;
 }
 
-.main-style-popular-style-item .profile .name-link {
-  text-decoration: none;
-  color: black;
+.main-style-popular-style-item .underPost .username {
   font-size: 0.9rem;
   font-weight: bold;
+}
+
+.main-style-popular-style-item .underPost .likebtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.main-style-popular-style-item .underPost .likebtn .like-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.main-style-popular-style-item .underPost .likebtn .like-count {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.main-style-popular-style-item .title p {
+  font-size: 1rem;
+  text-align: center;
 }
 
 /* POPULAR 섹션 */

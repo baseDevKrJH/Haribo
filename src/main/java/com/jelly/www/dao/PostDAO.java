@@ -204,7 +204,7 @@ public class PostDAO {
 	        sb.append("ON POST.user_id = FOLLOW.following_id ");
 	        sb.append("WHERE FOLLOW.follower_id = ? ");
 	        sb.append("order by created_at desc");
-		} else if (orderBy == 2) {
+		} else if (orderBy == 1) {
 			System.out.println("order by like count");
 			sb.append("SELECT POST.* FROM POST INNER JOIN FOLLOW ");
 	        sb.append("ON POST.user_id = FOLLOW.following_id ");
@@ -489,6 +489,42 @@ public class PostDAO {
         }
     }
 
+    // 좋아요 순 상위 4개 가져오기
+    public ArrayList<PostVO> getTop4ByLikes(){
+    	ArrayList<PostVO> list = new ArrayList<PostVO>();
+    	sb.setLength(0);
+    	sb.append("select * from POST order by like_count desc limit 4");
+    	
+    	 try {
+         	pstmt = conn.prepareStatement(sb.toString());
+             rs = pstmt.executeQuery();
+
+             while(rs.next()) {
+             	PostVO vo = new PostVO(
+             			rs.getInt("post_id"), 
+     					rs.getInt("user_id"), 
+     					rs.getInt("style_category"),
+     					rs.getString("title"), 
+     					rs.getString("content"), 
+     					rs.getString("thumbnail_image_url"), 
+     					rs.getInt("like_count"),
+     					rs.getInt("comment_count"), 
+     					rs.getInt("view_count"), 
+     					rs.getInt("save_count"),
+     					rs.getTimestamp("created_at"),
+     					rs.getTimestamp("updated_at")
+                 );
+                 list.add(vo);
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         } finally {
+             close();
+         }
+    	
+    	return list;
+    }
+    
 	// 자원 해제 메서드
 	public void close() {
 		try {
