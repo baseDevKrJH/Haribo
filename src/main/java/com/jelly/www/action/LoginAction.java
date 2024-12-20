@@ -1,5 +1,7 @@
 package com.jelly.www.action;
 
+import java.io.IOException;
+
 import com.jelly.www.dao.UserDAO;
 import com.jelly.www.vo.UserVO;
 
@@ -12,6 +14,10 @@ public class LoginAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        HttpSession session = req.getSession();
+        String returnPage = (String) session.getAttribute("returnPage");
+        System.out.println("recieved parameter: " + returnPage);
+        
 
         UserDAO dao = new UserDAO();
         UserVO vo = dao.findOneByEmailAndPw(email, password);
@@ -22,11 +28,15 @@ public class LoginAction implements Action {
             System.out.println("로그인 성공");
 
             // 세션에 사용자 정보 저장
-            HttpSession session = req.getSession();
             session.setAttribute("user", vo); // 로그인한 사용자 정보 세션에 저장
-
-            // 루트 페이지로 리다이렉트
-            return "redirect:/haribo/jelly"; // 리다이렉트 URL 설정
+            
+            if(returnPage != null && returnPage.trim() != "") {
+            	return returnPage;
+            } else {
+            	// 루트 페이지로 리다이렉트
+            	return "redirect:/haribo/jelly"; // 리다이렉트 URL 설정
+            }
+           
         } else {
             // 로그인 실패
             System.out.println("로그인 실패");
