@@ -80,7 +80,7 @@
 			<div class="tab" data-target="#tab-products">태그 상품 (${productSet.size()})</div>
 			<c:if test="${sessionScope.user != null && sessionScope.user.userId == userVo.userId}">
 				<!-- 본인인 경우에만 관심 스타일 탭 표시 -->
-				<div class="tab" data-target="#tab-saved">관심 스타일 (${savedPostList.size()})</div>
+				<div class="tab" data-target="#tab-saved">관심 스타일 (${savedList.size()})</div>
 			</c:if>
 		</div>
 
@@ -126,13 +126,22 @@
 
 		<div id="tab-saved" class="tab-content">
 			<div class="posts">
-				<c:forEach var="savedPost" items="${savedPostList}">
+				<c:forEach var="savedPost" items="${savedList}">
 					<a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${savedPost.postId}" class="post-card">
 						<div class="imageWrapper">
 							<img src="${savedPost.thumbnailImageUrl}" alt="저장된 게시물 썸네일" />
 						</div>
 						<div class="underPost">
-							<p>좋아요: ${savedPost.likeCount}</p>
+							<img 
+						        id="like-btn-${savedPost.postId}" 
+						        class="like-btn"
+						        src="<%= request.getContextPath() %>/img/${savedPost.like ? 'after_like.png' : 'before_like.png'}"
+						        alt="좋아요 버튼" 
+						        data-context-path="<%= request.getContextPath() %>"
+						        data-post-id="${savedPost.postId}"
+						        data-like-count = "${savedPost.likeCount}"
+						        onclick="return false;" />
+						        <span id="like-count-${savedPost.postId}" class="like-count">${savedPost.likeCount}</span>
 						</div>
 					</a>
 				</c:forEach>
