@@ -35,21 +35,21 @@
     </div>
   </div>
 
-  <!-- 상품 정보 -->
-  <div class="product-info-section">
-    <div class="instant-buy">
-      <p class="instant-buy-label">즉시 구매가</p>
-      <p class="instant-buy-price">
-        <c:choose>
-          <c:when test="${not empty lowestPriceMap[product.productId]}">
-            ${lowestPriceMap[product.productId]}원
-          </c:when>
-          <c:otherwise>
-            가격 정보 없음
-          </c:otherwise>
-        </c:choose>
-      </p>
-    </div>
+<!-- 상품 정보 -->
+<div class="product-info-section">
+  <div class="instant-buy">
+    <p class="instant-buy-label">즉시 구매가</p>
+    <p class="instant-buy-price">
+      <c:choose>
+        <c:when test="${formattedAveragePurchasePrice != '가격 정보 없음'}">
+          ${formattedAveragePurchasePrice}원
+        </c:when>
+        <c:otherwise>
+          가격 정보 없음
+        </c:otherwise>
+      </c:choose>
+    </p>
+  </div>
 
     <div class="product-name">${product.productName}</div>
     <div class="product-description">${product.description}</div>
