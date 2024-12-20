@@ -49,6 +49,7 @@ public class StyleProfileAction implements Action {
 			PostLikeDAO postLikeDAO =  new PostLikeDAO();
 			ArrayList<PostVO> postList = postDao.getByUserId(userId);
 			ArrayList<StyleProfileListVO> newPostList = new ArrayList<StyleProfileListVO>();
+			
 			for(PostVO vo: postList) {
 				boolean isLike = false;
 				if(user != null) {
@@ -86,10 +87,37 @@ public class StyleProfileAction implements Action {
 			// 저장된 스타일 가져오기
 			PostSaveDAO postSaveDao = new PostSaveDAO();
 			ArrayList<PostSaveVO> postSaveList = postSaveDao.getByUserId(userId);
-			ArrayList<PostVO> savedPostList = new ArrayList<PostVO>();
-			for(PostSaveVO postSave : postSaveList) {
+			ArrayList<StyleProfileListVO> savedList = new ArrayList<StyleProfileListVO>();
+			for(PostSaveVO post1 : postSaveList) {
 				PostDAO postDao1 = new PostDAO();
-				savedPostList.add(postDao1.selectOne(postSave.getPostId()));
+				PostVO vo = postDao1.selectOne(post1.getPostId());
+				
+				boolean isLike = false;
+				if(user != null) {
+					isLike = postLikeDAO.checkLike(vo.getPostId(), user.getUserId());
+				}
+				StyleProfileListVO obj = new StyleProfileListVO(
+						vo.getPostId(),
+						vo.getUserId(),
+						vo.getStyleCategory(),
+						vo.getTitle(),
+						vo.getContent(),
+						vo.getThumbnailImageUrl(),
+						vo.getLikeCount(),
+						vo.getCommentCount(),
+						vo.getViewCount(),
+						vo.getSaveCount(),
+						vo.getCreatedAt(),
+						vo.getUpdatedAt(),
+						isLike
+						);
+				savedList.add(obj);
+				
+			}
+			
+			System.out.println("Saved List Size: " + savedList.size());
+			for (StyleProfileListVO item : savedList) {
+			    System.out.println(item);
 			}
 			
 			userDao.close();
@@ -102,7 +130,7 @@ public class StyleProfileAction implements Action {
 			request.setAttribute("isFollow", isFollow);
 			request.setAttribute("postList", newPostList);
 			request.setAttribute("productSet", productSet);
-			request.setAttribute("savedPostList", savedPostList);
+			request.setAttribute("savedList", savedList);
 			
 		}
 

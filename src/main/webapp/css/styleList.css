@@ -113,3 +113,71 @@ body {
   color: #333;
   border-top: 1px solid #eee;
 }
+
+/* General container for the navbar */
+.filter-navbar {
+    display: flex;
+    justify-content: center; /* Center the entire navbar */
+    align-items: center; /* Vertically center items */
+    width: 100%; /* Full width */
+    margin: 20px 0; /* Add vertical margin */
+}
+
+/* Grouping filter links on the left */
+.filter-left {
+    display: flex;
+    gap: 20px; /* Space between links */
+    justify-content: center; /* Center align the left links */
+}
+
+/* Grouping filter links on the right */
+.filter-right {
+    display: flex;
+    gap: 20px; /* Space between the right-side links */
+    justify-content: center; /* Center align the right links */
+    margin-left: auto; /* Push the right group to the far right */
+}
+
+/* Style for the individual filter links */
+.filter-link {
+    text-decoration: none; /* Remove underline */
+    padding: 10px 20px; /* Add padding for a bigger clickable area */
+    background-color: #f0f0f0; /* Light background color */
+    border-radius: 5px; /* Rounded corners */
+    color: black; /* Text color */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
+    font-weight: 500; /* Slightly bold text */
+    border: 1px solid transparent; /* No border by default */
+}
+
+/* Active link style */
+.filter-link.active {
+    background-color: #333; /* Dark background for active item */
+    color: white; /* White text for active item */
+    border-color: #333; /* Border color to match the active background */
+    transform: scale(1.05); /* Slightly scale up the active item */
+}
+
+/* Hover effect for filter links */
+.filter-link:hover {
+    background-color: #ddd; /* Light grey background on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filter-navbar {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: center;
+    }
+
+    .filter-left,
+    .filter-right {
+        flex-direction: column; /* Stack the filter items vertically */
+        gap: 10px; /* Smaller gap for stacked items */
+    }
+
+    .filter-right {
+        margin-left: 0; /* Remove left margin when stacked */
+    }
+}
+

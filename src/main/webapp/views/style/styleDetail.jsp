@@ -107,7 +107,6 @@
           <c:if test="${post.postId != postVo.postId}">
             <a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post">
               <img src="${post.thumbnailImageUrl}" alt="게시물 썸네일" />
-              <p>좋아요: ${post.likeCount}</p>
             </a>
           </c:if>
         </c:forEach>

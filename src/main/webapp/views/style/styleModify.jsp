@@ -150,7 +150,7 @@
 
         <!-- Caption (Content) -->
         <label for="contentInput">Caption:</label>
-        <textarea name="content" id="contentInput"><c:out value="${postVo.content}" /></textarea>
+        <textarea name="content" id="contentInput"><c:out value="${postVo.content}"/></textarea>
 
         <!-- Image Input -->
         <label for="imageInput">Select Image:</label>
