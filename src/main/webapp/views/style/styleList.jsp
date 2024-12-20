@@ -106,25 +106,28 @@
 	    });
 
 	});
-	
-	
+
 
 	</script>
 <body>
-	<div class="filter">
-		<!-- setAttribute("style", "street") to determine active page -->
-		<!-- javascript:void(0) to not go back to top of page -->
-		<a href="javascript:void(0);" onclick="_Style.getStyleList(0);" class="${style == 'classic' ? 'active' : ''}">All</a>
-		<a href="javascript:void(0);" onclick="_Style.getStyleList(99);" class="${style == 'classic' ? 'active' : ''}">Following</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(1);" class="${style == 'classic' ? 'active' : ''}">Casual</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(2);" class="${style == 'street' ? 'active' : ''}">Street</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(3);" class="${style == 'modern' ? 'active' : ''}">Modern</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" class="${style == 'vintage' ? 'active' : ''}">Vintage</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" class="${style == 'minimal' ? 'active' : ''}">Minimal</a>
-	    <a href="javascript:void(0);" onclick="_Style.getStyleList(6);" class="${style == 'casual' ? 'active' : ''}">Formal</a>
-	    <a href="javascript:void(0);" onclick="orderBy(0);" class="${style == 'casual' ? 'active' : ''}">Most Recent</a>
-	    <a href="javascript:void(0);" onclick="orderBy(1);" class="${style == 'casual' ? 'active' : ''}">Most Likes</a>
-	    
+    <div class="filter-navbar">
+        <!-- Filter links on the left -->
+        <div class="filter-left">
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(0);" id="filter-all" class="filter-link">All</a>
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(99);" id="filter-following" class="filter-link">Following</a>
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(1);" id="filter-casual" class="filter-link">Casual</a>
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(2);" id="filter-street" class="filter-link">Street</a>
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(3);" id="filter-modern" class="filter-link">Modern</a>
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" id="filter-vintage" class="filter-link">Vintage</a>
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" id="filter-minimal" class="filter-link">Minimal</a>
+            <a href="javascript:void(0);" onclick="_Style.getStyleList(6);" id="filter-formal" class="filter-link">Formal</a>
+        </div>
+        
+        <!-- Filter links on the right -->
+        <div class="filter-right">
+            <a href="javascript:void(0);" onclick="orderBy(0);" id="filter-recent" class="filter-link">Most Recent</a>
+            <a href="javascript:void(0);" onclick="orderBy(1);" id="filter-likes" class="filter-link">Most Likes</a>
+        </div>
     </div>
     
     

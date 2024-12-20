@@ -114,13 +114,13 @@
             <input type="hidden" name="uploadType" value="stylePost" />
             
             <label for="titleInput">Title:</label>
-            <input type="text" name="title" id="titleInput">
+            <input type="text" name="title" id="titleInput" required>
 
             <label for="contentInput">Caption:</label>
-            <textarea name="content" id="contentInput"></textarea>
+            <textarea name="content" id="contentInput" required></textarea>
 
             <label for="imageInput">Select Image:</label>
-            <input type="file" name="postImages" id="imageInput" multiple="multiple" onchange="previewImages()">
+            <input type="file" name="postImages" id="imageInput" multiple="multiple" onchange="previewImages()" required>
             
             <!-- Image preview section -->
             <div id="imagePreview"></div>
