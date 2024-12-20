@@ -1,4 +1,4 @@
-$(document).ready(function () {
+	$(document).ready(function () {
 	$("#follow-btn").on("click", function() {
 		const contextPath = $(this).data("context-path");
 		const followingId = $(this).data("user-id");
