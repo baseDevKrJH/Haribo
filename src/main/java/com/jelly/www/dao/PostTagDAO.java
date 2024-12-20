@@ -62,7 +62,7 @@ public class PostTagDAO {
             pstmt.setInt(1, postId);
             rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 PostTagVO vo = new PostTagVO(
                     rs.getInt("post_tag_id"),
                     rs.getInt("post_id"),
