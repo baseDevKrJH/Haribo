@@ -34,6 +34,10 @@ public class SearchAction implements Action {
             request.setAttribute("searchResults", searchResults);
             request.setAttribute("query", query); // 검색어도 뷰에 전달
             productDAO.close();
+            
+            if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            	return "/views/style/searchResult.jsp";
+            }
             // 검색 결과 JSP 경로 반환
             return "/views/product/searchResults.jsp";
 
