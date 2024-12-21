@@ -80,8 +80,19 @@ public class PostTagDAO {
 		return list;
 	}
 	
-	
-	
+	public void deleteTagOfPost(int postId) {
+		sb.setLength(0);
+		sb.append("delete from POST_TAG where post_id = ?");
+		
+		try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, postId); 
+            pstmt.executeUpdate();
+            System.out.println("deleting all tags of postId " + postId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}
 
 	// 자원 해제 메서드
 	public void close() {

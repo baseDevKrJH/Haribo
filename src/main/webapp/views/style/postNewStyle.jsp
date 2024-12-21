@@ -72,7 +72,6 @@
 		    border-radius: 6px;
 		    cursor: pointer;
 		    font-size: 16px;
-		    text-transform: uppercase;
 		}
 		
 		#formContainer input[type="submit"]:hover {
@@ -91,23 +90,9 @@
 		    max-width: 100px;
 		    max-height: 100px;
 		    object-fit: cover;
-		    border: 1px solid #000; /* Black border for preview images */
+		    border: 1px solid #222; /* Black border for preview images */
 		    border-radius: 5px;
 		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-		}
-		
-		/* Mobile Responsiveness */
-		@media (max-width: 768px) {
-		    #formContainer {
-		        padding: 15px;
-		    }
-		
-		    #formContainer input[type="text"],
-		    #formContainer textarea,
-		    #formContainer select,
-		    #formContainer input[type="file"] {
-		        width: calc(100% - 10px);
-		    }
 		}
   	</style>
 </head>
@@ -115,6 +100,7 @@
     <div id="formContainer">
         <form action="<%= request.getContextPath() %>/upload" method="post" enctype="multipart/form-data" onsubmit="alert('업로드 완료')">
             <input type="hidden" name="uploadType" value="stylePost" />
+	        <input type="hidden" name="productIds" id="product-ids">
             
             <label for="titleInput">제목</label>
             <input type="text" name="title" id="titleInput">
@@ -143,9 +129,6 @@
             <button type="button" id="tagBtn" class="tag-btn">상품태그 추가</button>
             <div id="tag-products" class="tag-products">
             </div>
-            
-	        <!-- 태그된 상품 id 전달 -->
-	        <input type="hidden" name="productIds" id="product-ids">
 	        
             <input type="submit" id="submitButton" value="업로드">
         </form>

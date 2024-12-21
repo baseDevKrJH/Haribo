@@ -1,15 +1,10 @@
 package com.jelly.www.action;
 
-import java.io.File;
-import java.util.UUID;
-
 import com.jelly.www.dao.PostDAO;
-import com.jelly.www.vo.PostImageVO;
 import com.jelly.www.vo.PostVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 
 public class StyleModifyAction implements Action {
 
