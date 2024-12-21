@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@charset "UTF-8";
 /* ***************************
    전체 컨테이너 스타일
 *************************** */
@@ -206,7 +205,7 @@
   height: 50px;
   font-size: 20px;
   font-weight: bold;
-  background-color: rgba(255, 127, 80, 1); /* 코랄 색상 */
+  background-color: #d4d4d4;
   border-radius: 10px;
   border: none;
   color: white;

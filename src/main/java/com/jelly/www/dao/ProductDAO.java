@@ -23,7 +23,7 @@ public class ProductDAO {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("MySQL DB 연결 성공");
+            System.out.println("ProductDAO: MySQL DB 연결 성공");
         } catch (ClassNotFoundException e) {
             System.err.println("MySQL 드라이버 로드 실패");
             e.printStackTrace();
@@ -434,7 +434,32 @@ public class ProductDAO {
         }
         return sizePriceList;
     }
+    
+    // 사이즈별 가격 조회 (구매/판매페이지에서 사이즈별 가격표시할 때 사용)
+    public ProductVO selectPriceByProductIdAndSize(int productId, int size) {
+    	ProductVO vo = new ProductVO();
+        sb.setLength(0);
+        sb.append("SELECT size, price FROM SIZE WHERE product_id = ? AND size = ?");
 
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, productId);
+            pstmt.setInt(2, size);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                vo = new ProductVO(
+                		rs.getString("size"),
+                		rs.getInt("price")
+                		);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        return vo;
+    }
+    
+    
     // 검색어 관련 메서드
     public List<ProductVO> searchProducts(String query) {
         List<ProductVO> list = new ArrayList<>();
@@ -520,6 +545,45 @@ public class ProductDAO {
         return productList;
     }
 
+    // 모델 번호 포맷팅 메서드
+    public String getFormattedModelNumber(int productId) {
+        String modelNumber = null;
+        sb.setLength(0);
+        sb.append("SELECT MODEL_NUMBER FROM PRODUCT WHERE PRODUCT_ID = ?");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            pstmt.setInt(1, productId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                modelNumber = rs.getString("MODEL_NUMBER");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        // 모델 번호 포맷팅
+        if (modelNumber != null) {
+            modelNumber = formatModelNumber(modelNumber);
+        }
+        return modelNumber;
+    }
+
+    // 모델 번호를 8자리마다 줄바꿈 처리
+    private String formatModelNumber(String modelNumber) {
+        StringBuilder formatted = new StringBuilder();
+        for (int i = 0; i < modelNumber.length(); i++) {
+            formatted.append(modelNumber.charAt(i));
+            if ((i + 1) % 8 == 0 && i != modelNumber.length() - 1) {
+                formatted.append("<br>");
+            }
+        }
+        return formatted.toString();
+    }
+    
     // 자원 해제 메서드
     public void close() {
         try {

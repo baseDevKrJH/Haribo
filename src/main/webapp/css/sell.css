@@ -1,5 +1,8 @@
 @charset "UTF-8";
-@charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
 
 .order-container {
 	display: flex;
@@ -33,6 +36,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	padding: 5px;
 }
 
 .modalOpen {
@@ -45,12 +49,12 @@
 .order-info {
 	display: flex;
 	align-items: center;
-	margin: 10px 0;
 }
 
 .order-subInfo {
 	display: flex;
 }
+
 
 .order-info img {
 	width: 70px;
@@ -61,8 +65,9 @@
 
 .order-info span {
 	display: inline-block;
-	padding: 5px;
+    padding: 5px;
 	font-size: 13px;
+	margin: auto 0;
 }
 
 .fontGray {
@@ -81,26 +86,26 @@
 
 .account-btn {
 	border: 1px solid #f4f4f4;
-	padding: 20px 15px;
-	border-radius: 10px;
-	margin: 10px 0;
-	background-color: white;
-	cursor: pointer;
-	font-size: 13px;
-	width: 100%;
-	text-align: left;
-}
+    padding: 15px 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+    background-color: white;
+    cursor: pointer;
+    font-size: 13px;
+    width: 100%;
+    text-align: left;
+    align-items: center;
+    display: flex
+;}
 
 .addCard {
 	border: 1px solid white;
-	border-radius: 10px;
-	margin: 10px 0;
-	background-color: white;
-	cursor: pointer;
-	font-size: 13px;
-	width: 100%;
-	text-align: right;
-}
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: right;
+    float: right;}
 
 /* 결제 금액 디테일 */
 .order-price {

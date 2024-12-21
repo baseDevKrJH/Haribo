@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/views/home/subHeader.jsp" />
 <!DOCTYPE html>
 <html lang="en">
@@ -7,9 +9,46 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>즉시판</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/sell.css">
 
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/sell.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(()=>{
+	$(".payment-submit-btn").on("click", async function requestPayment(){
+		const now = new Date(); 
+ 		const year = now.getFullYear() % 100;
+ 		const month = ("0" + (now.getMonth() + 1)).slice(-2); // 월 앞자리에 0을 추가 (예: 01, 02)
+ 		const date = ("0" + now.getDate()).slice(-2); // 일 앞자리에 0을 추가 (예: 01, 02)
+ 		const rnd = Math.floor(Math.random()*100);
+		const tradeId = year + month + date + rnd + "0"
+
+		$.ajax({
+		    url: '/haribo/sellConfirm', // 판매 정보를 DAO에 넣는 서블릿으로 이동
+		    method: "GET", // HTTP 메서드는 대문자로 작성
+		    data: {
+		        tradeId: tradeId,
+		        productName: "${product.productName}", // JSP EL 표현식 문자열로 감싸기
+		        totalPrice: "${productSeller.price}",
+		        productId: "${product.productId}",
+		        size: "${size}"
+		    },
+		    success: function (response) {
+		        console.log("결제 성공");
+		        window.location.href = "${pageContext.request.contextPath}/jelly?page=sellConfirm"; // 성공 시 페이지 이동
+		    },
+		    error: function(xhr, status, error) { 
+		        console.error("결제 실패:", error); // console.log 대신 console.error 사용
+		        console.error("응답 상태:", status);
+		        console.error("서버 응답:", xhr.responseText);
+		    }
+		});
+
+	});
+});
+
+
+</script>
 </head>
 <body>
 	<div class="order-container">
@@ -20,14 +59,32 @@
 				<span>주문 상품</span>
 			</div>
 			<div class="order-info">
-				<img src="../img/productimg.png" alt="" />
+				<img src="${product.imageUrl}" alt="상품사진" />
 				<div class="order-subInfo">
 					<div class="productSubInfo">
-						<span>Nike Air Force 1 '07 WB Flax</span>
+						<span style="font-weight: bold">${product.modelNumber }</span><br />
+						<span>${product.productName }</span>
 						<div class="fontGray">
-							<span>나이키 에어포스 1 '07 WB 플랙스 CJ9179-200</span>
+							<span>${product.productName } </span>
 						</div>
-						<span>240</span>
+						<span>${size }</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 판매 정산계좌 -->
+		<div class="order-content">
+			<div class="order-title">
+				<span>판매 정산 계좌</span>
+			</div>
+			<div class="order-info">
+				<div class="order-subInfo">
+					<div class="fontGray">
+						<span>계좌</span><br /> <span>예금주</span>
+					</div>
+					<div>
+						<span>${defaultAccount.accountHolder}</span><br /> <span>${defaultAccount.accountNumber }</span><br />
 					</div>
 				</div>
 			</div>
@@ -44,8 +101,9 @@
 						<span>받는 분</span><br /> <span>연락처</span><br /> <span>주소</span>
 					</div>
 					<div>
-						<span>천세진</span><br /> <span>010-9289-7875</span><br /> <span>[13536]
-							경기 성남시 분당구 판교역로 4 (백현동) 10층 </span>
+						<span>${user.userName}</span><br /> <span>${user.phoneNumber }</span><br />
+						<span>[${address.postalCode}] ${address.addressLine1 }
+							${address.addressLine2 }</span>
 					</div>
 				</div>
 			</div>
@@ -65,10 +123,12 @@
 			</div>
 			<div class="order-info">
 				<div class="paymentSubinfo">
-					<span>카드 간편결제</span><br />
-					<button class="account-btn">현대카드 &nbsp;
-						****-****-****-****</button>
-					<button class="addCard">+ 새 카드 추가하기</button>
+					<span>카드 간편결제</span> <a href="/views/mypage/구매내역.jsp"><button
+							class="addCard">+ 새 카드 추가하기</button></a>
+					<div class="account-btn">${defaultAccount.bankName }&nbsp;
+						${defaultAccount.accountNumber }</div>
+					<span>페널티는 일시불만 지원합니다. 체결 후 결제 정보 변경은 불가하며 분할 납부 변경은 카드사 문의
+						바랍니다.단, 카드사별 정책에 따라 분할 납부 변경 시 수수료가 발생할 수 있습니다.</span>
 				</div>
 			</div>
 		</div>
@@ -82,30 +142,34 @@
 				<div class="order-price">
 					<div class="price-detail">
 						<div>
-							<span>상품금액</span> <span>129,000원</span>
+							<span>즉시 판매가</span> <span>${formattedPrice }원</span>
 						</div>
 						<div>
-							<span>배송비</span> <span>5,000원</span>
+							<span>검수비</span> <span>무료</span>
 						</div>
 						<div>
-							<span>쿠폰</span> <span>-10,000원</span>
+							<span>수수료</span> <span>10,000</span>
+						</div>
+						<div>
+							<span>배송비</span> <span>선불.판매자 부담</span>
 						</div>
 					</div>
 					<div class="total-price">
-						<span>총 결제금액</span> <span>124,000원</span>
+						<span>정산금액</span> 
+						<span> <fmt:formatNumber value="${price -10000 }" type="number" />
+						</span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-    <!-- 결제 푸터 -->
-    <div class="payment-footer">
-      <input
-        type="submit"
-        value="134,000원 판매하기"
-        class="payment-submit-btn"
-      />
-    </div>
-  </body>
-  	<jsp:include page="/views/home/footer.jsp" />
+	<!-- 결제 푸터 -->
+	<div class="payment-footer">
+		<button class="payment-submit-btn">
+		<fmt:formatNumber value="${price - 10000 }원 판매하기" type="number"/>
+		</button> 
+			
+	</div>
+</body>
+<jsp:include page="/views/home/footer.jsp" />
 </html>

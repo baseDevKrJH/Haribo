@@ -92,7 +92,14 @@ public class JellyController extends HttpServlet {
 			action = new BuyAction();
 		} else if (page.equals("buyConfirm")) {
 			action = new BuyConfirmAction();
-		} else {
+		} else if (page.equals("sell")) {
+			action = new SellAction();
+		} else if (page.equals("sellConfirm")) {
+			action = new SellConfirmAction();
+		}
+		
+		
+		else {
 			url = "/views/error/404.jsp"; // 에러 페이지 처리
 		}
 

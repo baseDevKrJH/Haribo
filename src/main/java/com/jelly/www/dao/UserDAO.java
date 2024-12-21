@@ -2,10 +2,14 @@ package com.jelly.www.dao;
 
 import java.sql.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jelly.www.vo.AddressVO;
+import com.jelly.www.vo.UserAccountVO;
 import com.jelly.www.vo.UserVO;
+
 
 public class UserDAO {
     private String driver = "com.mysql.cj.jdbc.Driver";
@@ -248,7 +252,7 @@ public class UserDAO {
         return false; // 중복이 없으면 false 
     }
     
-    
+        
     // 자원 해제
     private void close() {
         try {

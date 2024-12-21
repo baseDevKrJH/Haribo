@@ -63,7 +63,8 @@ public class ProductVO {
         this.size = size;
         this.price = price;
     }
-
+    
+    
     // 인기 상품 조회용
     public ProductVO(int productId, String productName, String brand, int initialPrice, String imageUrl, int totalSales) {
         this.productId = productId;
