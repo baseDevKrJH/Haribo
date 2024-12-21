@@ -157,7 +157,6 @@
 	            <!-- 검색 결과 여기에 표시 -->
 	        </div>
 	        
-	        <hr class="divider" />
 	        <p>선택된 상품</p>
 	        <div id="selected-product">
 	            <!-- 선택된 상품 여기에 표시 -->
