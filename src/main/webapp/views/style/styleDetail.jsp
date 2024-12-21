@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Style Detail</title>
+  <title>STYLE DETAIL</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleDetail.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styleComment.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comment.css">

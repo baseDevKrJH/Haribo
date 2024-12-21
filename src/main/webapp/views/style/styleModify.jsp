@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>STYLE MODIFY</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/postNewStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/postNewStyle.js"></script>
