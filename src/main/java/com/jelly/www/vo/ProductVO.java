@@ -28,7 +28,9 @@ public class ProductVO {
     private String size;             // 단일 사이즈 조회용
     private int price;               // 가격 조회용
     private int totalSales;          // 총 판매량 (인기 상품 조회용)
-
+    
+    private String formattedPrice;      // 포맷팅 처리된 가격
+    
     // 전체
     public ProductVO(int productId, String productName, String description, String brand, Date releaseDate, int initialPrice,
                      String modelNumber, int categoryId, String imageUrl, boolean isActive, Date createdAt, Date updatedAt) {
