@@ -83,7 +83,7 @@
               <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product">
                 <img src="${product.imageUrl}" alt="${product.productName}" />
                 <p>${product.productName}</p>
-                <p>${product.initialPrice}원</p>
+                <p>${product.formattedPrice}원</p>
               </a>
             </c:forEach>
           </div>
