@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/views/home/subHeader.jsp" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>관심상품 목록</title>
@@ -19,13 +19,16 @@
         padding: 10px 0;
         border-bottom: 2px solid #333;
         margin: 0 auto 20px auto;
-        max-width: 800px; /* wishlist-container와 동일한 가로 크기 */
+        max-width: 800px; 
     }
 
     .wishlist-container {
         max-width: 800px;
         margin: 0 auto;
         padding: 20px;
+        min-height: calc(5 * 120px);
+        box-sizing: border-box; 
+        position: relative;
     }
 
     .wishlist-item {
@@ -37,12 +40,12 @@
     }
 
     .wishlist-item:not(:last-child) {
-        border-bottom: 1px solid #ddd; /* 하단 구분선 */
+        border-bottom: 1px solid #ddd; 
     }
 
     .wishlist-item img {
-        width: 80px; /* 이미지 너비 */
-        height: 80px; /* 이미지 높이 */
+        width: 80px;
+        height: 80px;
         object-fit: cover;
         border-radius: 5px;
         margin-right: 15px;
@@ -54,15 +57,15 @@
 
     .wishlist-item .details h3 {
         margin: 0;
-        font-size: 13px; /* 상품명 크기 */
-        font-weight: bold; /* 상품명 볼드 */
+        font-size: 13px;
+        font-weight: bold;
     }
 
     .wishlist-item .details p {
         margin: 5px 0;
         color: #666;
-        font-size: 13px; /* 상세설명 크기 */
-        font-weight: normal; /* 상세설명 일반체 */
+        font-size: 13px; 
+        font-weight: normal;
     }
 
     .wishlist-item .actions {
@@ -76,47 +79,47 @@
         display: flex;
         align-items: center;
         padding: 10px 15px;
-        background-color: #FF7F50; /* 버튼 색상 */
+        background-color: #FF7F50;
         color: white;
         border: none;
         border-radius: 10px;
         font-size: 14px;
         cursor: pointer;
-        width: 164px; /* 버튼 너비 */
-        height: 52px; /* 버튼 높이 */
+        width: 164px;
+        height: 52px;
         text-align: left;
         position: relative;
     }
 
     .wishlist-item .actions .buy-button:hover {
-        background-color: #FFA07A; /* 호버 시 연한 색상 */
+        background-color: #FFA07A;
     }
 
     .wishlist-item .actions .buy-button .title {
-        width: 50px; /* 구매 텍스트 영역 크기 */
+        width: 50px;
         font-size: 14px;
         font-weight: bold;
-        margin-right: 5px; /* 구매 텍스트와 가격 간격 */
+        margin-right: 5px;
         text-align: left;
     }
 
     .wishlist-item .actions .buy-button .price {
-        text-align: left; /* 왼쪽 정렬 */
+        text-align: left;
     }
 
     .wishlist-item .actions .buy-button .price .text-lookup.num {
         font-weight: bold;
         color: #fff;
-        font-size: 14px; /* 폰트 크기 동일화 */
-        margin-bottom: 0; /* 즉시 구매가와 간격 없애기 */
-        line-height: 1; /* 줄 간격 줄이기 */
+        font-size: 14px;
+        margin-bottom: 0; 
+        line-height: 1;
     }
 
     .wishlist-item .actions .buy-button .price .text-lookup.desc {
         font-size: 11px;
         color: #ddd;
-        margin-top: 2px; /* 추가 간격 제거 */
-        line-height: 1; /* 줄 간격 줄이기 */
+        margin-top: 2px; 
+        line-height: 1; 
     }
 
     .wishlist-item .actions .delete-button {
@@ -130,7 +133,7 @@
         position: absolute;
         right: 6px;
         top: 50%;
-        margin-top: 40px;
+        margin-top: 38px;
         transform: translateY(-50%);
     }
 
@@ -138,31 +141,29 @@
         color: #333;
     }
 
-    /* 페이지네이션 스타일 */
+    /* 페이지네이션 */
     .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
     }
 
     .pagination a {
         margin: 0 5px;
-        padding: 5px 10px;
-        border: 1px solid #333;
-        border-radius: 5px;
         text-decoration: none;
-        color: #333;
-        font-size: 14px;
+        color: #000000; 
     }
 
-    .pagination a:hover {
-        background-color: #333;
-        color: white;
+    .pagination a.active {
+        font-weight: bold;
+        text-decoration: underline;
+        color: #000000; 
     }
 
-    .pagination .active {
-        background-color: #333;
-        color: white;
+    .pagination a.disabled {
+        color: #ccc;
         pointer-events: none;
     }
 </style>
@@ -201,38 +202,44 @@
                         </div>
                     </div>
                 </c:forEach>
-
-                <!-- 페이지네이션 -->
-                <div class="pagination">
-                    <c:if test="${currentPage > 1}">
-                        <a href="${pageContext.request.contextPath}/jelly?page=wish&currentPage=${currentPage - 1}">이전</a>
-                    </c:if>
-                    <c:forEach begin="1" end="${totalPages}" var="page">
-                        <c:choose>
-                            <c:when test="${page == currentPage}">
-                                <a class="active">${page}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/jelly?page=wish&currentPage=${page}">${page}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${currentPage < totalPages}">
-                        <a href="${pageContext.request.contextPath}/jelly?page=wish&currentPage=${currentPage + 1}">다음</a>
-                    </c:if>
-                </div>
-
             </c:when>
             <c:otherwise>
                 <p>관심상품이 없습니다.</p>
             </c:otherwise>
         </c:choose>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+            <c:choose>
+                <c:when test="${currentPage > 1}">
+                    <a href="/haribo/jelly?page=wish&currentPage=${currentPage - 1}">이전</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="disabled">이전</a>
+                </c:otherwise>
+            </c:choose>
+
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <a href="/haribo/jelly?page=wish&currentPage=${i}" class="${currentPage == i ? 'active' : ''}">
+                    ${i}
+                </a>
+            </c:forEach>
+
+            <c:choose>
+                <c:when test="${currentPage < totalPages}">
+                    <a href="/haribo/jelly?page=wish&currentPage=${currentPage + 1}">다음</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="disabled">다음</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </div>
 <%@ include file="/views/home/footer.jsp" %>
     <script>
         // 관심상품 삭제
         function removeItem(productId) {
-            if (confirm("이 상품을 관심상품에서 삭제하시겠습니까?")) {
+            if (confirm("이 상품을 삭제하시겠습니까?")) {
                 location.href = "${pageContext.request.contextPath}/jelly?page=wish&deleteProductId=" + productId;
             }
         }

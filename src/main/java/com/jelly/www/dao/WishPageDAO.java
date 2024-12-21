@@ -96,8 +96,6 @@ public class WishPageDAO {
 
             int rowsAffected = pstmt.executeUpdate();
 
-            // 디버깅: 삭제된 행 수 출력
-            System.out.println("Deleted rows: " + rowsAffected);
         } catch (SQLException e) {
             e.printStackTrace();
         }

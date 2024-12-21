@@ -18,7 +18,7 @@ public class WishPageAction implements Action {
 
         // 로그인 여부 확인
         if (userId == null) {
-            return "redirect:/jelly?page=login"; // 로그인 페이지로 리다이렉트
+            return "redirect:/jelly?page=login";
         }
 
         // DAO 객체 생성
@@ -35,10 +35,8 @@ public class WishPageAction implements Action {
                     // 관심상품 삭제
                     dao.removeWishlistItem(userId, productId);
 
-                    // 디버깅: 삭제 확인
-                    System.out.println("Deleted productId: " + productId);
                 } else {
-                    System.err.println("Invalid productId: " + deleteProductId);
+
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Error parsing productId: " + deleteProductId);
@@ -68,9 +66,8 @@ public class WishPageAction implements Action {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", currentPage);
 
-        // 디버깅: 조회된 데이터 확인
-        System.out.println("Wishlist fetched: " + wishlist);
-        System.out.println("Total Items: " + totalItems + ", Total Pages: " + totalPages);
+        // System.out.println("Wishlist : " + wishlist);
+        // System.out.println("Total Items : " + totalItems + ", Total Pages: " + totalPages);
 
         // JSP 페이지로 포워딩
         return "/views/wish/wish.jsp";
