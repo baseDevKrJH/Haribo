@@ -69,18 +69,29 @@ body {
   border-top: 1px solid #eee;
 }
 
+
+.profileInfo {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Vertically center-align items */
+  justify-content: center; /* Horizontally center-align items */
+  gap: 10px; /* Add space between profile picture and username */
+  text-decoration: none; /* Remove underline for links */
+  color: inherit; /* Keep the text color consistent */
+}
+
 .profilePic {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  margin-right: 10px;
+  width: 40px; /* Adjust size of the profile picture */
+  height: 40px;
+  border-radius: 50%; /* Make it circular */
+  object-fit: cover; /* Ensure the image fits nicely */
 }
 
 .username {
-  font-weight: bold;
-  color: #555;
-  flex: 1;
+  font-size: 1rem; /* Adjust text size */
+  font-weight: bold; /* Make it slightly more prominent */
+  color: #333; /* Darker color for text */
 }
+
 
 .likebtn {
   display: flex;

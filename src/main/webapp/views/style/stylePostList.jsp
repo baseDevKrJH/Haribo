@@ -4,14 +4,17 @@
 <script src="<%= request.getContextPath() %>/js/listStyleLike.js"></script>
 <!-- post list -->
 <c:forEach var="post" items="${postList}">
-	<a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post-card">
+	<div class="post-card">
+	<a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}">
 		<div class="imageWrapper">
-			<!-- get image from imageDAO -->
 			<img src="${post.postImageUrl}" alt="${post.nickname}'s post">
 		</div>
+	</a>
 		<div class="underPost">
+		<a href="${pageContext.request.contextPath}/jelly?page=styleProfile&userId=${post.userId}" class="profileInfo">
 			<img src="${post.profileImageUrl}" alt="${post.nickname}'s profile picture" class="profilePic"/>
 			<span class="username">${post.nickname}</span>
+		</a>
 			<span class="likebtn">
 			    <img 
 			        id="like-btn-${post.postId}" 
@@ -29,7 +32,8 @@
 		<div class="title">
 			<p>${post.title}</p>
 		</div>
-	</a>
+		</div>
+	
 </c:forEach>
 
 
