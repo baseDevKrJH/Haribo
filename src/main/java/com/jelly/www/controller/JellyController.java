@@ -73,6 +73,39 @@ public class JellyController extends HttpServlet {
             url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
         } else if (page.equals("search")) {
             action = new SearchAction(); // 검색 요청 처리
+        } else if (page.equals("profileInfo")) {
+            url = "/views/mypage/profileInfo.jsp"; // 프로필 관리 계좌 이동
+        } else if (page.equals("mypage")) {
+            if (isUserLoggedIn(req)) {
+                action = new MypageAction(); // 마이 페이지 처리
+            } else {
+                url = "/views/login/login.jsp"; // 로그인 페이지로 리다이렉트
+            }
+        } else if (page.equals("purchaseHistory")) {
+            // 구매내역 조회는 로그인한 사용자만 볼 수 있다고 가정
+            if (isUserLoggedIn(req)) {
+                action = new PurchaseHistoryAction(); // 구매내역 페이지 처리
+            } else {
+                url = "/views/login/login.jsp"; // 로그인 페이지로 리다이렉트
+            }
+        } else if (page.equals("salesHistory")) {
+            if (isUserLoggedIn(req)) {
+                action = new SalesHistoryAction(); // 판매내역 페이지 처리
+            } else {
+                url = "/views/login/login.jsp";
+            }     
+        } else if (page.equals("purchaseHistoryDetail")) {
+            if (isUserLoggedIn(req)) {
+                action = new PurchaseHistoryDetailAction(); // 구매내역 상세 페이지 처리
+            } else {
+                url = "/views/login/login.jsp";
+            }
+        } else if (page.equals("salesHistoryDetail")) {
+            if (isUserLoggedIn(req)) {
+                action = new SalesHistoryDetailAction(); // 판매내역 상세 페이지 처리
+            } else {
+                url = "/views/login/login.jsp";
+            }
         } else if (page.equals("filter")) {
             resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "GET 요청은 허용되지 않습니다.");
             return;

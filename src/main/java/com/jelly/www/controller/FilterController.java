@@ -48,7 +48,7 @@ public class FilterController {
             // DAO 호출
             ProductDAO dao = new ProductDAO();
             List<ProductVO> filteredProducts = dao.filterByBrandsCategoriesAndPrice(brands, categories, priceRange);
-            // debug: DAO 호출 후 결과 확인
+            // DAO 호출 후 결과 확인
 //            System.out.println("[FilterController] 필터링된 상품 개수: " + filteredProducts.size());
 
             // JSON 응답 반환
