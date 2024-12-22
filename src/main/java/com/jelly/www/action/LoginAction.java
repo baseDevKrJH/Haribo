@@ -23,14 +23,19 @@ public class LoginAction implements Action {
             HttpSession session = req.getSession();
             session.setAttribute("user", vo);
             session.setAttribute("user_id", vo.getUserId());
-            
-            // 관심목록 다시 세션에 저장
+            session.setAttribute("userEmail", email); // 이메일 저장 추가 -- 형윤
+
+            // 관리자 계정 확인 -- 형윤
+            if ("admin@gmail.com".equals(email) && "1234".equals(password)) {
+                session.setAttribute("isAdmin", true); 
+            } else {
+                session.setAttribute("isAdmin", false); 
+            }
+
+            // 관심목록 다시 세션에 저장 -- 형윤
             WishlistDAO wishlistDAO = new WishlistDAO();
             List<Integer> wishlist = wishlistDAO.getWishlistByUserId(vo.getUserId());
             session.setAttribute("wishlist", wishlist);
-            System.out.println("wishlist: " + wishlist);
-
-            System.out.println("로그인 됨. 관심상품 목록 로드됨");
 
             // 로그인 후 리다이렉트할 URL 처리
             String redirectUrl = (String) session.getAttribute("redirectUrl");

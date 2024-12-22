@@ -69,6 +69,21 @@ public class JellyController extends HttpServlet {
             url = "/views/event/event1.jsp"; // Event1 페이지 처리
         } else if (page.equals("event2")) {
             url = "/views/event/event2.jsp"; // Event2 페이지 처리
+        } else if (page.equals("notice")) {
+            action = new NoticeAction(); // 공지사항 목록 페이지 처리
+        } else if (page.equals("noticeWrite")) {
+            url = "/views/notice/noticeWrite.jsp"; // 작성 페이지 이동
+        } else if (page.equals("noticeEdit")) {
+        	action = new NoticeEditAction();
+        } else if (page.equals("noticeDetail")) {
+        	action = new NoticeDetailAction();
+        
+            
+        
+            
+        
+        } else if (page.equals("noticeDelete")) {
+            action = new NoticeDeleteAction(); // 공지사항 삭제 페이지 처리
         } else if (page.equals("faq")) {
             url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
         } else if (page.equals("search")) {
@@ -146,6 +161,12 @@ public class JellyController extends HttpServlet {
             action = new LoginAction(); // 로그인 요청 처리
         } else if ("joinOk".equals(page)) {
             action = new JoinOkAction(); // 회원가입 요청 처리
+        } else if ("noticeWrite".equals(page)) {
+            action = new NoticeWriteAction(); // 공지사항 작성 처리    
+        } else if ("noticeDelete".equals(page)) {
+        	action = new NoticeDeleteAction(); // 공지사항 삭제 처리
+        } else if (page.equals("noticeEditOk")) {
+        	action = new NoticeEditOkAction();  // 공지사항 수정 처리
         } else if ("filter".equals(page)) {
             FilterController filterController = new FilterController();
             filterController.handleRequest(req, resp);
