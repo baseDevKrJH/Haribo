@@ -47,8 +47,8 @@
             font-weight: bold;
             font-size: 14px;
             color: #222;
-            margin-right: 10px;
             margin-top: 9px;
+            margin-right: 25px;
         }
 
         .notice-info {
