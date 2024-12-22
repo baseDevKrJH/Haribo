@@ -68,16 +68,16 @@
       </p>
 
       <!-- 프로필 관리 -->
-      <p class="mypage-sbn-menu">
-        <c:choose>
-          <c:when test="${param.page == 'profileInfo'}">
-            <a href="<%=request.getContextPath()%>/jelly?page=profileInfo" class="active">프로필 관리</a>
-          </c:when>
-          <c:otherwise>
-            <a href="<%=request.getContextPath()%>/jelly?page=profileInfo">프로필 관리</a>
-          </c:otherwise>
-        </c:choose>
-      </p>
+	<p class="mypage-sbn-menu">
+  		<c:choose>
+    		<c:when test="${param.page == 'viewProfileInfo'}">
+      			<a href="<%=request.getContextPath()%>/jelly?page=viewProfileInfo" class="active">프로필 관리</a>
+    				</c:when>
+    		<c:otherwise>
+      				<a href="<%=request.getContextPath()%>/jelly?page=viewProfileInfo">프로필 관리</a>
+    		</c:otherwise>
+  		</c:choose>
+	</p>
 
       <!-- 주소록 -->
       <p class="mypage-sbn-menu">

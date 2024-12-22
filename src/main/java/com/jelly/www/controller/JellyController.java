@@ -83,8 +83,8 @@ public class JellyController extends HttpServlet {
         	action = new FaqAction(); // 자주묻는질문(FAQ) 페이지 처리
         } else if (page.equals("search")) {
             action = new SearchAction(); // 검색 요청 처리
-        } else if (page.equals("profileInfo")) {
-            url = "/views/mypage/profileInfo.jsp"; // 프로필 관리 계좌 이동
+        } else if (page.equals("viewProfileInfo")) {
+            action = new MyProfileInfoViewAction(); // 프로필 정보 조회
         } else if (page.equals("mypage")) {
             if (isUserLoggedIn(req)) {
                 action = new MypageAction(); // 마이 페이지 처리
@@ -156,6 +156,8 @@ public class JellyController extends HttpServlet {
             action = new LoginAction(); // 로그인 요청 처리
         } else if ("joinOk".equals(page)) {
             action = new JoinOkAction(); // 회원가입 요청 처리
+        } else if (page.equals("updateProfileInfo")) {
+            action = new MyProfileInfoUpdateAction(); // 프로필 정보 업데이트
         } else if ("noticeWrite".equals(page)) {
             action = new NoticeWriteAction(); // 공지사항 작성 처리    
         } else if ("noticeDelete".equals(page)) {
