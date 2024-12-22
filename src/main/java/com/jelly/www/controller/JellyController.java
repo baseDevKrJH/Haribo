@@ -77,15 +77,10 @@ public class JellyController extends HttpServlet {
         	action = new NoticeEditAction();
         } else if (page.equals("noticeDetail")) {
         	action = new NoticeDetailAction();
-        
-            
-        
-            
-        
         } else if (page.equals("noticeDelete")) {
             action = new NoticeDeleteAction(); // 공지사항 삭제 페이지 처리
         } else if (page.equals("faq")) {
-            url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
+        	action = new FaqAction(); // 자주묻는질문(FAQ) 페이지 처리
         } else if (page.equals("search")) {
             action = new SearchAction(); // 검색 요청 처리
         } else if (page.equals("profileInfo")) {

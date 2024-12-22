@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
+body {
+  font-family: "Pretendard Variable", Arial, sans-serif;
+}
 .header-section {
   width: 100%;
   background-color: #fff;
