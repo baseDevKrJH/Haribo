@@ -1,4 +1,4 @@
-/* sp-body를 구체적인 네임스페이스로 수정 */
+/* BODY */
 .main-style-popular-body {
   font-family: "Pretendard Variable", Arial, sans-serif;
   margin: 0;
@@ -9,73 +9,84 @@
   flex-direction: column; /* 컨테이너를 중앙에 정렬 */
   padding: 40px 0;
   min-height: 100vh; /* 화면 전체 높이 사용 */
+  box-sizing: border-box;
 }
 
-/* sp-container를 구체적인 네임스페이스로 수정 */
+/* 컨테이너 */
 .main-style-popular-container {
-  width: 1280px; /* 고정된 가로 크기 */
-  height: 700px; /* 고정된 세로 크기 */
+  width: 100%;
+  max-width: 1280px; /* 고정된 최대 가로 크기 */
   display: flex;
   justify-content: space-between; /* 섹션 간 간격 유지 */
   align-items: stretch;
+  gap: 20px; /* 섹션 간 여백 추가 */
   margin: 0 auto; /* 수평 중앙 정렬 */
   box-sizing: border-box;
 }
 
-/* sp-section을 구체적인 네임스페이스로 수정 */
+/* 섹션 */
 .main-style-popular-section {
   flex: 1;
-  padding: 20px;
   display: flex;
-  height: 700px;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* 섹션 제목 스타일 */
 .main-style-popular-section h2 {
-  margin: 0 15px 20px 0;
+  margin: 0 0 20px 0;
   font-size: 1.5rem;
   display: flex;
-  justify-content: flex-start;
-  gap: 10px;
+  align-items: center; /* 제목과 링크를 세로로 정렬 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  gap: 5px; /* 제목과 링크 사이 간격 */
 }
 
 .main-style-popular-section h2 a {
   text-decoration: none;
   color: black;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* 제목 크기와 조화를 위해 크기 조정 */
 }
 
+/* 세로 구분선 */
 .main-style-popular-divider {
   width: 1px;
   background-color: #ddd;
   height: auto;
-  margin: 0 20px;
 }
 
-.main-style-popular-style-items {
+/* STYLE 섹션 아이템 */
+.main-style-popular-style-items,
+.main-style-popular-popular-items {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* 두 개씩 나란히 배치 */
   gap: 20px;
 }
 
-.main-style-popular-style-item {
+.main-style-popular-style-item,
+.main-style-popular-popular-item {
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: center;
-}
-
-.main-style-popular-style-item .imageWrapper {
-  display: block;
-  width: 233px;
-  height: 263px;
-  border: 1px dashed rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  overflow: hidden;	
   box-sizing: border-box;
 }
 
-.main-style-popular-style-item .imageWrapper img {
+.main-style-popular-style-item .imageWrapper,
+.main-style-popular-popular-item .image-link {
+  display: block;
+  width: 230px;
+  height: 230px;
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.main-style-popular-style-item .imageWrapper img,
+.main-style-popular-popular-item .image-link img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -86,8 +97,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 233px;
-  gap: 10px;
+  max-width: 230px;
 }
 
 .main-style-popular-style-item .underPost .profilePic {
@@ -96,7 +106,8 @@
   border-radius: 50%;
 }
 
-.main-style-popular-style-item .underPost .username {
+.main-style-popular-style-item .underPost .username,
+.main-style-popular-popular-item .name {
   font-size: 0.9rem;
   font-weight: bold;
 }
@@ -123,142 +134,41 @@
   text-align: center;
 }
 
-/* POPULAR 섹션 */
-.main-style-popular-popular-items {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.main-style-popular-popular-item {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.main-style-popular-popular-item .image-link {
-  display: block;
-  width: 230px;
-  height: 230px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.main-style-popular-popular-item .image-link img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.main-style-popular-popular-item .info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/* POPULAR 섹션 */
-.main-style-popular-popular-item .name {
-  font-weight: bold; 
-  font-size: 14px; 
-  color: #555555;
-  margin-bottom: 5px;
-}
-
 .main-style-popular-popular-item .description {
   color: gray;
-  margin-bottom: 5px;
   font-size: 0.9rem;
+  margin-bottom: 5px;
 }
 
 .main-style-popular-popular-item .price {
-  font-size: 14px; 
-  color: #222222; 
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
-.main-style-popular-heart-container {
-  --heart-color: rgb(189, 91, 255);
-  position: relative;
-  width: 24px;
-  height: 24px;
-  transition: .3s;
-}
-
-.main-style-popular-heart-container .checkbox {
-  position: absolute;
+/* FOOTER 스타일 */
+footer {
   width: 100%;
-  height: 100%;
-  opacity: 0;
-  z-index: 20;
-  cursor: pointer;
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px 0;
+  background-color: #f9f9f9;
+  font-size: 0.9rem;
+  color: #666;
 }
 
-.main-style-popular-heart-container .svg-container {
+/* BRAND 섹션 문제 해결 */
+.main-style-popular-brand-container {
   width: 100%;
-  height: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* 중앙 정렬 */
   align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.main-style-popular-heart-container .svg-outline,
-.main-style-popular-heart-container .svg-filled {
-  fill: var(--heart-color);
-  position: absolute;
-}
-
-.main-style-popular-heart-container .svg-filled {
-  animation: keyframes-svg-filled 1s;
-  display: none;
-}
-
-.main-style-popular-heart-container .svg-celebrate {
-  position: absolute;
-  animation: keyframes-svg-celebrate .5s;
-  animation-fill-mode: forwards;
-  display: none;
-  stroke: var(--heart-color);
-  fill: var(--heart-color);
-  stroke-width: 2px;
-}
-
-.main-style-popular-heart-container .checkbox:checked ~ .svg-container .svg-filled {
-  display: block;
-}
-
-.main-style-popular-heart-container .checkbox:checked ~ .svg-container .svg-celebrate {
-  display: block;
-}
-
-@keyframes keyframes-svg-filled {
-  0% {
-    transform: scale(0);
-  }
-
-  25% {
-    transform: scale(1.2);
-  }
-
-  50% {
-    transform: scale(1);
-    filter: brightness(1.5);
-  }
-}
-
-@keyframes keyframes-svg-celebrate {
-  0% {
-    transform: scale(0);
-  }
-
-  50% {
-    opacity: 1;
-    filter: brightness(1.5);
-  }
-
-  100% {
-    transform: scale(1.4);
-    opacity: 0;
-    display: none;
-  }
+.main-style-popular-brand-container img {
+  max-width: 100%;
+  height: auto;
 }

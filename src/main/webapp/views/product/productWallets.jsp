@@ -31,7 +31,7 @@
       <div class="filter-icon">
         <img src="<%= request.getContextPath() %>/img/filter.png" alt="Filter" id="filter-btn">
       </div>
-    </div>s
+    </div>
 
     <!-- 상품 리스트 -->
     <div class="products" id="product-container">

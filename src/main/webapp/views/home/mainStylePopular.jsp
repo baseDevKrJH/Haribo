@@ -10,67 +10,57 @@
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mainstylepopular.css">
   <script src="<%= request.getContextPath() %>/js/listStyleLike.js"></script>
- <style>
- 	div.name {
- 		font: 14px;
- 		font-color: #55555;
- 	}
- </style>
 </head>
 <body class="main-style-popular-body">
+
   <div class="main-style-popular-container">
-  
-  
-  
     <!-- STYLE 섹션 -->
     <div class="main-style-popular-section">
-        <h2>
-          STYLE<a href="<%= request.getContextPath() %>/jelly?page=styleList">&gt;</a>
-        </h2>
+      <h2>
+        STYLE
+        <a href="<%= request.getContextPath() %>/jelly?page=styleList">&gt;</a>
+      </h2>
       <div class="main-style-popular-style-items">
-	      <c:forEach var="post" items="${postList}">
-	      	<div class="main-style-popular-style-item">
-	          <a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post-card">
-	            <div class="imageWrapper">
-					<img src="${post.postImageUrl}" alt="${post.nickname}'s post">
-				</div>
-	          	<div class="underPost">
-					<img src="${post.profileImageUrl}" alt="${post.nickname}'s profile picture" class="profilePic"/>
-					<span class="username">${post.nickname}</span>
-					<span class="likebtn">
-					    <img 
-					        id="like-btn-${post.postId}" 
-					        class="like-btn" 
-					        src="<%= request.getContextPath() %>/img/${post.like ? 'after_like.png' : 'before_like.png'}"
-					        alt="좋아요 버튼" 
-					        data-context-path="<%= request.getContextPath() %>" 
-					        data-post-id="${post.postId}"
-					        data-like-count = "${post.likeCount}"
-					        onclick="return false;" />
-	        
-			    		<span id="like-count-${post.postId}" class="like-count">${post.likeCount}</span>
-					</span>
-				  </div>
-				  <div class="title">
-					  <p>${post.title}</p>
-				  </div>
-				</a>
-        	 </div>
-	       </c:forEach>
-	     </div>
-    <!-- 세로 구분선 -->
-    <div class="main-style-popular-divider"></div>
+        <c:forEach var="post" items="${postList}">
+          <div class="main-style-popular-style-item">
+            <a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post-card">
+              <div class="imageWrapper">
+                <img src="${post.postImageUrl}" alt="${post.nickname}'s post">
+              </div>
+              <div class="underPost">
+                <img src="${post.profileImageUrl}" alt="${post.nickname}'s profile picture" class="profilePic"/>
+                <span class="username">${post.nickname}</span>
+                <span class="likebtn">
+                  <img 
+                    id="like-btn-${post.postId}" 
+                    class="like-btn" 
+                    src="<%= request.getContextPath() %>/img/${post.like ? 'after_like.png' : 'before_like.png'}"
+                    alt="좋아요 버튼" 
+                    data-context-path="<%= request.getContextPath() %>" 
+                    data-post-id="${post.postId}"
+                    data-like-count="${post.likeCount}"
+                    onclick="return false;" />
+                  <span id="like-count-${post.postId}" class="like-count">${post.likeCount}</span>
+                </span>
+              </div>
+              <div class="title">
+                <p>${post.title}</p>
+              </div>
+            </a>
+          </div>
+        </c:forEach>
+      </div>
+    </div>
 
-
-     <!-- POPULAR 섹션 -->
+    <!-- POPULAR 섹션 -->
     <div class="main-style-popular-section">
       <h2>
-        POPULAR<a href="<%= request.getContextPath() %>/jelly?page=popular">&gt;</a>
+        POPULAR
+        <a href="<%= request.getContextPath() %>/jelly?page=popular">&gt;</a>
       </h2>
       <div class="main-style-popular-popular-items">
-        <!-- 인기 아이템 출력 반복 -->
         <c:forEach var="product" items="${popularProducts}" varStatus="status">
-          <c:if test="${status.index < 4}"> <!-- 상위 4개 상품만 표시 -->
+          <c:if test="${status.index < 4}">
             <div class="main-style-popular-popular-item">
               <a class="image-link" href="<%= request.getContextPath() %>/jelly?page=productDetail&productId=${product.productId}">
                 <img src="${product.imageUrl}" alt="${product.productName}">
@@ -78,7 +68,7 @@
               <div class="info">
                 <div class="name">${product.productName}</div>
                 <div class="description">${product.description}</div>
-                <div class="price">${product.initialPrice}원</div>    
+                <div class="price">${product.initialPrice}원</div>
               </div>
             </div>
           </c:if>
@@ -86,5 +76,6 @@
       </div>
     </div>
   </div>
+
 </body>
 </html>
