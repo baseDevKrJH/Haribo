@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductVO {
     private int productId;           // 상품 ID
-    private String productName;             // 상품 이름
+    private String productName;      // 상품 이름
     private String description;      // 상품 설명
     private String brand;            // 브랜드
     private Date releaseDate;        // 출시일
@@ -25,12 +25,12 @@ public class ProductVO {
     private Date updatedAt;          // 수정일
 
     private List<String> sizes;      // 사이즈 목록
-    private String size;             // 단일 사이즈 사이즈,가격 조회용
-    private int price;               // 가격 사이즈,가격 조회용
+    private String size;             // 단일 사이즈 조회용
+    private int price;               // 가격 조회용
+    private int totalSales;          // 총 판매량 (인기 상품 조회용)
     
     private String formattedPrice;      // 포맷팅 처리된 가격
 
-    // 전체
     public ProductVO(int productId, String productName, String description, String brand, Date releaseDate, int initialPrice,
                      String modelNumber, int categoryId, String imageUrl, boolean isActive, Date createdAt, Date updatedAt) {
         this.productId = productId;
@@ -59,9 +59,19 @@ public class ProductVO {
         this.imageUrl = imageUrl;
     }
 
-    // 사이즈,가격 조회용
+    // 사이즈, 가격 조회용
     public ProductVO(String size, int price) {
         this.size = size;
         this.price = price;
+    }
+
+    // 인기 상품 조회용
+    public ProductVO(int productId, String productName, String brand, int initialPrice, String imageUrl, int totalSales) {
+        this.productId = productId;
+        this.productName = productName;
+        this.brand = brand;
+        this.initialPrice = initialPrice;
+        this.imageUrl = imageUrl;
+        this.totalSales = totalSales;
     }
 }

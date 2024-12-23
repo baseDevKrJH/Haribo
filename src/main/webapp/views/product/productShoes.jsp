@@ -8,9 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jelly</title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/product.css">
+  <!-- upbutton.css -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/upbutton.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
+
+  	<!-- 맨 위로 이동 버튼 -->
+	<button class="btn_top" id="btnTop" title="맨 위로 가기"></button>
+  
   <div class="container">
     <!-- 카테고리 링크 -->
     <div class="categories">
@@ -27,39 +33,65 @@
       </div>
     </div>
 
-    <!-- 상품 리스트 -->
-    <div class="products" id="product-container">
-      <c:forEach var="product" items="${productList}">
-        <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product-card">
-          <div class="image-wrapper">
-            <img src="${product.imageUrl}" alt="${product.productName}"> <!-- 수정된 부분 -->
-          </div>
-          <div class="brand">${product.brand}</div>
-          <div class="product-name">${product.productName}</div> <!-- 수정된 부분 -->
-          <div class="price">${product.initialPrice}원</div>
-        </a>
-      </c:forEach>
-    </div>
-  </div>
+<!-- 상품 리스트 -->
+<div class="products" id="product-container">
+  <c:forEach var="product" items="${productList}">
+    <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product-card">
+      <div class="image-wrapper">
+        <img src="${product.imageUrl}" alt="${product.productName}">
+      </div>
+      <div class="brand">${product.brand}</div>
+      <div class="product-name">${product.productName}</div>
+      
+      <!-- 구매 평균가 또는 발매가 표시 -->
+      <div class="price">
+        <c:choose>
+          <c:when test="${averagePurchasePriceMap[product.productId] == 0}">
+            ${product.initialPrice}원  <!-- 평균가가 0이면 발매가 표시 -->
+          </c:when>
+          <c:otherwise>
+            ${averagePurchasePriceMap[product.productId]}원  <!-- 평균가 표시 -->
+          </c:otherwise>
+        </c:choose>
+      </div>
+    </a>
+  </c:forEach>
+</div>
 
-  <!-- 필터 슬라이드 메뉴 -->
+    <!-- 로딩 중 -->
+	<div id="loading">
+  		<svg id="loading-svg" viewBox="25 25 50 50">
+    		<circle r="20" cy="50" cx="50"></circle>
+  		</svg>
+	</div>
+
+<!-- 필터 슬라이드 메뉴 -->
   <div class="filter-menu" id="filter-menu">
     <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
     <h2>필터</h2>
     <div class="filter-options">
       <!-- 브랜드 필터 -->
-      <h3>브랜드</h3>
-      <div class="brand-filters">
-        <label for="brand-nike">
-          <input type="checkbox" id="brand-nike" name="brand" value="NIKE"> NIKE
-        </label>
-        <label for="brand-adidas">
-          <input type="checkbox" id="brand-adidas" name="brand" value="ADIDAS"> ADIDAS
-        </label>
-        <label for="brand-puma">
-          <input type="checkbox" id="brand-puma" name="brand" value="PUMA"> PUMA
-        </label>
-      </div>
+	<h3>브랜드</h3>
+		<div class="brand-filters">
+  			<label for="brand-nike">
+    			<input type="checkbox" id="brand-nike" name="brand" value="NIKE"> NIKE
+  			</label>
+  			<label for="brand-adidas">
+    			<input type="checkbox" id="brand-adidas" name="brand" value="ADIDAS"> ADIDAS
+  			</label>
+  			<label for="brand-celine">
+  			  <input type="checkbox" id="brand-celine" name="brand" value="CELINE"> CELINE
+ 			 </label>
+  			<label for="brand-dior">
+  			  <input type="checkbox" id="brand-dior" name="brand" value="DIOR"> DIOR
+  			</label>
+  			<label for="brand-new-balance">
+   			 <input type="checkbox" id="brand-new-balance" name="brand" value="NEW BALANCE"> NEW BALANCE
+  			</label>
+  			<label for="brand-ugg">
+    <input type="checkbox" id="brand-ugg" name="brand" value="UGG"> UGG
+  </label>
+</div>
 
       <!-- 하위 카테고리 필터 -->
       <h3>하위 카테고리</h3>
@@ -103,6 +135,51 @@
     <button class="reset-btn" id="reset-filter">초기화</button>
   </div>
 
+  <!-- 무한 스크롤 AJAX -->
+<script>
+$(document).ready(function () {
+    let currentPage = 1;
+    const $productContainer = $("#product-container");
+    const $loading = $("#loading");
+    let isLoading = false;
+
+    $(window).on("scroll", function () {
+        if (!isLoading && $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+            loadMoreProducts();
+        }
+    });
+
+    function loadMoreProducts() {
+        isLoading = true;
+        currentPage++;
+        $loading.fadeIn();
+
+        $.ajax({
+            url: "<%= request.getContextPath() %>/jelly",
+            type: "GET",
+            data: { page: "shoes", pageNo: currentPage },
+            success: function (data) {
+                if ($.trim(data) === "") {
+                } else {
+                    setTimeout(function () {
+                        $productContainer.append(data); // 상품 리스트 HTML 추가
+                    }, 700); // 0.7초 로딩
+                }
+            },
+            error: function (xhr, status, error) {
+            },
+            complete: function () {
+                setTimeout(function () {
+                    $loading.fadeOut();
+                }, 1000); // 1초 후 로딩 숨김
+                isLoading = false;
+            }
+        });
+    }
+});
+</script>
+
+  <script src="<%= request.getContextPath() %>/js/upbutton.js"></script>
   <script src="<%= request.getContextPath() %>/js/filter.js"></script>
   <%@ include file="/views/home/footer.jsp" %>
 </body>

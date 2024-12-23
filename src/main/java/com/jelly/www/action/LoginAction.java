@@ -1,8 +1,10 @@
 package com.jelly.www.action;
 
-import java.io.IOException;
+
+import java.util.List;
 
 import com.jelly.www.dao.UserDAO;
+import com.jelly.www.dao.WishlistDAO;
 import com.jelly.www.vo.UserVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,27 +26,33 @@ public class LoginAction implements Action {
         dao.close();
 
         if (vo != null) {
-            // 로그인 성공
-            System.out.println("로그인 성공");
+            session.setAttribute("user", vo);
+            session.setAttribute("user_id", vo.getUserId());
+            session.setAttribute("userEmail", email); // 이메일 저장 추가 -- 형윤
 
-            // 세션에 사용자 정보 저장
-            session.setAttribute("user", vo); // 로그인한 사용자 정보 세션에 저장
-            
-            if(returnPage != null && returnPage.trim() != "") {
-            	return returnPage;
+            // 관리자 계정 확인 -- 형윤
+            if ("admin@gmail.com".equals(email) && "1234".equals(password)) {
+                session.setAttribute("isAdmin", true); 
             } else {
-            	// 루트 페이지로 리다이렉트
-            	return "redirect:/haribo/jelly"; // 리다이렉트 URL 설정
+                session.setAttribute("isAdmin", false); 
             }
-           
+
+            // 관심목록 다시 세션에 저장 -- 형윤
+            WishlistDAO wishlistDAO = new WishlistDAO();
+            List<Integer> wishlist = wishlistDAO.getWishlistByUserId(vo.getUserId());
+            session.setAttribute("wishlist", wishlist);
+
+            // 로그인 후 리다이렉트할 URL 처리
+            String redirectUrl = (String) session.getAttribute("redirectUrl");
+            if (redirectUrl != null && !redirectUrl.isEmpty()) {
+                // 세션에 저장된 URL로 리다이렉트
+                return "redirect:" + redirectUrl;
+            } else {
+                // 세션에 URL이 없으면 홈으로 리다이렉트
+                return "redirect:/haribo/jelly";
+            }
         } else {
-            // 로그인 실패
-            System.out.println("로그인 실패");
-
-            // 실패 메시지를 요청 속성에 저장
             req.setAttribute("errorMessage", "이메일 또는 비밀번호가 잘못되었습니다.");
-
-            // 로그인 페이지로 이동
             return "/views/login/login.jsp";
         }
     }

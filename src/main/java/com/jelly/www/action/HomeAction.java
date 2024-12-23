@@ -1,11 +1,14 @@
 package com.jelly.www.action;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostLikeDAO;
+import com.jelly.www.dao.ProductDAO;
 import com.jelly.www.dao.UserDAO;
 import com.jelly.www.vo.PostVO;
+import com.jelly.www.vo.ProductVO;
 import com.jelly.www.vo.StylePostInfoVO;
 import com.jelly.www.vo.UserVO;
 
@@ -49,7 +52,12 @@ public class HomeAction implements Action {
         request.setAttribute("postList", postList);
         
 
-        // View 경로 반환
-        return "/views/home/home.jsp";
+        // 인기 상품 데이터 조회
+        ProductDAO productDAO = new ProductDAO();
+        List<ProductVO> popularProducts = productDAO.getPopularProducts(); // 인기 상품 데이터 조회
+        request.setAttribute("popularProducts", popularProducts); // 인기 상품 데이터 저장
+
+
+        return "/views/home/home.jsp"; // 홈 페이지로 이동
     }
 }

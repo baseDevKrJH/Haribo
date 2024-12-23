@@ -12,7 +12,7 @@
   <!-- Main Brand Header -->
   <div class="main-brand-header">
     <h2>BRAND</h2>
-    <a href="<%= request.getContextPath() %>/brand.jsp">&gt;</a>
+    <a href="<%= request.getContextPath() %>/jelly?page=brand">&gt;</a>
   </div>
 
   <!-- Main Brand 컨테이너 -->

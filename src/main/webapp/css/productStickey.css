@@ -107,14 +107,22 @@
 
 /* 구매 버튼 */
 .buy_button {
-	background-color: #ef6253;
+	background-color: #FF7F50
 }
 
 /* 판매 버튼 */
 .sell_button {
-	background-color: #41b979;
+	background-color: #1290FC;
 }
 
 .price {
 	font-size: 12px;
+}
+
+/* 관심등록 버튼 -> 관심등록 되었을경우 */
+.btn_wish2.disabled {
+    background-color: #222222CC; 
+    color: #ffffff; 
+    border: 1px solid #cccccc; 
+    cursor: pointer; 
 }
