@@ -24,12 +24,13 @@ $(()=>{
 		const tradeId = year + month + date + rnd + "0"
 
 		$.ajax({
-		    url: '/haribo/sellConfirm', // 판매 정보를 DAO에 넣는 서블릿으로 이동
+		    url: '/haribo/sellData', // 판매 정보를 DAO에 넣는 서블릿으로 이동
 		    method: "GET", // HTTP 메서드는 대문자로 작성
 		    data: {
-		        tradeId: tradeId,
-		        productName: "${product.productName}", // JSP EL 표현식 문자열로 감싸기
-		        totalPrice: "${productSeller.price}",
+		    	tradeId: tradeId,
+		        productName: "${product.productName}", 
+		        totalPrice: ${price - 10000}, // 쿠폰까지 먹인 최종가 나중에 변경해야 함
+		        price : {price}, // 사용자가 입력한 판매 입찰가
 		        productId: "${product.productId}",
 		        size: "${size}"
 		    },
@@ -102,8 +103,8 @@ $(()=>{
 					</div>
 					<div>
 						<span>${user.userName}</span><br /> <span>${user.phoneNumber }</span><br />
-						<span>[${address.postalCode}] ${address.addressLine1 }
-							${address.addressLine2 }</span>
+						<span>[${defaultAddress.postalCode}] ${defaultAddress.addressLine1 }
+							${defaultAddress.addressLine2 }</span>
 					</div>
 				</div>
 			</div>
@@ -166,7 +167,7 @@ $(()=>{
 	<!-- 결제 푸터 -->
 	<div class="payment-footer">
 		<button class="payment-submit-btn">
-		<fmt:formatNumber value="${price - 10000 }원 판매하기" type="number"/>
+		<fmt:formatNumber value="${price - 10000 }" type="number"/>원 판매하기
 		</button> 
 			
 	</div>

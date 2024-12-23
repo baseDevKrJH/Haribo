@@ -261,39 +261,50 @@
     <div class="size-grid">
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
-            <span>${size}</span>
-            <c:choose>
-              <c:when test="${sizeButtons[size] == '구매 입찰'}">
+          <c:choose>
+            <c:when test="${sizeButtons[size] == '구매 입찰'}">
+              <a href="${pageContext.request.contextPath}/jelly?page=orderBid&productId=${product.productId}&size=${size}" class="size-button">
+                <span class="size-label">${size}</span>
                 <span class="price bid-label">구매 입찰</span>
-	            <a href="${pageContext.request.contextPath}/jelly?page=buyBid&productId=${product.productId }&size=${size}" class="size-button">
-              </c:when>
-              <c:otherwise>
+              </a>
+            </c:when>
+            <c:otherwise>
+              <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId}&size=${size}" class="size-button">
+                <span class="size-label">${size}</span>
                 <span class="price">${sizeButtons[size]}</span>
-	            <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId }&size=${size}" class="size-button">
-              </c:otherwise>
-            </c:choose>
-          </a>
+              </a>
+            </c:otherwise>
+          </c:choose>
         </div>
       </c:forEach>
     </div>
   </div>
 </div>
-    <!-- 판매 모달 -->
-    <div class="modal-overlay" id="sell-modal">
-      <div class="modal-content">
-        <button class="modal-close" id="sell-modal-close">&times;</button>
-        <h3 class="modal-title">판매 사이즈 선택</h3>
-        <div class="size-grid">
-          <c:forTokens var="sizeVal" items="210,220,230,240,250,260,270,280,290" delims=",">
-            <div class="size-item">
+
+<!-- 판매 모달 -->
+<div class="modal-overlay" id="sell-modal">
+  <div class="modal-content">
+    <button class="modal-close" id="sell-modal-close">&times;</button>
+    <h3 class="modal-title">판매 사이즈 선택</h3>
+    <div class="size-grid">
+      <c:forTokens var="sizeVal" items="210,220,230,240,250,260,270,280,290" delims=",">
+        <div class="size-item">
+          <c:choose>
+            <c:when test="${sizeButtons[sizeVal] == '판매 입찰'}">
+              <a href="${pageContext.request.contextPath}/jelly?page=orderBid&productId=${product.productId}&size=${sizeVal}" class="size-button">
+                <span>${sizeVal}</span>
+                <span class="price bid-label">판매 입찰</span>
+              </a>
+            </c:when>
+            <c:otherwise>
               <a href="${pageContext.request.contextPath}/jelly?page=sell&productId=${product.productId}&size=${sizeVal}" class="size-button">
                 <span>${sizeVal}</span>
-                <span class="price">판매하기</span>
+                <span class="price">${sizeButtons[sizeVal]}</span>
               </a>
-            </div>
-          </c:forTokens>
+            </c:otherwise>
+          </c:choose>
         </div>
-      </div>
+      </c:forTokens>
     </div>
   </div>
 </div>

@@ -32,8 +32,8 @@
 					</div>
 					<div>
 						<span>${user.userName }</span><br /> <span>${user.phoneNumber }</span><br />
-						<span>[ ${address.postalCode } ] ${address.addressLine1 }
-							${address.addressLine2 }</span>
+						<span>[${defaultAddress.postalCode}] ${defaultAddress.addressLine1 }
+							${defaultAddress.addressLine2 }</span>
 					</div>
 				</div>
 			</div>
@@ -133,14 +133,14 @@
 				<h3 class="modal-title">주소록</h3>
 			</div>
 			<button class="addBtn">+ 새 주소 추가하기</button>
-			<div class="addressInfoList">
-				<div class="addressInfo">
+			 <div class="addressInfoList">
+				<%-- <div class="addressInfo">
 					<div class="name">${user.userName }</div>
-					<div class="address">[${address.postalCode }]
-						${address.addressLine1 } ${address.addressLine2 }</div>
+					<div class="address">[${[address].postalCode }]
+						${[address].addressLine1 } ${[address.addressLine2 }</div>
 					<div class="phone">${user.phoneNumber }</div>
-				</div>
-			</div>
+				</div> --%>
+			</div> 
 		</div>
 	</div>
 	<!-- 주소 모달 끝 -->
@@ -279,15 +279,16 @@ $(()=> {
  				payMethod = "EASY_PAY";
  		} 
  		$.ajax({
-		    url: '/haribo/buyConfirm', // 결제 정보를 dao에 넣는 서블릿으로 이
+		    url: '/haribo/buyData', // 결제 정보를 dao에 넣는 서블릿으로 이
 		    method: "get",
 		    data: {
-		        paymentId: tradeId,
+		    	tradeId: tradeId,
 		        txId: response.txId,
-		        orderName: "${product.productName}",
-		        totalAmount: ${product.initialPrice},
-		       	productId : ${product.productId},
-		       	size : ${size},
+		        productName: "${product.productName}", 
+		        totalPrice: ${price - 10000}, // 쿠폰까지 먹인 최종가 나중에 변경해야 함
+		        price : ${price}, // 사용자가 입력한 판매 입찰가
+		        productId: "${product.productId}",
+		        size: "${size}",
 		       	payMethod : payMethod
 		    },
 		    success: function(response) {

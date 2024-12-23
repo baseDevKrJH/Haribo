@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.jelly.www.vo.AddressVO;
+import com.jelly.www.vo.ProductVO;
 
 public class AddressDAO {
 	// DB 연결 정보
@@ -36,33 +39,62 @@ public class AddressDAO {
 
 	}
 
-	// userId로 주소 한건 조회
-	public AddressVO selectOne(int userId) {
+	// userId로 기본 주소지 조회
+	public AddressVO selectDefaultAddressOne(int userId) {
 		AddressVO vo = null;
 		sb.setLength(0);
 		sb.append(
-				"SELECT address_id, user_id, address_line1, address_line2, postal_code, is_default, created_at, updated_at ");
-		sb.append("FROM ADDRESS WHERE user_id = ?");
+				"SELECT address_id, postal_code, address_line1, address_line2 ");
+		sb.append("FROM ADDRESS WHERE user_id = ? AND is_default = 1");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, userId);
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
-				vo = new AddressVO(rs.getInt("address_id"), rs.getInt("user_id"), rs.getString("address_line1"),
-						rs.getString("address_line2"), rs.getString("postal_code"), rs.getBoolean("is_default"),
-						rs.getTimestamp("created_at"), rs.getTimestamp("updated_at"));
+			while (rs.next()) {
+				vo = new AddressVO(
+						rs.getInt("address_id"),
+						rs.getString("postal_code"), 
+						rs.getString("address_line1"),
+						rs.getString("address_line2"));
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			close();
-		}
+		} 
 		return vo;
 	}
 
+	
+	// 사용자의 전체 주소 조회
+	public List<AddressVO> selectAddressAll(int userId) {
+        List<AddressVO> list = new ArrayList<>();
+        sb.setLength(0);
+		sb.append("SELECT address_id, postal_code, address_line1, address_line2 ");
+		sb.append("FROM ADDRESS WHERE user_id = ? AND is_default = 1");
+
+        try {
+            pstmt = conn.prepareStatement(sb.toString());
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+            	AddressVO vo = new AddressVO(
+						rs.getInt("address_id"),
+            			rs.getString("postal_code"), 
+						rs.getString("address_line1"),
+						rs.getString("address_line2")
+                );
+                list.add(vo);
+                System.out.println("조회된 상품: " + vo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        return list;
+    }
+	
 	// 주소 삭제
 	public void deleteOne(int userId) {
 		AddressVO vo = null;
@@ -77,10 +109,8 @@ public class AddressDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			close();
-		}
-
+		} 
+		
 	}
 
 	// 자원 해제 메서드

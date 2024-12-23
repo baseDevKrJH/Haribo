@@ -435,29 +435,6 @@ public class ProductDAO {
         return sizePriceList;
     }
     
-    // 사이즈별 가격 조회 (구매/판매페이지에서 사이즈별 가격표시할 때 사용)
-    public ProductVO selectPriceByProductIdAndSize(int productId, int size) {
-    	ProductVO vo = new ProductVO();
-        sb.setLength(0);
-        sb.append("SELECT size, price FROM SIZE WHERE product_id = ? AND size = ?");
-
-        try {
-            pstmt = conn.prepareStatement(sb.toString());
-            pstmt.setInt(1, productId);
-            pstmt.setInt(2, size);
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                vo = new ProductVO(
-                		rs.getString("size"),
-                		rs.getInt("price")
-                		);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } 
-        return vo;
-    }
     
     
     // 검색어 관련 메서드

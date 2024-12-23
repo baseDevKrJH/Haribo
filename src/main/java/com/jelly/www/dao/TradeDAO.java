@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jelly.www.vo.AddressVO;
-import com.jelly.www.vo.PaymentVO;
 import com.jelly.www.vo.ProductSellerVO;
 import com.jelly.www.vo.TradeVO;
 
@@ -132,13 +131,8 @@ public class TradeDAO {
 	}
 
 	// 구매한 상품 insert
-	public int insertBuyOne(TradeVO trade, int productId) {
-		// productId로 productSellerId 가져오기 return 타입은 VO	
-		ProductSellerDAO productDAO = new ProductSellerDAO();
-		ProductSellerVO productSeller = productDAO.selectProductSellerByProductId(productId);
-		int productSellerId = productSeller.getProductSellerId();
+	public int insertBuyOne(TradeVO trade) {
 		
-		// 구매한 상품 넣기 위한 insert 
 		sb.setLength(0);
 		sb.append(
 				"INSERT INTO TRADE VALUES (?, ?, ?, ?, ?, ?, ?,  NOW(), NOw(), NOW(), NOW())");
@@ -147,7 +141,7 @@ public class TradeDAO {
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, trade.getTradeId());
-			pstmt.setInt(2, productSellerId);
+			pstmt.setInt(2, trade.getProductSellerId());
 			pstmt.setInt(3, trade.getBuyerId());
 			pstmt.setInt(4, trade.getAddressId());
 			pstmt.setInt(5, trade.getCouponId());
@@ -163,7 +157,7 @@ public class TradeDAO {
 	}
 	
 	// 구매한 상품 PAYMENT테이블에 insert
-	public int insertPayment(int tradeId, String paymentMethod, int price) {
+	public int insertPayment(int tradeId, String paymentMethod, int totalPrice) {
 		sb.setLength(0);
 		sb.append("INSERT INTO PAYMENT (trade_id, payment_method, amount) VALUES (?, ?, ?)");
 		int result = 0;
@@ -172,7 +166,7 @@ public class TradeDAO {
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, tradeId);
 			pstmt.setString(2, paymentMethod);
-			pstmt.setInt(3, price);
+			pstmt.setInt(3, totalPrice);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

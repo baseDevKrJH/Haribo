@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.jelly.www.vo.ProductBuyerVO;
 import com.jelly.www.vo.ProductSellerVO;
 
 public class ProductSellerDAO {
@@ -34,33 +35,26 @@ public class ProductSellerDAO {
 
 	}
 	
-
-	// 상품 아이디로 ProductSeller 한건 조회 (trade에서 product_seller_id 필요할 때 사용)
-		public ProductSellerVO selectProductSellerByProductId(int productId) {
-			ProductSellerVO productSellers = null;
+		// 판매자 조회 (사이즈, 가격, 상품 Id가 맞는 사람)
+ 		public ProductSellerVO selectSellerIdOne(int productId, String size, int price) {
+			ProductSellerVO vo = null;
 			sb.setLength(0);
-			sb.append("SELECT product_seller_id, product_id, seller_id, size_id, price, stock, created_at, updated_at FROM PRODUCT_SELLER WHERE product_id = ? ORDER BY created_at DESC, price ASC limit 1");
-			System.out.println("sql : " + sb.toString());
+			sb.append("SELECT product_seller_id FROM PRODUCT_SELLER ");
+	 		sb.append("WHERE product_id = ? AND size = ? AND price = ? ");
+	 		sb.append("ORDER BY created_at ASC limit 1");			
 			try {
 				pstmt = conn.prepareStatement(sb.toString());
 				pstmt.setInt(1, productId);
-				rs = pstmt.executeQuery();
+	 			pstmt.setString(2, size);
+	 			pstmt.setInt(3, price);
+	 			rs = pstmt.executeQuery();
 				if (rs.next()) {
-					productSellers = new ProductSellerVO(
-							rs.getInt("product_seller_id"), 
-							rs.getInt("product_id"),
-							rs.getInt("seller_id"), 
-							rs.getInt("size_id"), 
-							rs.getInt("price"), 
-							rs.getInt("stock"),
-							rs.getTimestamp("created_at"), 
-							rs.getTimestamp("updated_at")
-					);
+	 				vo = new ProductSellerVO(rs.getInt("product_buyer_id"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return productSellers;
+			return vo;
 		}
 
 		// 구매가 평균 조회 메서드
@@ -159,7 +153,7 @@ public class ProductSellerDAO {
 	    }
 	
 	// 판매정보 추가
-	    public int insertSellData(ProductSellerVO vo) {
+	    public int insertSellerData(ProductSellerVO vo) {
 	    	sb.setLength(0);
 	    	sb.append("INSERT INTO PRODUCT_SELLER VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
 	    	int result = 0;
@@ -168,7 +162,7 @@ public class ProductSellerDAO {
 				pstmt.setInt(1, vo.getProductSellerId());
 				pstmt.setInt(2, vo.getProductId());
 				pstmt.setInt(3, vo.getSellerId());
-				pstmt.setInt(4, vo.getSizeId());
+				pstmt.setString(4, vo.getSize());
 				pstmt.setInt(5, vo.getPrice());
 				pstmt.setInt(6, vo.getStock());
 				

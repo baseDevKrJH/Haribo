@@ -88,14 +88,13 @@ public class JellyController extends HttpServlet {
 			url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
 		} else if (page.equals("notice")) {
 			url = "/views/notice/notice.jsp"; // 공지사항 페이지로 이동 -> 이거 url 아니고 NoticeAction으로 줄건데 일단 임시로 해놓음
-		} else if (page.equals("buyBid")) { // 구매 입찰 페이지 처리
-			action = new BuyBidAction();
-		} else if (page.equals("buy")) { // 구매 페이지 처리
+		} else if (page.equals("orderBid")) { // 판매 / 구매 입찰 페이지 처리
+			action = new OrderBidInputPriceAction();
+		} else if (page.equals("buy")) { // 즉시 구매시 결제 페이지 처리
 			action = new BuyAction();
 		} else if (page.equals("buyConfirm")) { // 결제 완료 페이지 처리
 			action = new BuyConfirmAction();
-		} else if (page.equals("sellBid")) { // 판매 입찰 페이지 처리
-			action = new SellBidAction();
+		
 		} else if (page.equals("sell")) { // 판매 페이지 처리
 			action = new SellAction();
 		} else if (page.equals("sellConfirm")) { // 판매 완료 페이지 처리

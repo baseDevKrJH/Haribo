@@ -185,3 +185,116 @@
 .payment-submit-btn:hover {
 	background-color: rgba(65, 115, 200, 1); /* 더 진한 파란색 */
 }
+
+/* 모달창 */
+/* "주소 변경" 버튼 */
+#address-modalOpenButton, #coupon-modalOpenButton {
+	background-color: white;
+	border: #f4f4f4 1px solid; /* 연한 회색 테두리 */
+	padding: 5px 8px; /* 내부 여백 */
+	border-radius: 15px; /* 모서리를 둥글게 */
+	color: gray; /* 글자 색상 */
+}
+/* 버튼 */
+#address-modalCloseButton, #coupon-modalCloseButton {
+	cursor: pointer;
+}
+
+/* 모달 컨테이너 */
+#address-modalContainer, #coupon-modalContainer {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#address-modalContainer.hidden, #coupon-modalContainer.hidden {
+	display: none;
+}
+
+/* 모달 내용 */
+#modalContent {
+	background-color: #ffffff;
+	width: 450px;
+	height: 550px;
+	padding: 15px;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	position: relative;
+}
+
+#modalContent .modal-close {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	border: none;
+	background: transparent;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.addBtn {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 45px;
+	background-color: white;
+	border: #f4f4f4 1px solid;
+	border-radius: 10px;
+	margin-bottom: 19px;
+}
+
+#modalContent h3 {
+	display: flex;
+	justify-content: center;
+}
+
+.addressInfoList {
+	border-radius: 8px;
+	padding: 20px;
+	margin: 0 auto;
+}
+
+.addressInfo {
+	border-bottom: 1px solid #eee;
+	padding: 10px 0;
+	font-size: 13px;
+	padding-bottom: 10px;
+}
+
+.addressInfo .name,
+.couponInfo .name {
+	font-weight: bold;
+	padding-bottom: 8px;
+	font-size: 14px;
+}
+
+.addressInfo div,
+.couponInfo div {
+	padding: 3px 0px;
+}
+
+.couponInfoList {
+	border-radius: 8px;
+	padding: 20px;
+	margin: 0 auto;
+	display: flex;
+}
+
+.couponInfo {
+	font-size: 13px;
+	padding : 10px;
+	border-radius: 10px;
+	border : #d4d4d4 1px solid;
+width: 100%;	
+}
+.couponInfo .expiredate {
+	float: right;
+	color: lightgray;
+}

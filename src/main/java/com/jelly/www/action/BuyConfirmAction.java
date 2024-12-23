@@ -10,8 +10,8 @@ public class BuyConfirmAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		String productIdParam = request.getParameter("productId");
-		int productId = Integer.parseInt(productIdParam);
+		// 요청 객체 가져오기 & 형변환
+		int productId = Integer.parseInt(request.getParameter("productId"));
 		
 		ProductDAO productDAO = new ProductDAO();
 		ProductVO product = productDAO.selectOne(productId);
