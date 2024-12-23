@@ -28,11 +28,11 @@
       <a href="#" class="btn btn_wish2">관심등록</a>
       <button class="btn_action buy_button" id="sticky-buy-btn">
         <strong>구매</strong>
-        <div class="price">${formattedPrice}원</div>
+        <div class="price">${averagePurchasePrice}원</div>
       </button>
       <button class="btn_action sell_button" id="sticky-sell-btn">
         <strong>판매</strong>
-        <div class="price">250,000원</div>
+        <div class="price">${averageSellPrice}원</div>
       </button>
     </div>
   </div>
@@ -45,17 +45,20 @@
     <div class="size-grid">
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
-          <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
-            <span>${size}</span>
-            <c:choose>
-              <c:when test="${sizeButtons[size] == '구매 입찰'}">
+          <c:choose>
+            <c:when test="${buySizeButtons[size] == '구매 입찰'}">
+              <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}" class="size-button">
+                <span>${size}</span>
                 <span class="price bid-label">구매 입찰</span>
-              </c:when>
-              <c:otherwise>
-                <span class="price">${sizeButtons[size]}</span>
-              </c:otherwise>
-            </c:choose>
-          </a>
+              </a>
+            </c:when>
+            <c:otherwise>
+              <a href="${pageContext.request.contextPath}/views/product/buy.jsp?size=${size}&price=${buySizeButtons[size]}" class="size-button">
+                <span>${size}</span>
+                <span class="price">${buySizeButtons[size]}원</span>
+              </a>
+            </c:otherwise>
+          </c:choose>
         </div>
       </c:forEach>
     </div>
@@ -68,14 +71,24 @@
       <button class="modal-close" id="sticky-sell-close">&times;</button>
       <h3 class="modal-title">판매 사이즈 선택</h3>
       <div class="size-grid">
-        <c:forTokens var="sizeVal" items="210,220,230,240,250,260,270,280,290" delims=",">
+        <c:forEach var="sizeVal" items="${sizeList}">
           <div class="size-item">
-            <a href="${pageContext.request.contextPath}/views/product/sell.jsp?size=${sizeVal}" class="size-button">
-              <span>${sizeVal}</span>
-              <span class="price">판매하기</span>
-            </a>
+            <c:choose>
+              <c:when test="${sellSizeButtons[sizeVal] == '판매 입찰'}">
+                <a href="${pageContext.request.contextPath}/views/product/sell.jsp?size=${sizeVal}" class="size-button">
+                  <span>${sizeVal}</span>
+                  <span class="price bid-label">판매 입찰</span>
+                </a>
+              </c:when>
+              <c:otherwise>
+                <a href="${pageContext.request.contextPath}/views/product/sell.jsp?size=${sizeVal}&price=${sellSizeButtons[sizeVal]}" class="size-button">
+                  <span>${sizeVal}</span>
+                  <span class="price">${sellSizeButtons[sizeVal]}원</span>
+                </a>
+              </c:otherwise>
+            </c:choose>
           </div>
-        </c:forTokens>
+        </c:forEach>
       </div>
     </div>
   </div>
