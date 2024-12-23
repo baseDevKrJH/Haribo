@@ -33,11 +33,6 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.post-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
 /* Image Wrapper */
 .imageWrapper {
   position: relative;
@@ -128,6 +123,8 @@ body {
   border-bottom: 1px solid #ddd;
   max-width: 1250px;
   margin: 0 auto;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 /* Filter Left */
@@ -145,9 +142,6 @@ body {
   transition: color 0.3s ease;
 }
 
-.filter-link:hover {
-  background-color: #ddd;
-}
 
 .filter-link.active {
   font-weight: bold;
@@ -167,6 +161,7 @@ body {
 }
 
 .dropdown-content {
+  margin-top: 5px;
   display: none;
   position: absolute;
   top: 100%;
