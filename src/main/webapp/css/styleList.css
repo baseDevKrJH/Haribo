@@ -16,7 +16,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1250px;
   margin: 0 auto;
 }
 
@@ -122,31 +122,20 @@ body {
 /* Filter Navbar */
 .filter-navbar {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 50px;
+  padding: 20px;
   border-bottom: 1px solid #ddd;
-  margin-left: 200px;
-  margin-right: 200px;
-  padding-top: 20px;
+  max-width: 1250px;
+  margin: 0 auto;
 }
 
-/* Grouping filter links on the left */
+/* Filter Left */
 .filter-left {
-  margin-right: auto;
-  cursor: pointer;
-}
-
-/* Grouping filter links on the right */
-.filter-right {
   display: flex;
   gap: 20px;
-  justify-content: center;
-  margin-left: auto;
 }
 
-/* Style for the individual filter links */
 .filter-link {
   text-decoration: none;
   color: black;
@@ -154,6 +143,10 @@ body {
   padding: 10px 20px;
   position: relative;
   transition: color 0.3s ease;
+}
+
+.filter-link:hover {
+  background-color: #ddd;
 }
 
 .filter-link.active {
@@ -164,26 +157,58 @@ body {
   text-decoration-thickness: 3px;
 }
 
-.filter-link:hover {
-  background-color: #ddd;
+/* Dropdown Menu */
+.filter-dropdown {
+  position: relative;
+}
+
+.filter-dropdown .filter-link {
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 10;
+  min-width: 200px;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: black;
+  font-size: 0.9rem;
+}
+
+.dropdown-content a:hover {
+  background-color: #f4f4f4;
+}
+
+/* Show dropdown on hover */
+.filter-dropdown:hover .dropdown-content {
+  display: block;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  /* Adjust posts grid for tablets */
   .posts {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 
-  /* Adjust filter navbar padding */
   .filter-navbar {
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
   }
 }
 
 @media (max-width: 768px) {
-  /* Stack navbar items vertically for smaller screens */
   .filter-navbar {
     flex-direction: column;
     align-items: center;
@@ -197,13 +222,11 @@ body {
     margin: 0;
   }
 
-  /* Adjust posts grid for smaller screens */
   .posts {
     grid-template-columns: 1fr;
     gap: 15px;
   }
 
-  /* Adjust filter navbar padding */
   .filter-navbar {
     margin-left: 20px;
     margin-right: 20px;
@@ -211,7 +234,6 @@ body {
 }
 
 @media (max-width: 480px) {
-  /* Adjust padding for very small screens */
   .filter-navbar {
     margin-left: 10px;
     margin-right: 10px;
