@@ -261,14 +261,15 @@
     <div class="size-grid">
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
-          <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId }&userId=${user.userId }&size=${size}" class="size-button">
             <span>${size}</span>
             <c:choose>
               <c:when test="${sizeButtons[size] == '구매 입찰'}">
                 <span class="price bid-label">구매 입찰</span>
+	            <a href="${pageContext.request.contextPath}/jelly?page=buyBid&productId=${product.productId }&size=${size}" class="size-button">
               </c:when>
               <c:otherwise>
                 <span class="price">${sizeButtons[size]}</span>
+	            <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId }&size=${size}" class="size-button">
               </c:otherwise>
             </c:choose>
           </a>

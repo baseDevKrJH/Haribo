@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jelly.www.vo.AddressVO;
+import com.jelly.www.vo.PaymentVO;
 import com.jelly.www.vo.ProductSellerVO;
 import com.jelly.www.vo.TradeVO;
 
@@ -53,9 +54,7 @@ public class TradeDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
-		}
+		} 
 		return tradeList;
 	}
 
@@ -79,9 +78,7 @@ public class TradeDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
-		}
+		} 
 		return tradeList;
 	}
 
@@ -105,10 +102,7 @@ public class TradeDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
-		}
-
+		} 
 		return trade;
 	}
 
@@ -132,9 +126,7 @@ public class TradeDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
-		}
+		} 
 
 		return trade;
 	}
@@ -165,19 +157,31 @@ public class TradeDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
-		}
+		} 
 
 		return result;
 	}
 	
-	
-	
-	
-	// 구매자와 판매자 매칭
-	// 거래상태 변경
-
+	// 구매한 상품 PAYMENT테이블에 insert
+	public int insertPayment(int tradeId, String paymentMethod, int price) {
+		sb.setLength(0);
+		sb.append("INSERT INTO PAYMENT (trade_id, payment_method, amount) VALUES (?, ?, ?)");
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, tradeId);
+			pstmt.setString(2, paymentMethod);
+			pstmt.setInt(3, price);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("insertPayment result : " + result);
+		return result;
+	}
 	// 자원 해제
 	private void close() {
 		try {

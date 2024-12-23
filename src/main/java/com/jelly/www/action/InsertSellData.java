@@ -71,12 +71,7 @@ public class InsertSellData extends HttpServlet {
 
 		} 
 
-		// 여기는 일단 해놓고 나중에 jsp 파일만들고 추가하기
-		req.setAttribute("tradeId", tradeId);
-		req.setAttribute("productName", productName);
-		req.setAttribute("product", product);
-		System.out.println(product);
-	
+			
 	}
 
 }

@@ -88,17 +88,20 @@ public class JellyController extends HttpServlet {
 			url = "/views/notice/faq.jsp"; // 자주묻는질문(FAQ) 페이지 처리
 		} else if (page.equals("notice")) {
 			url = "/views/notice/notice.jsp"; // 공지사항 페이지로 이동 -> 이거 url 아니고 NoticeAction으로 줄건데 일단 임시로 해놓음
-		} else if (page.equals("buy")) {
+		} else if (page.equals("buyBid")) { // 구매 입찰 페이지 처리
+			action = new BuyBidAction();
+		} else if (page.equals("buy")) { // 구매 페이지 처리
 			action = new BuyAction();
-		} else if (page.equals("buyConfirm")) {
+		} else if (page.equals("buyConfirm")) { // 결제 완료 페이지 처리
 			action = new BuyConfirmAction();
-		} else if (page.equals("sell")) {
+		} else if (page.equals("sellBid")) { // 판매 입찰 페이지 처리
+			action = new SellBidAction();
+		} else if (page.equals("sell")) { // 판매 페이지 처리
 			action = new SellAction();
-		} else if (page.equals("sellConfirm")) {
+		} else if (page.equals("sellConfirm")) { // 판매 완료 페이지 처리
 			action = new SellConfirmAction();
 		}
-		
-		
+
 		else {
 			url = "/views/error/404.jsp"; // 에러 페이지 처리
 		}
@@ -106,13 +109,11 @@ public class JellyController extends HttpServlet {
 		// Action 실행
 		if (action != null) {
 			url = action.execute(req, resp);
-			System.out.println("1");
 		}
 
 		// 페이지 이동
 		if (url != null && !resp.isCommitted()) {
 			RequestDispatcher rd = req.getRequestDispatcher(url);
-			System.out.println("2");
 			rd.forward(req, resp);
 		}
 	}
