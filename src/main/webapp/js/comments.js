@@ -61,6 +61,15 @@ $(document).ready(function () {
 	const likeCount = $("#like-count");
 	likeCount.html()
   });
+  
+  document.addEventListener("click", function (event) {
+      const commentMenu = document.getElementById("comment-menu");
+      if (commentMenu && !commentMenu.contains(event.target) && event.target.id !== "open-comment-btn") {
+			$commentMenu.removeClass("open");
+			const likeCount = $("#like-count");
+			likeCount.html()
+      }
+  });
 
 
 

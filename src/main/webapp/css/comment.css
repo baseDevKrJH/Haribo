@@ -30,7 +30,7 @@
 /* Comment content */
 .comment-contents {
     font-size: 0.9rem;
-    color: #555; /* Slightly muted color for the comment content */
+    color: black; /* Slightly muted color for the comment content */
     line-height: 1.4;
     white-space: pre-wrap; /* Preserves line breaks in the comment content */
 }
@@ -105,9 +105,9 @@
 
 /* Comment button styling */
 #postComment {
-    padding: 8px 16px;
+    padding: 8px 10px;
     font-size: 1rem;
-    background-color: #007BFF; /* Primary button color */
+    background-color: #222222; /* Primary button color */
     color: #fff; /* White text for contrast */
     border: none;
     border-radius: 4px; /* Rounded corners */
@@ -116,13 +116,13 @@
 }
 
 #postComment:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #444444; /* Darker shade on hover */
 }
 
 
 
 .delete-comment-btn:hover {
-    background-color: darkred;
+    color: red;
 }
 
 
@@ -140,10 +140,9 @@
 
 /* Modify delete button positioning if necessary */
 .delete-comment-btn {
-    background-color: red;
-    color: white;
+    color: gray;
     border: none;
-    padding: 5px 10px;
+    padding: 2px 2px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 0.9rem;

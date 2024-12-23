@@ -9,7 +9,6 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8f8f8;
   line-height: 1.4;
 }
 
@@ -71,10 +70,10 @@ body {
 
 
 .profileInfo {
-  display: flex; /* Use flexbox for alignment */
+  display: flex;
   align-items: center; /* Vertically center-align items */
   justify-content: center; /* Horizontally center-align items */
-  gap: 10px; /* Add space between profile picture and username */
+  gap: 10px; 
   text-decoration: none; /* Remove underline for links */
   color: inherit; /* Keep the text color consistent */
 }
@@ -125,20 +124,22 @@ body {
   border-top: 1px solid #eee;
 }
 
-/* General container for the navbar */
 .filter-navbar {
     display: flex;
-    justify-content: center; /* Center the entire navbar */
-    align-items: center; /* Vertically center items */
-    width: 100%; /* Full width */
-    margin: 20px 0; /* Add vertical margin */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #ddd;
+    margin-left: 200px;
+    margin-right: 200px;
+    padding-top: 20px;
 }
 
 /* Grouping filter links on the left */
 .filter-left {
-    display: flex;
-    gap: 20px; /* Space between links */
-    justify-content: center; /* Center align the left links */
+    margin-right: auto;
+    cursor: pointer;
 }
 
 /* Grouping filter links on the right */
@@ -151,23 +152,21 @@ body {
 
 /* Style for the individual filter links */
 .filter-link {
-    text-decoration: none; /* Remove underline */
-    padding: 10px 20px; /* Add padding for a bigger clickable area */
-    background-color: #f0f0f0; /* Light background color */
-    border-radius: 5px; /* Rounded corners */
-    color: black; /* Text color */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
-    font-weight: 500; /* Slightly bold text */
-    border: 1px solid transparent; /* No border by default */
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    padding: 10px 20px;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
 /* Active link style */
 .filter-link.active {
-    background-color: #333; /* Dark background for active item */
-    color: white; /* White text for active item */
-    border-color: #333; /* Border color to match the active background */
-    transform: scale(1.05); /* Slightly scale up the active item */
-}
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+    text-underline-offset: 14px;
+    text-decoration-thickness: 3px;
 
 /* Hover effect for filter links */
 .filter-link:hover {

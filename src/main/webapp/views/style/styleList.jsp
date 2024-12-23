@@ -104,29 +104,42 @@
 	            }, 1000);
 	        }
 	    });
-
+	    setActiveLeft(document.getElementById("filter-all"));
+	    setActiveRight(document.getElementById("filter-recent"));
 	});
+	
+	
+	function setActiveLeft(element) {
+        const links = document.querySelectorAll('.filter-left .filter-link');
+        links.forEach(link => link.classList.remove('active'));
+        element.classList.add('active');
+    }
+	function setActiveRight(element) {
+        const links = document.querySelectorAll('.filter-right .filter-link');
+        links.forEach(link => link.classList.remove('active'));
+        element.classList.add('active');
+    }
 
 
 	</script>
 <body>
     <div class="filter-navbar">
         <!-- Filter links on the left -->
-        <div class="filter-left">
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(0);" id="filter-all" class="filter-link">All</a>
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(99);" id="filter-following" class="filter-link">Following</a>
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(1);" id="filter-casual" class="filter-link">Casual</a>
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(2);" id="filter-street" class="filter-link">Street</a>
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(3);" id="filter-modern" class="filter-link">Modern</a>
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(4);" id="filter-vintage" class="filter-link">Vintage</a>
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(5);" id="filter-minimal" class="filter-link">Minimal</a>
-            <a href="javascript:void(0);" onclick="_Style.getStyleList(6);" id="filter-formal" class="filter-link">Formal</a>
-        </div>
+        <div class="filter-left" id="filter-container">
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(0); setActiveLeft(this);" id="filter-all" class="filter-link">All</a>
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(99); setActiveLeft(this);" id="filter-following" class="filter-link">Following</a>
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(1); setActiveLeft(this);" id="filter-casual" class="filter-link">Casual</a>
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(2); setActiveLeft(this);" id="filter-street" class="filter-link">Street</a>
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(3); setActiveLeft(this);" id="filter-modern" class="filter-link">Modern</a>
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(4); setActiveLeft(this);" id="filter-vintage" class="filter-link">Vintage</a>
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(5); setActiveLeft(this);" id="filter-minimal" class="filter-link">Minimal</a>
+		    <a href="javascript:void(0);" onclick="_Style.getStyleList(6); setActiveLeft(this);" id="filter-formal" class="filter-link">Formal</a>
+		</div>
         
         <!-- Filter links on the right -->
         <div class="filter-right">
-            <a href="javascript:void(0);" onclick="orderBy(0);" id="filter-recent" class="filter-link">Most Recent</a>
-            <a href="javascript:void(0);" onclick="orderBy(1);" id="filter-likes" class="filter-link">Most Likes</a>
+            <a href="javascript:void(0);" onclick="orderBy(0); setActiveRight(this);" id="filter-recent" class="filter-link">Most Recent</a>
+            <a href="javascript:void(0);" onclick="orderBy(1); setActiveRight(this);" id="filter-likes" class="filter-link">Most Likes</a>
         </div>
     </div>
     
