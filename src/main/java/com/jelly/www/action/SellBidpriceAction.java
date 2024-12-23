@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class SellBidInputPriceAction implements Action {
+public class SellBidpriceAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -46,7 +46,7 @@ public class SellBidInputPriceAction implements Action {
 			request.setAttribute("price", lowestPrice); // 사이즈별 최저가
 			request.setAttribute("size", size);
 		}
-		return "/views/order/sellBidInputPrice.jsp";
+		return "/views/order/sellBidprice.jsp";
 	}
 
 }

@@ -82,7 +82,7 @@ $(() => {
 	  $(".registPrice").on("click", () => {
 	    let inputPrice = $("#inputPrice").val().trim();
 	    $.ajax({
-	      url: '/haribo/orderBid',
+	      url: '/haribo/orderBidInputPrice',
 	      method: 'get', 
 	      data: {
 	    	  bidMoney: inputPrice

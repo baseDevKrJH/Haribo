@@ -155,16 +155,14 @@ public class ProductSellerDAO {
 	// 판매정보 추가
 	    public int insertSellerData(ProductSellerVO vo) {
 	    	sb.setLength(0);
-	    	sb.append("INSERT INTO PRODUCT_SELLER VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
+	    	sb.append("INSERT INTO PRODUCT_SELLER (product_id, seller_id, size, price, stock) VALUES (?, ?, ?, ?, 1 ))");
 	    	int result = 0;
 	    	try {
 				pstmt = conn.prepareStatement(sb.toString());
-				pstmt.setInt(1, vo.getProductSellerId());
-				pstmt.setInt(2, vo.getProductId());
-				pstmt.setInt(3, vo.getSellerId());
-				pstmt.setString(4, vo.getSize());
-				pstmt.setInt(5, vo.getPrice());
-				pstmt.setInt(6, vo.getStock());
+				pstmt.setInt(1, vo.getProductId());
+				pstmt.setInt(2, vo.getSellerId());
+				pstmt.setString(3, vo.getSize());
+				pstmt.setInt(4, vo.getPrice());
 				
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {

@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/orderBidInputPrice") // 여기에서 구매입찰 데이터 추가 (PRODUCT_BUYER)
-public class OrderBidInputPrice extends HttpServlet {
+public class InputBidpriceServ extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

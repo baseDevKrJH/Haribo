@@ -41,8 +41,8 @@
     <p class="instant-buy-label">즉시 구매가</p>
     <p class="instant-buy-price">
       <c:choose>
-        <c:when test="${formattedAveragePurchasePrice != '가격 정보 없음'}">
-          ${formattedAveragePurchasePrice}원
+        <c:when test="${averagePurchasePrice > 0}">
+          ${averagePurchasePrice}원
         </c:when>
         <c:otherwise>
           가격 정보 없음
@@ -76,29 +76,42 @@
       </div>
       <div class="detail">
         <div class="text">발매가</div>
-        <span>${formattedPrice}원</span>
+        <span>${initialPrice}원</span>
       </div>
     </dl>
 
-<!-- 구매/판매 버튼 -->
+<!-- 구매 버튼 -->
 <div class="button-group">
-  <!-- a태그를 button으로 변경 -->
   <button class="buy-button" id="buy-btn">
     <div class="buy-text">구매</div>
     <div class="buy-info">
-      <!-- 구매가 평균가 출력, 없으면 발매가 출력 -->
       <span class="price">
-        ${formattedAveragePurchasePrice != "가격 정보 없음" ? formattedAveragePurchasePrice : formattedPrice}
+        <c:choose>
+          <c:when test="${averagePurchasePrice > 0}">
+            ${averagePurchasePrice}원
+          </c:when>
+          <c:otherwise>
+            ${initialPrice}원
+          </c:otherwise>
+        </c:choose>
       </span>
       <span class="subtext">즉시 구매가</span>
     </div>
   </button>
+  
+  <!-- 판매 버튼 -->
   <button class="sell-button" id="sell-btn">
     <div class="sell-text">판매</div>
     <div class="sell-info">
-      <!-- 판매가 평균가 출력, 없으면 발매가 출력 -->
       <span class="price">
-        ${formattedAverageSellPrice != "가격 정보 없음" ? formattedAverageSellPrice : formattedPrice}
+        <c:choose>
+          <c:when test="${averageSellPrice > 0}">
+            ${averageSellPrice}원
+          </c:when>
+          <c:otherwise>
+            ${initialPrice}원
+          </c:otherwise>
+        </c:choose>
       </span>
       <span class="subtext">즉시 판매가</span>
     </div>
@@ -236,17 +249,20 @@
     <div class="size-grid">
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
-          <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId }&userId=${user.userId }&size=${size}" class="size-button">
-            <span>${size}</span>
-            <c:choose>
-              <c:when test="${sizeButtons[size] == '구매 입찰'}">
+          <c:choose>
+            <c:when test="${buySizeButtons[size] == '구매 입찰'}">
+              <a href="${pageContext.request.contextPath}/jelly?page=buyBid&productId=${product.productId}&size=${size}" class="size-button">
+                <span>${size}</span>
                 <span class="price bid-label">구매 입찰</span>
-              </c:when>
-              <c:otherwise>
-                <span class="price">${sizeButtons[size]}</span>
-              </c:otherwise>
-            </c:choose>
-          </a>
+              </a>
+            </c:when>
+            <c:otherwise>
+              <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId}&size=${size}&price=${buySizeButtons[size]}" class="size-button">
+                <span>${size}</span>
+                <span class="price">${buySizeButtons[size]}</span>
+              </a>
+            </c:otherwise>
+          </c:choose>
         </div>
       </c:forEach>
     </div>
@@ -262,16 +278,16 @@
       <c:forEach var="size" items="${sizeList}">
         <div class="size-item">
           <c:choose>
-            <c:when test="${sizeButtons[size] == '구매 입찰'}">
-              <a href="${pageContext.request.contextPath}/jelly?page=orderBid&productId=${product.productId}&size=${size}" class="size-button">
+            <c:when test="${buySizeButtons[size] == '구매 입찰'}">
+              <a href="${pageContext.request.contextPath}/jelly?page=buyBid&productId=${product.productId}&size=${size}" class="size-button">
                 <span class="size-label">${size}</span>
                 <span class="price bid-label">구매 입찰</span>
               </a>
             </c:when>
             <c:otherwise>
-              <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId}&size=${size}" class="size-button">
+              <a href="${pageContext.request.contextPath}/jelly?page=buy&productId=${product.productId}&size=${size}&price=${buySizeButtons[size]}" class="size-button">
                 <span class="size-label">${size}</span>
-                <span class="price">${sizeButtons[size]}</span>
+                <span class="price">${buySizeButtons[size]}</span>
               </a>
             </c:otherwise>
           </c:choose>
@@ -287,29 +303,27 @@
     <button class="modal-close" id="sell-modal-close">&times;</button>
     <h3 class="modal-title">판매 사이즈 선택</h3>
     <div class="size-grid">
-      <c:forTokens var="sizeVal" items="210,220,230,240,250,260,270,280,290" delims=",">
+      <c:forEach var="sizeVal" items="${sizeList}">
         <div class="size-item">
           <c:choose>
-            <c:when test="${sizeButtons[sizeVal] == '판매 입찰'}">
-              <a href="${pageContext.request.contextPath}/jelly?page=orderBid&productId=${product.productId}&size=${sizeVal}" class="size-button">
+            <c:when test="${sellSizeButtons[sizeVal] == '판매 입찰'}">
+              <a href="${pageContext.request.contextPath}/jelly?page=sellBid&productId=${product.productId}&size=${sizeVal}" class="size-button">
                 <span>${sizeVal}</span>
                 <span class="price bid-label">판매 입찰</span>
               </a>
             </c:when>
             <c:otherwise>
-              <a href="${pageContext.request.contextPath}/jelly?page=sell&productId=${product.productId}&size=${sizeVal}" class="size-button">
+              <a href="${pageContext.request.contextPath}/jelly?page=sell&productId=${product.productId}&size=${sizeVal}&price=${sellSizeButtons[sizeVal]}" class="size-button">
                 <span>${sizeVal}</span>
-                <span class="price">${sizeButtons[sizeVal]}</span>
+                <span class="price">${sellSizeButtons[sizeVal]}</span>
               </a>
             </c:otherwise>
           </c:choose>
         </div>
-      </c:forTokens>
+      </c:forEach>
     </div>
   </div>
 </div>
-
-
 <script src="<%= request.getContextPath() %>/js/upbutton.js"></script>
 <%@ include file="/views/home/footer.jsp" %>
 

@@ -6,7 +6,6 @@ import com.jelly.www.vo.ProductVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class ProductDetailAction implements Action {
@@ -41,9 +40,8 @@ public class ProductDetailAction implements Action {
         String formattedModelNumber = productDAO.getFormattedModelNumber(productId);
         request.setAttribute("formattedModelNumber", formattedModelNumber);
 
-        // 가격 포맷팅 처리
-        DecimalFormat df = new DecimalFormat("#,###");
-        String formattedPrice = df.format(product.getInitialPrice()); // 발매가
+        // 발매가 그대로 전달
+        int initialPrice = product.getInitialPrice();
 
         // 구매가와 판매가 평균 가격 조회
         int averagePurchasePrice = productSellerDAO.getAveragePurchasePrice(productId);
@@ -51,11 +49,11 @@ public class ProductDetailAction implements Action {
         int lowestPrice = productSellerDAO.getLowestPrice(productId);
 
         // 구매가 평균 가격이 없으면 발매가로 대체
-        String formattedAveragePurchasePrice = averagePurchasePrice > 0 ? df.format(averagePurchasePrice) : formattedPrice;
+        int averagePurchasePriceToUse = averagePurchasePrice > 0 ? averagePurchasePrice : initialPrice;
         // 판매가 평균 가격이 없으면 발매가로 대체
-        String formattedAverageSellPrice = averageSellPrice > 0 ? df.format(averageSellPrice) : formattedPrice;
+        int averageSellPriceToUse = averageSellPrice > 0 ? averageSellPrice : initialPrice;
         // 최저가가 없으면 발매가로 대체
-        String formattedLowestPrice = lowestPrice > 0 ? df.format(lowestPrice) : formattedPrice;
+        int lowestPriceToUse = lowestPrice > 0 ? lowestPrice : initialPrice;
 
         // 고정 사이즈 목록 (210~290)
         List<String> sizeList = Arrays.asList("210", "220", "230", "240", "250", "260", "270", "280", "290");
@@ -71,25 +69,39 @@ public class ProductDetailAction implements Action {
             }
         }
 
-        // 각 사이즈에 대해 버튼 텍스트 설정 (가격이 없으면 구매 입찰)
-        Map<String, String> sizeButtons = new HashMap<>();
+        // 구매 입찰과 판매 입찰 버튼 텍스트를 따로 생성
+        Map<String, String> buySizeButtons = new HashMap<>();
+        Map<String, String> sellSizeButtons = new HashMap<>();
+
         for (String size : sizeList) {
             int price = sizePriceMap.getOrDefault(size, -1);
+
+            // 구매 입찰 버튼 텍스트 설정
             if (price == -1) {
-                sizeButtons.put(size, "구매 입찰");
+                buySizeButtons.put(size, "구매 입찰"); // 문자열로 설정
             } else {
-                sizeButtons.put(size, String.format("%,d원", price));
+                buySizeButtons.put(size, String.valueOf(price)); // 숫자를 문자열로 변환
+            }
+
+            // 판매 입찰 버튼 텍스트 설정
+            if (price == -1) {
+                sellSizeButtons.put(size, "판매 입찰"); // 문자열로 설정
+            } else {
+                sellSizeButtons.put(size, String.valueOf(price)); // 숫자를 문자열로 변환
             }
         }
 
+        productDAO.close();
+
         // JSP로 전달할 데이터 설정
         request.setAttribute("product", product); // 상품 정보
-        request.setAttribute("formattedPrice", formattedPrice); // 발매가
-        request.setAttribute("formattedAveragePurchasePrice", formattedAveragePurchasePrice); // 구매가 평균
-        request.setAttribute("formattedAverageSellPrice", formattedAverageSellPrice); // 판매가 평균
-        request.setAttribute("formattedLowestPrice", formattedLowestPrice); // 최저가
+        request.setAttribute("initialPrice", initialPrice); // 발매가
+        request.setAttribute("averagePurchasePrice", averagePurchasePriceToUse); // 구매가 평균
+        request.setAttribute("averageSellPrice", averageSellPriceToUse); // 판매가 평균
+        request.setAttribute("lowestPrice", lowestPriceToUse); // 최저가
         request.setAttribute("sizeList", sizeList); // 고정 사이즈 리스트
-        request.setAttribute("sizeButtons", sizeButtons); // 사이즈별 버튼 텍스트
+        request.setAttribute("buySizeButtons", buySizeButtons); // 구매 입찰 버튼 텍스트
+        request.setAttribute("sellSizeButtons", sellSizeButtons); // 판매 입찰 버튼 텍스트
 
         return "/views/product/productDetail.jsp";
     }
