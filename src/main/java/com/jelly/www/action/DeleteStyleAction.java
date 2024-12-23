@@ -2,6 +2,7 @@ package com.jelly.www.action;
 
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostImageDAO;
+import com.jelly.www.dao.PostTagDAO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +17,9 @@ public class DeleteStyleAction implements Action{
 			int postId = Integer.parseInt(pId);
 			PostDAO postDAO = new PostDAO();
 			PostImageDAO imageDAO = new PostImageDAO();
+			PostTagDAO postTagDao = new PostTagDAO();
 			imageDAO.deleteImageOfPost(postId);
+			postTagDao.deleteTagOfPost(postId);
 			postDAO.deleteOne(postId);
 			
 			postDAO.close();

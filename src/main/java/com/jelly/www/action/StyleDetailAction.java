@@ -1,5 +1,6 @@
 package com.jelly.www.action;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import com.jelly.www.dao.FollowDAO;
@@ -52,6 +53,9 @@ public class StyleDetailAction implements Action {
 			ProductDAO productDao = new ProductDAO();
 			for(PostTagVO postTagVo : postTagList) {
 				ProductVO productVo = productDao.selectOne(postTagVo.getProductId());
+				// 가격 포맷팅 처리
+		        DecimalFormat df = new DecimalFormat("#,###");
+		        productVo.setFormattedPrice(df.format(productVo.getInitialPrice()));
 				productList.add(productVo);
 			}
 			

@@ -1,5 +1,6 @@
 package com.jelly.www.action;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -80,7 +81,11 @@ public class StyleProfileAction implements Action {
 				ArrayList<PostTagVO> postTagList = postTagDao.getByPostId(post.getPostId());
 				for(PostTagVO postTag : postTagList) {
 					ProductDAO productDao = new ProductDAO();
-					productSet.add(productDao.selectOne(postTag.getProductId()));
+					ProductVO productVo = productDao.selectOne(postTag.getProductId());
+					// 가격 포맷팅 처리
+			        DecimalFormat df = new DecimalFormat("#,###");
+			        productVo.setFormattedPrice(df.format(productVo.getInitialPrice()));
+					productSet.add(productVo);
 				}
 			}
 			

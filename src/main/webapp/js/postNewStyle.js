@@ -2,6 +2,7 @@ $(document).ready(function() {
 	// 상품 태그 모달 열기
    $('#tagBtn').on('click', function () {
 		$('.modal-overlay').css('display', 'flex');
+		$('.search-input').focus();
    });
 
     // 모달 닫기

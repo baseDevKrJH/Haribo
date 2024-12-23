@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Style Detail</title>
+  <title>STYLE DETAIL</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleDetail.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styleComment.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comment.css">
@@ -83,7 +83,7 @@
               <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product">
                 <img src="${product.imageUrl}" alt="${product.productName}" />
                 <p>${product.productName}</p>
-                <p>${product.initialPrice}</p>
+                <p>${product.formattedPrice}원</p>
               </a>
             </c:forEach>
           </div>

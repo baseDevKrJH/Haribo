@@ -116,6 +116,7 @@ public class UploadImageController extends HttpServlet {
         int seq = 1;
     	PostDAO dao = new PostDAO();
     	PostImageDAO imageDAO = new PostImageDAO();
+    	PostTagDAO postTagDao = new PostTagDAO();
     	PostVO vo = new PostVO();
     	
     	String title = request.getParameter("title");
@@ -128,6 +129,7 @@ public class UploadImageController extends HttpServlet {
         		postId = Integer.parseInt(request.getParameter("modifyingPostId"));
         		System.out.println("postId of post that will be modified: " + postId);
         		imageDAO.deleteImageOfPost(postId);
+        		postTagDao.deleteTagOfPost(postId);
         		dao.updatePost(postId, title, content, styleCategory);
         		
         		
@@ -144,15 +146,14 @@ public class UploadImageController extends HttpServlet {
             	postId = newVO.getPostId();
             	System.out.println("postId: " + postId);
             	
-            	String productIds = request.getParameter("productIds");
-            	String[] productIdArray = productIds.split(","); // 콤마를 기준으로 문자열 나누기
-
-            	PostTagDAO postTagDao = new PostTagDAO();
-            	for (String id : productIdArray) {
-            	    postTagDao.insertOne(postId, Integer.parseInt(id));
-            	}
         	}
         	
+        	String productIds = request.getParameter("productIds");
+        	String[] productIdArray = productIds.split(","); // 콤마를 기준으로 문자열 나누기
+        	
+        	for (String id : productIdArray) {
+        		postTagDao.insertOne(postId, Integer.parseInt(id));
+        	}
         	
         	
         	

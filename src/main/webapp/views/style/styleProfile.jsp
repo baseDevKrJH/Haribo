@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Style Detail</title>
+<title>STYLE PROFILE</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styleProfile.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/styleProfile.js"></script>
@@ -117,7 +117,7 @@
 						<a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product">
 							<img src="${product.imageUrl}" alt="${product.productName}" />
 							<p>${product.productName}</p>
-							<p>${product.initialPrice}원</p>
+							<p>${product.formattedPrice}원</p>
 						</a>
 					</c:forEach>
 				</div>
