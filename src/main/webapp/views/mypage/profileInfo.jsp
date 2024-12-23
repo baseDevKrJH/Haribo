@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profileInfo.css" />
 </head>
 <body>
-    <!-- 마이페이지 공통부분 시작 -->
+    <!-- 마이페이지 공통 -->
     <div class="mypage-container">
         <%@ include file="/views/mypage/mypageNavi.jsp"%>
-        <!-- 마이페이지 컨텐츠 시작 -->
+        <!-- 마이페이지 -->
         <div class="mypage-content">
             <div class="mypageSubtitle">프로필 관리</div>
             <div class="profile-box">
@@ -30,7 +30,13 @@
                     <br />
                     <span class="profile-user-email"><c:out value="${userProfile.email}" /></span>
                 </div>
-                <button class="nickname-edit-btn" id="editProfileInfoBtn">프로필 변경</button>
+                <form action="${pageContext.request.contextPath}/uploadProfile" method="post" enctype="multipart/form-data">
+                    <div class="profile-btns">
+                        <label for="profileImageUpload" class="nickname-edit-btn">이미지 변경</label>
+                        <input type="file" name="profileImage" id="profileImageUpload" accept=".png,.jpg,.jpeg" style="display: none;" />
+                        <button type="submit" id="saveProfileImageBtn" class="nickname-edit-btn" style="display: none;">저장</button>
+                    </div>
+                </form>
             </div>
             <div class="loginInfo-content">
                 <h3>프로필 정보</h3>
@@ -69,6 +75,18 @@
         </div>
     </div>
     <script>
+        const profileImageUpload = document.getElementById('profileImageUpload');
+        const saveProfileImageBtn = document.getElementById('saveProfileImageBtn');
+
+        // 이미지 변경 버튼 클릭 시 저장 버튼 보이기
+        profileImageUpload.addEventListener('change', () => {
+            if (profileImageUpload.files.length > 0) {
+                saveProfileImageBtn.style.display = 'inline-block';
+            } else {
+                saveProfileImageBtn.style.display = 'none';
+            }
+        });
+
         const editNicknameBtn = document.getElementById('editNicknameBtnDetail');
         const saveNicknameBtn = document.getElementById('saveNicknameBtnDetail');
         const cancelNicknameBtn = document.getElementById('cancelNicknameBtnDetail');
@@ -88,7 +106,7 @@
         saveNicknameBtn.addEventListener('click', async () => {
             const newNickname = nicknameInput.value;
 
-            // 서버로 데이터 전송함
+            // 서버로 데이터 전송
             const response = await fetch('${pageContext.request.contextPath}/jelly', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

@@ -35,7 +35,7 @@
                 </div>
                 <div class="profile-btns">
                     <!-- 프로필 관리 버튼 -->
-                    <input type="button" value="프로필 관리" class="profile-info-btn" id ="btn1" onclick="location.href='/haribo/jelly?page=profileInfo'" />
+                    <input type="button" value="프로필 관리" class="profile-info-btn" id ="btn1" onclick="location.href='/haribo/jelly?page=viewProfileInfo'" />
                     <!-- 내 스타일 버튼 -->
                     <input type="button" value="내스타일" class="profile-info-btn" id="btn2" onclick="location.href='/haribo/jelly?page=styleProfile'" />
                 </div>
