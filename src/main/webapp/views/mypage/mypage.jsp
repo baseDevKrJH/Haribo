@@ -8,17 +8,16 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css" />
     <title>마이페이지</title>
     <style>
-    .mypage-snb {
-    max-width: 200px;
-    width: 90%;
-    height: 600px;
-    padding-left: 35px !important;
-	}    
+        .mypage-snb {
+            max-width: 200px;
+            width: 90%;
+            height: 600px;
+            padding-left: 35px !important;
+        }
     </style>
 </head>
 <body>
     <div class="mypage-container">
-    	
         <%@ include file="/views/mypage/mypageNavi.jsp" %>
         
         <!-- mypage content -->
@@ -35,9 +34,9 @@
                 </div>
                 <div class="profile-btns">
                     <!-- 프로필 관리 버튼 -->
-                    <input type="button" value="프로필 관리" class="profile-info-btn" id ="btn1" onclick="location.href='/haribo/jelly?page=viewProfileInfo'" />
+                    <input type="button" value="프로필 관리" class="profile-info-btn" id="btn1" onclick="location.href='/haribo/jelly?page=viewProfileInfo'" />
                     <!-- 내 스타일 버튼 -->
-                    <input type="button" value="내스타일" class="profile-info-btn" id="btn2" onclick="location.href='/haribo/jelly?page=styleProfile'" />
+                    <input type="button" value="내스타일" class="profile-info-btn" id="btn2" onclick="location.href='/haribo/jelly?page=styleProfile&userId=${uVo.userId}'" />
                 </div>
             </div>
 

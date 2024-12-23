@@ -28,7 +28,7 @@
                 <img src="${post.postImageUrl}" alt="${post.nickname}'s post">
               </div>
               <div class="underPost">
-                <img src="${post.profileImageUrl}" alt="${post.nickname}'s profile picture" class="profilePic"/>
+                <img src="${post.profileImageUrl}" alt="${post.nickname}'s profile picture" class="profilePic" />
                 <span class="username">${post.nickname}</span>
                 <span class="likebtn">
                   <img 
@@ -43,14 +43,14 @@
                   <span id="like-count-${post.postId}" class="like-count">${post.likeCount}</span>
                 </span>
               </div>
-              <div class="title">
-                <p>${post.title}</p>
-              </div>
             </a>
           </div>
         </c:forEach>
       </div>
     </div>
+
+    <!-- 세로 구분선 -->
+    <div class="main-style-popular-divider"></div>
 
     <!-- POPULAR 섹션 -->
     <div class="main-style-popular-section">

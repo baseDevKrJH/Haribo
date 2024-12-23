@@ -79,17 +79,18 @@
   margin-right: 20px; 
 }
 
+/* 프로필 버튼 */
 .profile-info-btn {
   padding: 8px 20px;
-  background-color: #000;
-  color: #fff;
-  border: none;
+  background-color: #fff; 
+  color: #000; 
+  border: 1px solid #ddd; 
   border-radius: 5px;
   cursor: pointer;
 }
 
 .profile-info-btn:hover {
-  background-color: #444;
+  background-color: #f4f4f4; 
 }
 
 /* 최근 구매내역 및 판매내역 테이블 */

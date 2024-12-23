@@ -26,7 +26,7 @@
             <div class="profile-box">
                 <div>
                     <img
-                        src="<c:out value='${userProfile.profileImage}' default='https://toppng.com/uploads/preview/emoji-iphone-nerd-115497289397n7uzmyvxq.png' />"
+                        src="<c:out value='${userProfile.profileImage}' />"
                         alt="프로필 사진" class="profile-image" />
                 </div>
                 <div class="profile-info">
