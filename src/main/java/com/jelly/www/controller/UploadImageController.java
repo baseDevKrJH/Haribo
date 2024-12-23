@@ -16,7 +16,6 @@ import com.jelly.www.action.MypageAction;
 import com.jelly.www.action.NoticeAction;
 import com.jelly.www.action.OuterAction;
 import com.jelly.www.action.SearchAction;
-import com.jelly.www.action.WishAction;
 import com.jelly.www.dao.PostDAO;
 import com.jelly.www.dao.PostImageDAO;
 import com.jelly.www.dao.PostTagDAO;
