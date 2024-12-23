@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypageCommon.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/loginInfo.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profileInfo.css" />
+    <style>
+        .nickname-edit-btn.active {
+            background-color: black;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <!-- 마이페이지 공통 -->
@@ -82,8 +88,10 @@
         profileImageUpload.addEventListener('change', () => {
             if (profileImageUpload.files.length > 0) {
                 saveProfileImageBtn.style.display = 'inline-block';
+                saveProfileImageBtn.classList.add('active');
             } else {
                 saveProfileImageBtn.style.display = 'none';
+                saveProfileImageBtn.classList.remove('active');
             }
         });
 
