@@ -1,6 +1,6 @@
 .footer-section-container {
-  flex-shrink: 0; /* 푸터가 수축되지 않도록 설정 */
-  width: 100%; /* 페이지 전체 너비를 차지하도록 설정 */
+  flex-shrink: 0; 
+  width: 100%;
   padding: 40px 0;
   background-color: white;
   color: #222222;
