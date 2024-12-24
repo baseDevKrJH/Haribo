@@ -1,20 +1,20 @@
-/* 스타일 상세 페이지 공통 설정 */
+/* 기본 스타일 */
 body {
   margin: 10px;
   padding: 10px;
 }
 
-/* 컨테이너 */
+/* 컨테이너 스타일 */
 .container {
-  width: 800px !important; 
+  width: 800px !important;
   margin: 20px auto;
   padding: 20px;
 }
 
-/* 작성자 정보 */
+/* 작성자 정보 섹션 */
 .author-info {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -37,25 +37,25 @@ body {
   font-size: 20px;
   display: flex;
   flex-direction: column;
-  gap: 0; 
+  gap: 0;
 }
 
 .author-info .info .date {
   font-size: 12px;
   color: #999;
-  margin-top: 2px; 
+  margin-top: 2px;
 }
 
 .author-info .info p {
   margin-bottom: 3px;
 }
 
-/* 스타일 수정 버튼 */
+/* 수정 버튼 */
 .edit-btn {
   display: inline-block;
   border: 1px solid #ebebeb;
   padding: 10px 20px;
-  color: #222222;
+  color: #222;
   font-size: 14px;
   text-align: center;
   border-radius: 10px;
@@ -72,39 +72,74 @@ body {
 .follow-btn {
   font-size: 14px;
   padding: 10px 20px;
-  background-color: #222222;
+  background-color: #222;
   color: #fff;
   border-radius: 10px;
   transition: background-color 0.3s;
 }
 
-/* 팔로잉 버튼 */
 .follow-btn.following {
   background-color: #f9f9f9;
-  color: #222222;
+  color: #222;
   border: 1px solid #ebebeb;
 }
 
 .follow-btn:hover {
-  background-color: #444444;
+  background-color: #444;
 }
 
-/* 게시물 이미지 */
-.post-images {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.post-images img {
-  width: 600px;
-  height: auto;
+/* 슬라이더 */
+.post-images-slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   border-radius: 10px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
 }
 
-/* 게시물 정보 스타일 */
+/* 슬라이더 이미지 */
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.slider-image {
+  min-width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* 슬라이드 버튼 */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 20px;
+  z-index: 10;
+}
+
+.slider-btn.prev-btn {
+  left: 10px;
+}
+
+.slider-btn.next-btn {
+  right: 10px;
+}
+
+.slider-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* 게시물 정보 */
 .post-info {
   margin-bottom: 30px;
 }
@@ -138,7 +173,7 @@ body {
   height: 24px;
 }
 
-/* 태그된 상품 스타일 */
+/* 태그된 상품 */
 .tagged-products {
   margin-bottom: 30px;
 }
@@ -167,7 +202,7 @@ body {
   border-radius: 10px;
 }
 
-/* 구분선 스타일 */
+/* 구분선 */
 .divider {
   border: 0;
   height: 1px;
@@ -175,7 +210,7 @@ body {
   margin: 20px 0;
 }
 
-/* 다른 스타일 그리드 */
+/* 다른 게시물 */
 .other-posts .header {
   display: flex;
   justify-content: space-between;
@@ -208,6 +243,9 @@ body {
   border-radius: 10px;
 }
 
-#like-btn, #open-comment-btn, #save-btn {
+/* 아이콘 버튼 */
+#like-btn,
+#open-comment-btn,
+#save-btn {
   cursor: pointer;
 }

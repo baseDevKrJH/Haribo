@@ -47,7 +47,7 @@ public class MyProfileInfoDAO {
             if (rs.next()) {
                 String profileImage = rs.getString("profile_image");
                 if (profileImage == null || profileImage.isEmpty()) {
-                    profileImage = "../img/profile2.png";
+                	profileImage = "/img/profile.png";
                 }
 
                 user = new UserProfileInfoVO(

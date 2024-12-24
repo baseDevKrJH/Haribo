@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comment.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/js/styleDetail.js"></script>
+  <script src="${pageContext.request.contextPath}/js/comments.js"></script>
 </head>
 <body>
   <div class="container">
@@ -25,27 +26,31 @@
         </div>
       </div>
       <c:choose>
-		<c:when test="${sessionScope.user != null && sessionScope.user.userId == postVo.userId}">
-		  <div class="edit-btn" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}">
-		  	<a href="<%= request.getContextPath() %>/jelly?page=styleModify&postId=${postVo.postId}">스타일 수정하기</a>
-		  </div>
-		</c:when>
-		<c:otherwise>
-		  <button id="follow-btn" class="follow-btn ${isFollow ? 'following' : '' }" 
-		            data-context-path="${pageContext.request.contextPath}" 
-		            data-user-id="${postVo.userId}">
-		      ${isFollow ? '팔로잉' : '팔로우'}
-		  </button>
-	    </c:otherwise>
-	  </c:choose>
+        <c:when test="${sessionScope.user != null && sessionScope.user.userId == postVo.userId}">
+          <div class="edit-btn" data-context-path="${pageContext.request.contextPath}" data-post-id="${postVo.postId}">
+            <a href="<%= request.getContextPath() %>/jelly?page=styleModify&postId=${postVo.postId}">스타일 수정하기</a>
+          </div>
+        </c:when>
+        <c:otherwise>
+          <button id="follow-btn" class="follow-btn ${isFollow ? 'following' : '' }" 
+                  data-context-path="${pageContext.request.contextPath}" 
+                  data-user-id="${postVo.userId}">
+            ${isFollow ? '팔로잉' : '팔로우'}
+          </button>
+        </c:otherwise>
+      </c:choose>
     </div>
 
-    <!-- 게시물 이미지 표시 -->
+    <!-- 게시물 이미지 슬라이드 -->
     <c:if test="${not empty postImageList}">
-      <div class="post-images">
-        <c:forEach var="postImage" items="${postImageList}">
-          <img src="${postImage.postImageUrl}" alt="게시물 이미지">
-        </c:forEach>
+      <div class="post-images-slider">
+        <button class="slider-btn prev-btn" id="prev-btn">&#10094;</button>
+        <div class="slider-wrapper" id="slider-wrapper">
+          <c:forEach var="postImage" items="${postImageList}">
+            <img class="slider-image" src="${postImage.postImageUrl}" alt="게시물 이미지">
+          </c:forEach>
+        </div>
+        <button class="slider-btn next-btn" id="next-btn">&#10095;</button>
       </div>
     </c:if>
 
@@ -72,74 +77,37 @@
         </span>
       </div>
     </div>
-
-    <!-- 태그된 상품 표시 -->
-    <div class="tagged-products">
-      <c:choose>
-        <c:when test="${not empty productList}">
-          <h2>상품태그 ${productList.size()}개</h2>
-          <div class="product-grid">
-            <c:forEach var="product" items="${productList}" end="4">
-              <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product">
-                <img src="${product.imageUrl}" alt="${product.productName}" />
-                <p>${product.productName}</p>
-                <p>${product.formattedPrice}원</p>
-              </a>
-            </c:forEach>
-          </div>
-        </c:when>
-        <c:otherwise>
-          <h2>상품태그 0개</h2>
-        </c:otherwise>
-      </c:choose>
-    </div>
-
-    <hr class="divider" />
-
-    <!-- 작성자의 다른 게시물 표시 -->
-    <div class="other-posts">
-      <div class="header">
-        <h2>@${userVo.nickname}님의 다른 스타일</h2>
-        <p><a href="${pageContext.request.contextPath}/jelly?page=styleProfile&userId=${userVo.userId}" class="more-btn">더보기</a></p>
-      </div>
-      <div class="post-grid">
-        <c:forEach var="post" items="${postList}" end="4">
-          <c:if test="${post.postId != postVo.postId}">
-            <a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post">
-              <img src="${post.thumbnailImageUrl}" alt="게시물 썸네일" />
-            </a>
-          </c:if>
-        </c:forEach>
-      </div>
-    </div>
   </div>
-  
-  <div class="comment-menu" id="comment-menu">
-	 <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
-	 <h2>댓글</h2>
-		<!-- Post Information -->
-		<div id="postInfo">
-		    <a href="<%= request.getContextPath() %>/jelly?page=styleProfile&userId=${userVo.userId}" id="postProfileLink">
-		        <img src="${userVo.profileImage}" alt="Profile Picture" id="postProfilePicture">
-		        <span id="postNickname">${userVo.nickname}</span>
-		    </a>
-		</div>
-		
-		<!-- Write Comment Section -->
-		<div id="writeComment">
-		    <textarea name="myComment" id="myComment" placeholder="댓글을 작성해주세요"></textarea>
-		    <input id="postComment" type="button" value="작성" 
-		           data-context-path="${pageContext.request.contextPath}" 
-		           data-post-id="${postVo.postId}" 
-		           data-comment-count="${postVo.commentCount}"/>
-		</div>
-   	 
-   	 
-   	 <div id="comments">
-		
-   	 </div>
- </div>
- <script src="<%= request.getContextPath() %>/js/comments.js"></script>
+
+<!-- 댓글 창 -->
+<div class="comment-menu" id="comment-menu">
+    <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
+    <h2>댓글</h2>
+
+    <!-- 댓글 작성 -->
+    <div id="writeComment">
+        <textarea name="myComment" id="myComment" placeholder="댓글을 작성해주세요"></textarea>
+        <button id="postComment" 
+                data-context-path="${pageContext.request.contextPath}" 
+                data-post-id="${postVo.postId}" 
+                data-comment-count="${postVo.commentCount}">작성</button>
+    </div>
+
+    <!-- 댓글 목록 -->
+ <div id="comments">
+    <c:forEach var="comment" items="${commentList}">
+        <div class="comment-info">
+            <a href="<%= request.getContextPath() %>/jelly?page=styleProfile&userId=${comment.userId}" class="comment-profile-link">
+                <img src="${comment.profileImage}" alt="프로필 이미지" class="comment-profile-picture">
+                <span class="comment-nickname">${comment.nickname}</span>
+            </a>
+            <p class="comment-contents">${comment.content}</p>
+        </div>
+    </c:forEach>
+</div>
+</div>
+
+  <script src="<%= request.getContextPath() %>/js/stylePostImg.js"></script>
   <%@ include file="/views/home/footer.jsp" %>
 </body>
 </html>
