@@ -207,3 +207,7 @@ body {
   height: auto;
   border-radius: 10px;
 }
+
+#like-btn, #open-comment-btn, #save-btn {
+  cursor: pointer;
+}

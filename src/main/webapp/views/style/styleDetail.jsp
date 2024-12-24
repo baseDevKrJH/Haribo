@@ -116,20 +116,19 @@
   
   <div class="comment-menu" id="comment-menu">
 	 <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
-	 <h2>Comments</h2>
+	 <h2>댓글</h2>
 		<!-- Post Information -->
 		<div id="postInfo">
 		    <a href="<%= request.getContextPath() %>/jelly?page=styleProfile&userId=${userVo.userId}" id="postProfileLink">
 		        <img src="${userVo.profileImage}" alt="Profile Picture" id="postProfilePicture">
 		        <span id="postNickname">${userVo.nickname}</span>
 		    </a>
-		    <div id="postContents">${postVo.content}</div>
 		</div>
 		
 		<!-- Write Comment Section -->
 		<div id="writeComment">
-		    <textarea name="myComment" id="myComment" placeholder="Write a comment..."></textarea>
-		    <input id="postComment" type="button" value="Comment" 
+		    <textarea name="myComment" id="myComment" placeholder="댓글을 작성해주세요"></textarea>
+		    <input id="postComment" type="button" value="작성" 
 		           data-context-path="${pageContext.request.contextPath}" 
 		           data-post-id="${postVo.postId}" 
 		           data-comment-count="${postVo.commentCount}"/>
@@ -141,7 +140,6 @@
    	 </div>
  </div>
  <script src="<%= request.getContextPath() %>/js/comments.js"></script>
-
   <%@ include file="/views/home/footer.jsp" %>
 </body>
 </html>
