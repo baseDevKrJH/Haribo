@@ -233,6 +233,8 @@
             ※ 해당 사이즈 정보는 참고용이며, 브랜드·상품마다 차이가 있을 수 있음  
             정확한 내용은 실물 상품 기준으로 공식 제조사/유통사에 확인 요망
           </p>
+          <br />
+          <br />
         </div>
       </div>
     </div>
@@ -323,6 +325,7 @@
 
   <script src="<%= request.getContextPath() %>/js/upbutton.js"></script>
   <script src="<%= request.getContextPath() %>/js/productModal.js"></script>
+  <script src="<%= request.getContextPath() %>/js/productWishButton.js"></script>
 
   <div class="footer-section-container">
     <%@ include file="/views/home/footer.jsp" %>

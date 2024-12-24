@@ -10,14 +10,15 @@ body {
 }
 
 .product-detail-container {
-  flex: 1 0 auto; 
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   margin: 0 auto;
-  width: 100%; 
+  width: 1280px; /* 640px x 2 (왼쪽 + 오른쪽) */
+  justify-content: space-between; /* 섹션 간의 간격 균등 분배 */
 }
 .product-image-section {
-  flex: 1;
+  padding-left: 0; /* 불필요한 여백 제거 */
+  width: 640px; /* 가로 길이를 640px로 고정 */
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -373,7 +374,7 @@ body {
 .size-info-container {
   width: 100%;
   max-width: 400px;
-  height: 400px; 
+  height: 420px; 
   margin: 0; 
   padding-top: 20px;
   border-top: 1px solid #ebebeb;

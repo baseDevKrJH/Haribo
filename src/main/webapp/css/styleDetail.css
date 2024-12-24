@@ -3,7 +3,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Pretendard Variable", Arial, sans-serif;
-  background-color: #f9f9f9;
 }
 
 .container {
@@ -81,7 +80,8 @@ body {
 }
 
 .post-images img {
-  width: 100%;
+  width: 600px;
+  height: 600px;
   border-radius: 10px;
   object-fit: cover;
   transition: transform 0.3s;
@@ -193,20 +193,16 @@ grid-template-columns: repeat(5, 1fr);
 
 /* edit-btn 스타일 */
 .edit-btn {
-  display: inline-block; /* 버튼처럼 보이게 하기 위해 inline-block으로 설정 */
+  display: inline-block; 
   border: 1px solid #EBEBEB;
-  padding: 10px 20px; /* 적당한 여백을 추가 */
-  background-color: #F9F9F9; /* 배경색: 파란색 */
-  color: #222222; /* 글자색: 흰색 */
-  font-size: 14px; /* 글자 크기 */
-  text-align: center; /* 가운데 정렬 */
-  border-radius: 10px; /* 모서리를 둥글게 */
+  padding: 10px 20px;
+  background-color: #F9F9F9;
+  color: #222222; 
+  font-size: 14px;
+  text-align: center; 
+  border-radius: 10px; 
   text-decoration: none; /* 링크의 기본 스타일인 밑줄 제거 */
   transition: background-color 0.3s, transform 0.2s; /* 배경색과 변형 효과에 트랜지션 추가 */
 }
 
-/* 호버 시 효과 */
-.edit-btn:hover {
-  transform: scale(1.05); /* 약간 커지는 효과 */
-}
 
