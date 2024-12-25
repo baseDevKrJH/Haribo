@@ -44,7 +44,7 @@ public class SellAction implements Action {
 			// userId로 주소 정보 조회
 			AddressDAO addressDAO = new AddressDAO();
 			AddressVO defaultAddress = addressDAO.selectDefaultAddressOne(userId); // 사용자의 기본주소
-			List<AddressVO> address = addressDAO.selectAddressAll(userId); // 사용자의 전체 주소 조
+			List<AddressVO> address = addressDAO.selectAddressAllExceptDefault(userId); // 사용자의 전체 주소 조
 
 			// userAccount VO 가져오기
 			UserAccountDAO accountDAO = new UserAccountDAO();

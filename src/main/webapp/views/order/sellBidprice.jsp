@@ -22,11 +22,11 @@
 		<div class="order-content">
 			<!-- 상품 정보 섹션 -->
 			<div class="order-info">
-				<img src="../img/productimg.png" alt="상품 이미지" />
+				<img src="${product.imageUrl }" alt="상품 이미지" />
 				<div class="order-details">
-					<span class="span-bold">JI1881</span> <span>Adidas Stadt
-						Core Black Carbon</span> <span class="span-gray">아디다스 어쩌고</span> <span
-						class="span-bold">230</span>
+					<span class="span-bold">${product.modelNumber }</span> <span>${product. productName}</span> 
+					<span class="span-gray">${product.description }</span> <span
+						class="span-bold">${size }</span>
 				</div>
 			</div>
 
@@ -34,10 +34,18 @@
 			<div class="price-detail">
 				<div class="orderNow">
 					<div>
-						<span class="span-bold">즉시 구매가</span> <span>84,000원</span>
-					</div>
+						<c:choose>
+							<c:when test="${price != 0}">
+								<span class="span-bold">즉시 구매가</span>
+								<span>${formattedPrice }원</span>
+							</c:when>
+							<c:otherwise>
+								<span class="span-bold">즉시 구매가</span>
+								<span>-</span>
+							</c:otherwise>
+						</c:choose>
 					<div>
-						<span class="span-bold">즉시 판매가</span> <span>70,000원</span>
+						<span class="span-bold">즉시 판매가</span> <span>-</span>
 					</div>
 				</div>
 			</div>
@@ -47,10 +55,10 @@
 					<h4>판매 희망가</h4>
 					<button class="registPrice">등록</button>
 				</div>
-				<span id="alertMessage">어쩌고 저쩌고</span><br />
+				<span id="alertMessage"></span><br />
 				<div class="inputPriceBox">
 					<input type="text" name="inputPrice" id="inputPrice"
-						placeholder="금액을 입력하세요" /> <span>원</span>
+						placeholder="희망가 입력" /> <span>원</span>
 				</div>
 			</div>
 			<!-- 배송정보 -->
@@ -90,6 +98,7 @@ $(() => {
 	      success: function (response, status, request) {
 	        console.log("입력한 가격 전송 완료");
 	        if (response >= 20000) {
+	        	$("#alertMessage").html("");
 	        	$("#totalAmount").text(response+"원");
 	        	
 	        	let productId = ${product.productId};

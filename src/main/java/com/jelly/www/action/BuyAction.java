@@ -41,27 +41,24 @@ public class BuyAction implements Action {
 			// userId로 주소 정보 조회
 			AddressDAO addressDAO = new AddressDAO();
 			AddressVO defaultAddress = addressDAO.selectDefaultAddressOne(userId); // 사용자의 기본주소
-			List<AddressVO> address = addressDAO.selectAddressAll(userId);
+			List<AddressVO> addressList = addressDAO.selectAddressAllExceptDefault(userId);
 			
-			// 우편번호 trim()
-			String postalCode = defaultAddress.getPostalCode().trim();
-
 			// 가격 포맷팅
 			DecimalFormat df = new DecimalFormat("#,###");
 			String formattedPrice = df.format(price);
+			
+			// 사용자가 소지한 쿠폰 조회
+			
 
 			// 상품정보, 사용자정보, 주소정보, 가격, 사이즈를 요청객체에 전달
 			request.setAttribute("product", product); // 상품 정보
 			request.setAttribute("user", user); // 사용자 정보
 			request.setAttribute("defaultAddress", defaultAddress); // 사용자의 기본주소 정보
-			request.setAttribute("address", address); // 사용자의 전체 주소 정보
+			request.setAttribute("addressList", addressList); // 사용자의 전체 주소 정보
 			request.setAttribute("price", price); // 사이즈별 가격
 			request.setAttribute("formattedPrice", formattedPrice); // 포맷팅 처리된 가
 			request.setAttribute("size", size);
-			request.setAttribute("postalCode", postalCode);
 			
-			
-			System.out.println(defaultAddress.getPostalCode());
 		}
 		return "/views/order/buy.jsp";
 	}

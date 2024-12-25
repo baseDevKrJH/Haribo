@@ -1,5 +1,7 @@
 package com.jelly.www.action;
 
+import java.text.DecimalFormat;
+
 import com.jelly.www.dao.ProductDAO;
 import com.jelly.www.vo.ProductVO;
 
@@ -12,11 +14,13 @@ public class BuyConfirmAction implements Action {
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		// 요청 객체 가져오기 & 형변환
 		int productId = Integer.parseInt(request.getParameter("productId"));
+		String formattedPrice = new DecimalFormat("#.###").format(request.getParameter("price"));
 		
 		ProductDAO productDAO = new ProductDAO();
 		ProductVO product = productDAO.selectOne(productId);
 		
 		request.setAttribute("product", product);
+		request.setAttribute("formattedPrice", formattedPrice);
 		
 		return "/views/order/buyConfirm.jsp";
 	}

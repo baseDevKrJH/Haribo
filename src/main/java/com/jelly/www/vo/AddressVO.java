@@ -3,12 +3,14 @@ package com.jelly.www.vo;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AddressVO {
 	int addressId;
 	int userId;
@@ -26,5 +28,7 @@ public class AddressVO {
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
 	}
+	
+	// 주소 
 
 }

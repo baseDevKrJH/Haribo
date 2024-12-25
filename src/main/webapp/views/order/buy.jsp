@@ -12,6 +12,10 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/buy.css">
 <!-- 포트원 결제 -->
 <script src="https://cdn.portone.io/v2/browser-sdk.js" async defer></script>
+<!-- 카카오 api -->
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <!-- jQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -25,6 +29,8 @@
 				배송 주소
 				<button id="address-modalOpenButton">주소 변경</button>
 			</div>
+			<c:choose>
+			<c:when test="${not empty defaultAddress}">
 			<div class="order-info">
 				<div class="order-subInfo">
 					<div class="fontGray">
@@ -37,6 +43,11 @@
 					</div>
 				</div>
 			</div>
+			</c:when>
+			<c:otherwise>
+			<h3>주소를 설정하세요</h3>
+			</c:otherwise>
+			</c:choose>
 			<select name="요청사항" id="" class="order-selection">
 				<option value="op1">요청사항 없음</option>
 				<option value="op2">문 앞에 놓아주세요</option>
@@ -89,10 +100,9 @@
 						<button class="payment-btn" id="credit-card">
 						신용카드</button>
 						<button class="payment-btn" style="color: #00c73c" id="naver-pay">
-						<img src="<%=request.getContextPath()%>/img/naverLogo.png" alt="" class="logoimg"/>  NaverPay</button>
+						<img src="<%=request.getContextPath()%>/img/naver.png" alt="" class="logoimg"/>NaverPay</button>
 						<button class="payment-btn" style="color: #ffcc00" id="kakao-pay">
-						<img src="<%=request.getContextPath()%>/img/kakaoLogo.png" alt="" class="logoimg"/>
-							  KakaoPay</button>
+						<img src="<%=request.getContextPath()%>/img/kakao.png" alt="" class="logoimg"/>KakaoPay</button>
 					</div>
 				</div>
 			</div>
@@ -133,17 +143,71 @@
 				<h3 class="modal-title">주소록</h3>
 			</div>
 			<button class="addBtn">+ 새 주소 추가하기</button>
+			<c:if test="${not empty addressList }">
 			 <div class="addressInfoList">
-				<%-- <div class="addressInfo">
+            <c:forEach var= "address" items="${addressList }">
+				 <button class="addressInfo" value="${address.postalCode }">
 					<div class="name">${user.userName }</div>
-					<div class="address">[${[address].postalCode }]
-						${[address].addressLine1 } ${[address.addressLine2 }</div>
+					<div class="address">[${address.postalCode }]
+						${address.addressLine1 } ${address.addressLine2 }</div>
 					<div class="phone">${user.phoneNumber }</div>
-				</div> --%>
+				</button> 
+			</c:forEach>
+			</c:if>
 			</div> 
 		</div>
 	</div>
 	<!-- 주소 모달 끝 -->
+	
+	<!-- 새 주소 추가 모달 -->
+	<div class="hidden" id="add-address-modalContainer">
+		<div id="modalContent">
+			<div class="modalTitle">
+				<button class="modal-close" id="add-address-modalCloseButton" >&times;</button>
+				<h3 class="modal-title">주소 추가</h3>
+			</div>
+			<div class="addressInfoList">
+				<div class="addressInfo">
+					<div class="input-box">
+						<div class="sub-title" id="name">이름</div>
+						<input type="text" name="" class="inputText" id="input-name"
+							placeholder="수령인의 이름" /><br />
+						<div id="name-alert"></div>
+
+					</div>
+					<div class="input-box">
+						<div class="sub-title">
+							우편번호
+							<button id="searchAddress">우편번호 찾기</button>
+						</div>
+
+						<!-- 우편번호 입력 -->
+						<input type="text" name="" class="inputText" id="input-postalCode"
+							placeholder="우편 번호를 검색하세요" readonly />
+					</div>
+
+					<div class="input-box">
+						<div class="sub-title" id="address">주소</div>
+						<input type="text" name="" class="inputText" id="input-address"
+							placeholder="우편 번호 검색 후, 자동으로 입력됩니다" readonly />
+					</div>
+
+					<div class="input-box">
+						<div class="sub-title" id="detail-address">상세주소</div>
+						<input type="text" name="" class="inputText"
+							id="input-detailAddress" placeholder="건물, 아파트, 동/호수 입력" />
+					</div>
+					<div class="checkDefaultAdd">
+						<button class="checkBtn">✓</button>
+						<span>기본배송지로 설정</span>
+					</div>
+					<button id="saveBtn">저장</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 새주소 추가 모달 끝 -->
+	
 
 	<!-- 쿠폰 모달 -->
 	<div class="hidden" id="coupon-modalContainer">
@@ -179,19 +243,157 @@ $(()=> {
 	const addressmodal = $("#address-modalContainer")
 	$("#address-modalOpenButton").on("click", ()=>{
 		addressmodal.removeClass("hidden");	
+		document.body.style.overflow = "hidden"; // 모달창 열었을 때 뒷 부분 움직이지 않음
 	});
 	$("#address-modalCloseButton").on("click", ()=>{
 		addressmodal.addClass("hidden");
+		document.body.style.overflow = "auto";  // 모달창 닫으면 다시 움직이게
 	});
 	
 	// 쿠폰 모달 열기/닫기
 	const couponmodal = $("#coupon-modalContainer")
 	$("#coupon-modalOpenButton").on("click", ()=>{
 		couponmodal.removeClass("hidden");	
+		document.body.style.overflow = "hidden"; // 모달창 열었을 때 뒷 부분 움직이지 않음
+
 	});
 	$("#coupon-modalCloseButton").on("click", ()=>{
 		couponmodal.addClass("hidden");
+		document.body.style.overflow = "auto"; // 모달창 닫으면 다시 움직이게
 	});
+	
+	
+	
+	
+	 // 새주소 추가 모달 열기/닫기
+	const addAddressmodal = $("#add-address-modalContainer")
+	$(".addBtn").on("click", ()=>{
+		addAddressmodal.removeClass("hidden");
+		document.body.style.overflow = "hidden"; // 모달창 열었을 때 뒷 부분 움직이지 않음
+		// 모달창 열면 모든 입력값, css 초기화
+		$(".inputText").val("");
+		$("#name-alert").text("");
+		$(".checkBtn").css({
+			background : "white",
+			color : "black",
+			border: "#ddd 1px solid"
+		});
+	});
+	$("#add-address-modalCloseButton").on("click", ()=>{
+		addAddressmodal.addClass("hidden");
+		document.body.style.overflow = "auto"; // 모달창 닫으면 다시 움직이게
+
+	}); 
+	// alert 올바른 이름 적을 수 있게 메세지 -> 완료
+	let nameVal = '';
+	 $("#input-name").on("input", ()=>{
+		nameVal = $("#input-name").val();
+		if(nameVal != null){ // nameVal이 공백이 아니면 
+			$("#name-alert").text("올바른 이름을 입력해주세요.(2-20자)")
+		}
+	 })
+	 
+	 
+	// 주소 api불러오기 -> 완료
+	let postalCode = '';
+	let addressLine1 = '';
+
+	document.querySelector("#searchAddress").onclick = openKaKaoPostCode;
+
+	function openKaKaoPostCode(){
+		new daum.Postcode({
+			oncomplete: function(data){
+				document.querySelector("#input-postalCode").value = data.zonecode; // 우편 번호 가져오기
+				document.querySelector("#input-address").value = data.roadAddress; // 도로명 주소 가져오기
+				postalCode = document.querySelector("#input-postalCode").value;
+				addressLine1 = document.querySelector("#input-address").value;
+			}
+		}).open();
+	}
+	
+	//기본 배송지 체크 여부 확인 -> 완료
+	let cnt = 0; // 기본 배송지 체크 여부를 위한 변수
+	let check = false; // 기본배송지라고 체크했으면 true
+		
+	$(".checkBtn").on("click", ()=>{
+			console.log("cnt : " + cnt);
+			cnt ++;
+			
+		if (cnt % 2 !== 0){ 
+			console.log("기본 배송지 체크");
+			check = true;
+			console.log("check : " + check);
+
+			$(".checkBtn").css({
+				background : "black",
+				color : "white",
+				border: "black 1px solid"
+			});	
+			
+		}else{
+			console.log("기본 배송지 해제");
+			check = false;
+			console.log("check : " + check);
+			$(".checkBtn").css({
+				background : "white",
+				color : "black",
+				border: "#ddd 1px solid"
+			});	
+		}
+		
+	});
+	
+	
+	// 모달창에서 저장버튼 누르면 ajax 써서 address db에 넣기 -> 화면에 반영  -> 완료
+	// 이미 기본 주소가 있는 상태일경우 모달창에서 기본주소로 설정하기 체크 누르고 하면 자동으로 기본주소 -> 일반, 새로 입력한 기본 주소가 view 에 보임
+	$("#saveBtn").on("click", function() { // 클릭 이벤트에 대한 익명 함수 추가
+	    let addressLine2 = $("#input-detailAddress").val();
+	    
+	    $.ajax({
+	        url: "/haribo/insertAddress",
+	        method: "get",
+	        data: {
+	            postalCode: postalCode,
+	            addressLine1: addressLine1,
+	            addressLine2: addressLine2,
+	            isDefault: check
+	        },
+	        success: function(response) {
+	            console.log("주소 저장 성공");
+	            window.location.href = "${pageContext.request.contextPath}/jelly?page=addressBook";  // 주소록으로 
+	        },
+	        error: function(xhr, status, error) { // 함수 형태로 수정
+	            console.log("주소 저장 실패:", error);
+	            console.log("응답 상태:", status);
+	            console.log("서버 응답:", xhr.responseText);
+	        }
+	    });
+	});
+
+	// 주소 클릭하면 그 주소로 변하게 ... 
+	$(".addressInfoList").on("click", (e)=>{
+	let postalCode = e.target.value;
+	console.log(postalCode);
+
+	$.ajax({
+		url: "/haribo/setDefaultAddress",
+		method: "get",
+		data:{
+			postalCode : postalCode,
+		},
+		success : function(response){
+			console.log("기본 배송지 변경 성공");
+ 			window.location.href = "${pageContext.request.contextPath}/jelly?page=buy";
+ 		},
+		error: function(xhr, status, error) { // 함수 형태로 수정
+	        console.log("주소 저장 실패:", error);
+	        console.log("응답 상태:", status);
+	        console.log("서버 응답:", xhr.responseText);
+	    } 
+		
+	}) ;
+		
+})
 	// 결제 수단
 	let paymentMethod = '';
 	function setPaymentMethod(payment){
@@ -293,8 +495,9 @@ $(()=> {
 		    },
 		    success: function(response) {
 		        console.log("결제 성공");
-		        window.location.href = "${pageContext.request.contextPath}/jelly?page=buyConfirm&productId=${product.productId}";  // 결제 완료 페이지로 이동
-		    },error: function(xhr, status, error) { // 함수 형태로 수정
+		        window.location.href = "${pageContext.request.contextPath}/jelly?page=buyConfirm&productId=${product.productId}&price=${price}";  // 결제 완료 페이지로 이동
+		    },
+		    error: function(xhr, status, error) { // 함수 형태로 수정
 		        console.log("결제 실패:", error);
 		        console.log("응답 상태:", status);
 		        console.log("서버 응답:", xhr.responseText);

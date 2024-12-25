@@ -46,21 +46,22 @@
 *************************** */
 /* 계좌 등록 버튼 */
 .account-btn {
-	border: 1px solid #f4f4f4; /* 연한 회색 테두리 */
+	border: 1px solid #ddd; /* 연한 회색 테두리 */
 	padding: 10px 15px; /* 내부 여백 */
 	border-radius: 10px; /* 모서리를 둥글게 */
 	margin: 10px 0; /* 위아래 여백 */
 	background-color: white; /* 배경색 */
 	color: gray; /* 글자 색상 */
 	cursor: pointer; /* 마우스 커서가 포인터로 변경 */
-	font-size: 14px; /* 글자 크기 */
+	font-size: 13px; /* 글자 크기 */
 	width: 100%; /* 버튼의 너비를 부모 요소에 맞춤 */
 	text-align: left; /* 글자 정렬을 왼쪽으로 */
+	height: 42px;
 }
 
 /* 결제 버튼 (예: 신용카드, NPay, KakaoPay) */
 .payment-btn {
-	border: 1px solid #f4f4f4; /* 연한 회색 테두리 */
+	border: 1px solid #ddd; /* 연한 회색 테두리 */
 	padding: 10px 20px; /* 내부 여백 */
 	border-radius: 10px; /* 모서리를 둥글게 */
 	margin-right: 10px; /* 오른쪽 여백 */
@@ -160,7 +161,7 @@
 	display: flex; /* 내용을 flexbox로 배치 */
 	justify-content: space-between; /* 양쪽 끝에 배치 */
 	margin-top: 15px; /* 위쪽 여백 */
-	border-top: 1px solid #f4f4f4; /* 연한 회색 상단 테두리 */
+	border-top: 1px solid #ddd; /* 연한 회색 상단 테두리 */
 	padding-top: 10px; /* 상단 여백 */
 	width: 100%; /* 부모 요소에 맞춘 너비 */
 	color: black; /* 글자 색상 */
@@ -181,7 +182,7 @@ hr {
 .order-selection, .coupon-selection {
 	width: 100%; /* 부모 요소에 맞춘 너비 */
 	height: 40px; /* 고정 높이 */
-	border: #f4f4f4 solid 1px; /* 연한 회색 테두리 */
+	border: #ddd solid 1px; /* 연한 회색 테두리 */
 	border-radius: 10px; /* 모서리를 둥글게 */
 	padding-left: 7px; /* 왼쪽 여백 */
 	margin-top: 5px; /* 위쪽 여백 */
@@ -218,16 +219,16 @@ hr {
 }
 
 /* 모달창 */
-/* "주소 변경" 버튼 */
-#address-modalOpenButton, #coupon-modalOpenButton {
+#address-modalOpenButton {
 	background-color: white;
-	border: #f4f4f4 1px solid; /* 연한 회색 테두리 */
+	border: #ddd 1px solid; /* 연한 회색 테두리 */
 	padding: 5px 8px; /* 내부 여백 */
 	border-radius: 15px; /* 모서리를 둥글게 */
 	color: gray; /* 글자 색상 */
 }
 /* 버튼 */
-#address-modalCloseButton, #coupon-modalCloseButton {
+#address-modalCloseButton, #coupon-modalCloseButton,
+	#add-address-modalCloseButton {
 	cursor: pointer;
 }
 
@@ -244,7 +245,20 @@ hr {
 	background: rgba(0, 0, 0, 0.5);
 }
 
-#address-modalContainer.hidden, #coupon-modalContainer.hidden {
+#add-address-modalContainer {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(0, 0, 0, 0);
+}
+
+#address-modalContainer.hidden, #coupon-modalContainer.hidden,
+	#add-address-modalContainer.hidden {
 	display: none;
 }
 
@@ -252,11 +266,14 @@ hr {
 #modalContent {
 	background-color: #ffffff;
 	width: 450px;
-	height: 550px;
+	height: 450px;
 	padding: 15px;
+	margin-bottom: 93px;
 	border-radius: 10px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	position: relative;
+	max-height: calc(100vh - 200px);
+	overflow-y: auto;
 }
 
 #modalContent .modal-close {
@@ -276,12 +293,12 @@ hr {
 	align-items: center;
 	height: 45px;
 	background-color: white;
-	border: #f4f4f4 1px solid;
+	border: #ddd 1px solid;
 	border-radius: 10px;
 	margin-bottom: 19px;
 }
 
-#modalContent h3 {
+.modal-title {
 	display: flex;
 	justify-content: center;
 }
@@ -297,17 +314,18 @@ hr {
 	padding: 10px 0;
 	font-size: 13px;
 	padding-bottom: 10px;
+	width: 100%;
+	display: flex;
+	flex-direction: column
 }
 
-.addressInfo .name,
-.couponInfo .name {
+.addressInfo .name, .couponInfo .name {
 	font-weight: bold;
 	padding-bottom: 8px;
 	font-size: 14px;
 }
 
-.addressInfo div,
-.couponInfo div {
+.addressInfo div, .couponInfo div {
 	padding: 3px 0px;
 }
 
@@ -320,12 +338,104 @@ hr {
 
 .couponInfo {
 	font-size: 13px;
-	padding : 10px;
+	padding: 10px;
 	border-radius: 10px;
-	border : #d4d4d4 1px solid;
-width: 100%;	
+	border: #d4d4d4 1px solid;
+	width: 100%;
 }
+
 .couponInfo .expiredate {
 	float: right;
 	color: lightgray;
+}
+
+/* 새주소 추가하기 모달 */
+.sub-title {
+	font-weight: bold;
+	font-size: 15px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+input[type="text"] {
+	color: gray;
+	width: 99%;
+	border: none;
+	border-bottom: #f4f4f4 1px solid;
+	padding-bottom: 6px;
+}
+
+#input-name:focus, #input-detailAddress:focus {
+	outline: none;
+	border-bottom: black 2px solid;
+}
+
+input[type="text"]:focus {
+	outline: none;
+}
+
+#name-alert {
+	margin-top: 5px;
+	color: red;
+	font-size: 12px;
+}
+
+.input-box {
+	margin: 20px 0px;
+}
+
+#searchAddress {
+	font-size: 12px;
+	display: flex;
+	border: #ddd 1px solid;
+	border-radius: 10px;
+	padding: 4px 9px;
+	height: 24px;
+	align-items: center;
+	font-weight: lighter;
+	cursor: pointer
+}
+
+#searchAddress:hover {
+	border: black 1px solid;
+}
+
+.checkDefaultAdd {
+	display: flex;
+	align-items: center;
+}
+
+.checkBtn {
+	width: 25px;
+	height: 25px;
+	background: white;
+	border-radius: 5px;
+	border: #ddd 1px solid;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	font-size: 18px;
+}
+
+.addressInfo span {
+	margin-left: 11px;
+	font-size: 14px;
+}
+
+#saveBtn {
+	background: #ddd;
+	border-radius: 14px;
+	padding: 13px;
+	margin: 39px 148px;
+	width: 114px;
+	border: none;
+	color: #f4f4f4;
+	font-size: 15px;
+}
+
+#saveBtn:hover {
+	background: black;
+	color: white;
 }

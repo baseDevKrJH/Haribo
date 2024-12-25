@@ -100,6 +100,8 @@ public class JellyController extends HttpServlet {
 			action = new SellAction();
 		} else if (page.equals("sellConfirm")) { // 판매 완료 페이지 처리
 			action = new SellConfirmAction();
+		} else if  (page.equals("addressBook")) {
+			action = new addressBookAction(); // 주소록 페이지 처리
 		}
 
 		else {

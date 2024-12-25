@@ -36,7 +36,7 @@ $(()=>{
 		    },
 		    success: function (response) {
 		        console.log("결제 성공");
-		        window.location.href = "${pageContext.request.contextPath}/jelly?page=sellConfirm"; // 성공 시 페이지 이동
+		        window.location.href = "${pageContext.request.contextPath}/jelly?page=sellConfirm&productId=${product.productId}&price=${price}"; // 성공 시 페이지 이동
 		    },
 		    error: function(xhr, status, error) { 
 		        console.error("결제 실패:", error); // console.log 대신 console.error 사용

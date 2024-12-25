@@ -61,7 +61,7 @@
 				<span id="alertMessage"></span><br />
 				<div class="inputPriceBox">
 					<input type="text" name="inputPrice" id="inputPrice"
-						placeholder="금액을 입력하세요" /> <span>원</span>
+						placeholder="희망가 입력" /> <span>원</span>
 				</div>
 			</div>
 
@@ -83,7 +83,7 @@ $(() => {
 		    
 	    let inputPrice = $("#inputPrice").val().trim();
 	    $.ajax({
-	      url: '/haribo/orderBidInputPrice', // 여기로가서 구매입찰 데이터 추가 (InsertbuyBidInsertData)
+	      url: '/haribo/orderBidInputPrice', 
 	      method: 'get', 
 	      data: {
 	        	bidMoney: inputPrice
@@ -91,8 +91,9 @@ $(() => {
 	      success: (response) => {
 	        console.log("입력한 가격 전송 완료");
 	        console.log(JSON.stringify(response));
-	        if (response > 20000) {
-	        	$("#totalAmount").text(inputPrice+"원");
+	        if (inputPrice > 20000) {
+	        	$("#alertMessage").html("");
+	        	$("#totalAmount").text(response+"원");
 	        	
 	        	let productId = ${product.productId};
 	        	let sizeVal = ${size};

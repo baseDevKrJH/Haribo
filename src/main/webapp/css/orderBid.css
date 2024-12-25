@@ -44,7 +44,7 @@
 .order-info {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 29px 0px;
 }
 
 .order-info img {
@@ -78,7 +78,6 @@
    *************************** */
 .price-detail {
   display: flex;
-  padding-bottom: 10px;
   font-size: 14px;
   flex-direction: column;
     border-bottom: 1px solid #f4f4f4;
@@ -97,7 +96,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 15px;
+  padding: 27px;
   flex-direction: column;
   align-items: center;
 }
@@ -106,7 +105,8 @@
         판매 희망가 입력 섹션
    *************************** */
 .tapList {
-  margin: 20px 0px;
+  margin: 10px 0px;
+  padding-top: 15px;
 }
 
 .tapList h4 {
@@ -119,6 +119,7 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
+
 
 .registPrice {
   background-color: white;
@@ -141,7 +142,8 @@
   border-bottom: #f4f4f4 3px solid;
 }
 
-.inputPriceBox:hover {
+.inputPriceBox:hover
+.inputPriceBox:active {
   border-bottom: black 3px solid;
   font-weight: bold;
 }
@@ -159,7 +161,8 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-  font-weight: bold;
+  outline: none;
+  background: white;
 }
 #alertMessage {
   display: flex;
