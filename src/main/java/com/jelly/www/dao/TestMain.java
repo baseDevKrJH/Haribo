@@ -8,7 +8,6 @@ public class TestMain {
 //		System.out.println(dao);
 
 		TradeDAO dao1 = new TradeDAO();
-		System.out.println(dao1.selectProductSellerByProductId(419));
 		
 		
 

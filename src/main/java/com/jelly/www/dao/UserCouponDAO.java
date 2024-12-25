@@ -59,7 +59,7 @@ public class UserCouponDAO {
 		List<UserCouponVO> userCouponList = new ArrayList<UserCouponVO>();
 		
 		sb.setLength(0);
-		sb.append("SELECT couponCode, description, minimum_order_amount, expiry_date FROM COUPON C JOIN USER_COUPON UC WHERE ")
+		sb.append("SELECT couponCode, description, minimum_order_amount, expiry_date FROM COUPON C JOIN USER_COUPON UC WHERE ");
 		
 		
 		return null;
