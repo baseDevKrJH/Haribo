@@ -26,7 +26,7 @@
             <!-- 프로필 정보 (mypage-box1) -->
             <div class="mypage-box1">
                 <div>
-                    <img src="${uVo.profileImage}" alt="프로필 사진" class="profile-image" />
+                    <img src="${uVo.profileImage}" alt="profile" class="profile-image" />
                 </div>
                 <div class="profile-info">
                     <span class="profile-user-nickname">${uVo.userName}</span><br />

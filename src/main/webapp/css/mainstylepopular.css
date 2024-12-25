@@ -124,15 +124,13 @@
   max-width: 180px;
 }
 
-/* 좋아요 버튼 */
 .main-style-popular-style-item .underPost .likebtn {
   display: flex;
   align-items: center;
   gap: 5px;
   cursor: pointer; 
-  padding-left: 100px; 
+  margin-left: auto;
 }
-
 .main-style-popular-style-item .underPost .likebtn .like-btn {
   width: 20px;
   height: 20px;
