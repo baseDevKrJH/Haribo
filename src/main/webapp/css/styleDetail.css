@@ -17,6 +17,8 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  padding-bottom: 39px;
+  margin-top: 27px;
 }
 
 .author-info .profile {
@@ -30,7 +32,7 @@ body {
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  padding-top: 8px;
+  border: 2px solid #ccc;
 }
 
 .author-info .info {
@@ -48,6 +50,7 @@ body {
 
 .author-info .info p {
   margin-bottom: 3px;
+  margin-top: 0px;
 }
 
 /* 수정 버튼 */
@@ -142,6 +145,7 @@ body {
 .post-info h1 {
   font-size: 24px;
   margin-bottom: 10px;
+  padding-top: 85px;
 }
 
 .post-info p {
@@ -243,4 +247,60 @@ body {
 #open-comment-btn,
 #save-btn {
   cursor: pointer;
+}
+
+/* 태그된 상품 */
+.tagged-products {
+  width: 800px;
+  margin: 30px auto;
+  text-align: left;
+}
+
+.tagged-products .product-grid {
+  display: flex;
+  gap: 20px; 
+}
+
+/* 상품 이름 텍스트 제한 */
+.tagged-products .product p {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  margin: 0 auto;
+  font-size: 14px;
+}
+
+.tagged-products .product {
+  text-align: left; 
+}
+
+.tagged-products .product img {
+  width: 120px; 
+  height: auto;
+  border-radius: 10px; 
+}
+
+/* 다른 게시물 */
+.other-posts {
+  width: 800px;
+  margin: 30px auto;
+}
+
+.other-posts .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.other-posts .post-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.other-posts .post img {
+  width: 150px; 
+  height: auto;
+  border-radius: 10px;
 }

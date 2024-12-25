@@ -79,6 +79,44 @@
     </div>
   </div>
 
+<div class="tagged-products">
+  <c:choose>
+    <c:when test="${not empty productList}">
+      <h2>상품태그 ${productList.size()}개</h2>
+      <div class="product-grid">
+        <c:forEach var="product" items="${productList}" end="4">
+          <a href="${pageContext.request.contextPath}/jelly?page=productDetail&productId=${product.productId}" class="product">
+            <img src="${product.imageUrl}" alt="${product.productName}" />
+            <p>${product.productName}</p>
+            <p>${product.formattedPrice}원</p>
+          </a>
+        </c:forEach>
+      </div>
+    </c:when>
+    <c:otherwise>
+      <h2>상품태그 0개</h2>
+    </c:otherwise>
+  </c:choose>
+</div>
+
+<hr class="divider" />
+
+<div class="other-posts">
+  <div class="header">
+    <h2>@${userVo.nickname}님의 다른 스타일</h2>
+    <p><a href="${pageContext.request.contextPath}/jelly?page=styleProfile&userId=${userVo.userId}" class="more-btn">더보기</a></p>
+  </div>
+  <div class="post-grid">
+    <c:forEach var="post" items="${postList}" end="4">
+      <c:if test="${post.postId != postVo.postId}">
+        <a href="${pageContext.request.contextPath}/jelly?page=styleDetail&postId=${post.postId}" class="post">
+          <img src="${post.thumbnailImageUrl}" alt="게시물 썸네일" />
+        </a>
+      </c:if>
+    </c:forEach>
+  </div>
+</div>
+
 <!-- 댓글 창 -->
 <div class="comment-menu" id="comment-menu">
     <button class="close-btn" id="close-btn" aria-label="Close filter menu">&times;</button>
