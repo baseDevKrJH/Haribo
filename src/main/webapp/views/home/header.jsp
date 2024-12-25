@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="currentPage" value="${param.page}" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,7 +12,7 @@
 </head>
 <body>
   <div class="header-section">
-    <!-- 헤더 TOP -->
+    <!-- 상단 메뉴 -->
     <div class="header-section-top">
       <ul class="header-section-menu">
         <li><a href="<%= request.getContextPath() %>/jelly?page=notice">고객센터</a></li>
@@ -48,21 +49,21 @@
       </ul>
     </div>
 
-    <!-- 헤더 MAIN -->
+    <!-- 로고 -->
     <div class="header-section-main">
       <a href="<%= request.getContextPath() %>/jelly?page=home" class="header-section-logo">
         <img src="<%= request.getContextPath() %>/img/jellyLogo.png" alt="jellyLogo">
       </a>
     </div>
 
-    <!-- 헤더 BOTTOM -->
+    <!-- 하단 메뉴 -->
     <div class="header-section-bottom">
       <nav class="header-bottom-nav">
         <a href="<%= request.getContextPath() %>/jelly?page=home" class="${currentPage == 'home' ? 'active' : ''}">HOME</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=shoes" class="${currentPage == 'shop' ? 'active' : ''}">SHOP</a>
+        <a href="<%= request.getContextPath() %>/jelly?page=shoes" class="${currentPage == 'shoes' ? 'active' : ''}">SHOP</a>
         <a href="<%= request.getContextPath() %>/jelly?page=brand" class="${currentPage == 'brand' ? 'active' : ''}">BRAND</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=styleList" class="${currentPage == 'style' ? 'active' : ''}">STYLE</a>
-        <a href="<%= request.getContextPath() %>/jelly?page=event1" class="${currentPage == 'event' ? 'active' : ''}">EVENT</a>
+        <a href="<%= request.getContextPath() %>/jelly?page=styleList" class="${currentPage == 'styleList' ? 'active' : ''}">STYLE</a>
+        <a href="<%= request.getContextPath() %>/jelly?page=event1" class="${currentPage == 'event1' ? 'active' : ''}">EVENT</a>
       </nav>
       <form class="header-form" action="<%= request.getContextPath() %>/jelly?page=search" method="get">
         <button>

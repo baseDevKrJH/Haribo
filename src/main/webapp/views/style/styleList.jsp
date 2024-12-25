@@ -14,6 +14,16 @@
 .header-input {
 	padding-right: 0px;
 }
+.header-section-main {
+	padding-top: 30px !important;
+}
+.header-section-bottom {
+	padding-top: 30px !important;
+}
+.header-form {
+	width: 227.6px;
+    height: 42px;
+}
 </style>
 </head>
 <script>

@@ -117,7 +117,6 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: none;
   padding: 10px;
@@ -133,10 +132,6 @@ body {
 
 .slider-btn.next-btn {
   right: 10px;
-}
-
-.slider-btn:hover {
-  background-color: rgba(0, 0, 0, 0.7);
 }
 
 /* 게시물 정보 */

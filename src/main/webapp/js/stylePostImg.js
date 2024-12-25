@@ -6,6 +6,12 @@ $(document).ready(function () {
   let currentIndex = 0;
   const totalSlides = $slides.length;
 
+  // 사진이 1장일 경우 슬라이드 버튼 안보이ㄱ
+  if (totalSlides <= 1) {
+    $prevBtn.hide();
+    $nextBtn.hide();
+  }
+
   function updateSlider() {
     const offset = -currentIndex * $slides.parent().width();
     $slider.css("transform", `translateX(${offset}px)`);
