@@ -15,6 +15,7 @@ public class NoticeWriteAction implements Action {
 
 
         // 관리자 권한
+        // 스프링 시큐리티
         if (userId == null || !"admin@gmail.com".equals(userEmail)) {
             request.setAttribute("errorMessage", "권한이 없습니다.");
             return "/views/error/403.jsp"; 

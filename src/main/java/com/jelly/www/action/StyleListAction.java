@@ -55,7 +55,7 @@ public class StyleListAction implements Action{
         }
         
         
-        
+        // 99가 어떤건지?
 		if(code == 99 && user == null) {
 			// 리다이렉션 처리
 			session.setAttribute("returnPage", "/views/style/styleList.jsp");

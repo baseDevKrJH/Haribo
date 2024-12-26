@@ -20,6 +20,7 @@ public class FollowerAction implements Action {
 			
 			// 팔로워 리스트 가져오기
 			FollowDAO followDao = new FollowDAO();
+			// 쿼리로 한번에 가져올수 있었을거 같은데...
 			ArrayList<Integer> followerList = followDao.getFollowerIdList(userId);
 			ArrayList<UserVO> followerUserList = new ArrayList<UserVO>();
 			for(Integer followerId : followerList) {

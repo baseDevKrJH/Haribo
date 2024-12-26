@@ -12,6 +12,7 @@ public class FaqAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         // FAQ
+        // 데이터 관리
         List<Map<String, String>> faqList = new ArrayList<>();
         faqList.add(createFaq("공통", "JELLY는 어떤 서비스인가요?",
         		"JELLY 쉽게 구매하기 어려운 한정판 상품을 판매하고 거래할 수 있는 서비스이며 전문가의 철저한 검수를 통해 안전하고 신속하게 거래할 수 있습니다."));

@@ -12,6 +12,7 @@ public class NoticeEditOkAction implements Action {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
 
+        // 나중에 스프링에서 어떻게 처리하는지
         if (noticeIdStr == null || noticeIdStr.trim().isEmpty() || title == null || content == null || title.trim().isEmpty() || content.trim().isEmpty()) {
             request.setAttribute("errorMessage", "필드안채워짐");
             return "/views/notice/noticeEdit.jsp";

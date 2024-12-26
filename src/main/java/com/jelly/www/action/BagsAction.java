@@ -12,6 +12,7 @@ public class BagsAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         // 가방 카테고리 상품 조회
         ProductDAO productDAO = new ProductDAO();
+        // 한글 코드 지양하기 (코드화 해보기)
         List<ProductVO> productList = productDAO.selectByCategory("가방");
         productDAO.close();
 

@@ -280,6 +280,7 @@ public class ProductDAO {
         sb.setLength(0);  // StringBuffer 초기화
 
         // 해당 카테고리와 하위 카테고리 포함 조회
+        // 계층형 쿼리 생각해보기
         sb.append("SELECT p.PRODUCT_ID, p.PRODUCT_NAME, p.DESCRIPTION, p.BRAND, p.RELEASE_DATE, ");
         sb.append("p.INITIAL_PRICE, p.MODEL_NUMBER, p.CATEGORY_ID, p.IMAGE_URL, p.IS_ACTIVE, ");
         sb.append("p.CREATED_AT, p.UPDATED_AT ");
