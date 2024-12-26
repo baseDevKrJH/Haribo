@@ -27,12 +27,15 @@ public class MypageAction implements Action {
         // 사용자 정보 조회
         UserDAO uDao = new UserDAO();
         UserVO uVo = uDao.selectOne(userId);
-        
+
         if (uVo == null) {
+            System.out.println("uVo -> null");
             return "redirect:/404.jsp";
+        } else {
+            // System.out.println(uVo.getProfileImage());
         }
 
-        // 사용자 정보를 JSP로 전달
+        // JSP로 전달
         request.setAttribute("uVo", uVo);
 
         // 최근 3개 판매 내역 조회

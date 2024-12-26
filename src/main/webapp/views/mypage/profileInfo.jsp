@@ -24,12 +24,19 @@
         <div class="mypage-content">
             <div class="mypageSubtitle">프로필 관리</div>
             <div class="profile-box">
-                <div>
-                    <img
-                        src="<c:out value='${userProfile.profileImage}' />"
-                        alt="프로필 사진" class="profile-image" />
-                </div>
-                <div class="profile-info">
+				<div>
+					<c:choose>
+						<c:when test="${not empty userProfile.profileImage}">
+							<img src="${userProfile.profileImage}" alt="프로필 사진"
+								class="profile-image" />
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath}/img/profile.png"
+								alt="기본 프로필 사진" class="profile-image" />
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="profile-info">
                     <span class="profile-user-nickname" id="nicknameDisplay">
                         <c:out value="${userProfile.nickname}" />
                     </span>

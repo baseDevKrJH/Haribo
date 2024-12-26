@@ -185,7 +185,7 @@ public class JellyController extends HttpServlet {
             return; // FilterController에서 응답을 직접 처ㄹ
         } else if ("wishlistToggle".equals(page)) {
             action = new WishlistToggleAction(); // 관심상품 토글 처리
-        }else if ("checkWishlist".equals(page)) {
+        } else if ("checkWishlist".equals(page)) {
                 action = new CheckWishlistAction(); // 관심상품 상태 확인 액션
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "요청 처리 대상이 없습니다.");

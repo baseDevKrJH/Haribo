@@ -42,6 +42,11 @@ public class UserDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
+            	String profileImage = rs.getString("profile_image");
+            	// 프사가 null이거나 값이 없으면 기본 프로필 출력
+            	if (profileImage == null || profileImage.isEmpty()) {
+            	    profileImage = "/img/profile.png";
+            	}
                 UserVO user = new UserVO(
                     rs.getInt("user_id"),
                     rs.getString("user_name"),
@@ -81,6 +86,12 @@ public class UserDAO {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
+            	String profileImage = rs.getString("profile_image");
+            	// 프사가 null이거나 값이 없으면 기본 프로필 출력
+            	if (profileImage == null || profileImage.isEmpty()) {
+            	    profileImage = "/img/profile.png";
+
+            	}
                 user = new UserVO(
                     rs.getInt("user_id"),
                     rs.getString("user_name"),

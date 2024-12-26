@@ -11,7 +11,7 @@ public class MyProfileInfoViewAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         
-        // 세션 userId
+        // 세션 userI
         Object userIdObj = session.getAttribute("user_id");
         if (userIdObj == null) {
             return "redirect:/jelly?page=login";

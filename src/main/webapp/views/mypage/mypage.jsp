@@ -25,10 +25,19 @@
             
             <!-- 프로필 정보 (mypage-box1) -->
             <div class="mypage-box1">
-                <div>
-                    <img src="${uVo.profileImage}" alt="profile" class="profile-image" />
-                </div>
-                <div class="profile-info">
+				<div>
+					<c:choose>
+						<c:when test="${not empty uVo.profileImage}">
+							<img src="${uVo.profileImage}" alt="profile"
+								class="profile-image" />
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath}/img/profile.png"
+								alt="profile" class="profile-image" />
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="profile-info">
                     <span class="profile-user-nickname">${uVo.userName}</span><br />
                     <span class="profile-user-email">${uVo.email}</span>
                 </div>
